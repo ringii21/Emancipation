@@ -62,6 +62,15 @@ conception, pas une fonctionnalité.
   Le contenu est intime ; il ne quitte pas l'appareil.
 - **Zéro build.** Fichiers statiques servis tels quels. Pas de bundler, pas de framework, pas de
   `npm run build`. Une modification = un fichier édité = un `git push`.
+- **Structure multi-fichiers** (décision du 2026-08-07, remplace le monolithe initial). Le
+  `index.html` d'origine était une maquette de validation ; elle est conservée dans
+  `demo/index.html` et fait foi pour le comportement du module 1. La vraie app est découpée
+  par responsabilité : `index.html` (coquille), `styles.css`, `js/` (scripts classiques
+  chargés dans l'ordre, globaux nommés — toujours pas de modules ES ni de dépendances),
+  `data/` (données des semaines), `content/` (leçons traduites et commentées, un JSON par
+  partie et par langue, chargé par `fetch()`), `sources/` (textes sources, ex. PDF de 1912).
+- **`content/index.json` déclare les parties réellement disponibles.** C'est lui qui distingue
+  « semaine verrouillée » de « lecture pas encore écrite ».
 - **Un module à la fois, validé avant le suivant.** Décision explicite, qui reproduit
   volontairement la logique de verrouillage de Haanel.
 - **Domaine public uniquement pour les textes sources.** Haanel (mort en 1949) est libre. Les
@@ -119,17 +128,19 @@ Réserve : la traduction japonaise est une traduction de travail, non relue par 
 
 ## 7. Comment travailler sur ce dépôt
 
-1. **Lire le code avant d'écrire.** Tout est dans `index.html` : structure, styles, données,
-   logique. C'est volontairement monolithique.
-2. **Ne pas réécrire l'existant pour le « moderniser ».** Pas de migration vers React, pas de
-   découpage en modules ES, pas d'ajout de dépendances. La contrainte est assumée.
-3. **Ne jamais utiliser `localStorage` pour du binaire.** Les données audio vont dans IndexedDB
+1. **Lire le code avant d'écrire.** La structure est décrite en §3 ; `demo/index.html` reste
+   la référence de comportement du module 1.
+2. **Ne pas « moderniser ».** Pas de migration vers React, pas de modules ES, pas d'ajout de
+   dépendances. Le découpage en fichiers statiques est acquis ; il ne va pas plus loin.
+3. **Ne jamais retaper un texte éditorial à la main** lors d'un portage ou d'un déplacement :
+   extraction par script et comparaison programmatique, la fidélité à l'octet est exigée.
+4. **Ne jamais utiliser `localStorage` pour du binaire.** Les données audio vont dans IndexedDB
    (`lacle-voice`). Le reste tient dans `localStorage` sous la clé `mk`.
-4. **Vérifier avant de livrer.** Contrôle syntaxique du JavaScript, puis rendu réel dans un DOM
+5. **Vérifier avant de livrer.** Contrôle syntaxique du JavaScript, puis rendu réel dans un DOM
    (jsdom suffit) dans les deux langues. Ne pas livrer un fichier jamais exécuté.
-5. **Incrémenter `VERSION` dans `sw.js`** à chaque déploiement, sinon les utilisatrices reçoivent
+6. **Incrémenter `VERSION` dans `sw.js`** à chaque déploiement, sinon les utilisatrices reçoivent
    l'ancienne version depuis le cache.
-6. **Tester sur un vrai iPhone** pour tout ce qui touche au micro, à la synthèse vocale ou au
+7. **Tester sur un vrai iPhone** pour tout ce qui touche au micro, à la synthèse vocale ou au
    maintien de l'écran. Le comportement de Safari en mode écran d'accueil diffère de Safari
    classique.
 
