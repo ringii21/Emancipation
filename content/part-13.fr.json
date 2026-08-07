@@ -1,0 +1,143 @@
+{
+ "part": 13,
+ "titre": "Treizième Partie",
+ "intro": "27 paragraphes. Le thème annoncé par Haanel : pourquoi les rêves du rêveur se réalisent. La moitié du chapitre est un long éloge de la méthode scientifique (Bacon, l'induction), qui sert à donner une caution à sa thèse ; la charge utile arrive dans la seconde moitié. Sous chaque paragraphe, ce qu'il dit en français d'aujourd'hui. Traduction faite depuis le texte anglais original de 1912, domaine public.",
+ "p": [
+  {
+   "n": 1,
+   "txt": "La science a tendance, et c'est presque une nécessité, à expliquer les faits ordinaires en généralisant à partir de faits plus rares, qui font exception. Ainsi l'éruption d'un volcan révèle la chaleur qui travaille sans cesse à l'intérieur de la Terre, et à laquelle celle-ci doit une grande partie de sa forme.",
+   "glose": "Il ouvre par une thèse sur la méthode : on comprend l'ordinaire en observant l'exceptionnel. C'est le début d'une longue introduction (1 à 14) qui parle de science, pas de développement personnel. <em>Il pose un décor pour donner du poids à ce qui vient ; le cœur du chapitre est ailleurs.</em>"
+  },
+  {
+   "n": 2,
+   "txt": "De même, l'éclair révèle une force subtile qui travaille sans arrêt à produire des changements dans le monde inorganique. Et comme des langues mortes, qu'on n'entend plus, régnaient autrefois sur les nations, une dent géante retrouvée en Sibérie ou un fossile enfoui témoignent de l'évolution des âges passés — et du même coup nous expliquent l'origine des collines et des vallées où nous vivons aujourd'hui.",
+   "glose": "Suite d'exemples pour la même idée : le rare éclaire le courant. Passe vite, c'est de l'illustration."
+  },
+  {
+   "n": 3,
+   "txt": "Ainsi, généraliser à partir de faits rares, étranges ou exceptionnels a servi de boussole à toutes les découvertes de la science inductive.",
+   "glose": "Reformulation du 1. Il nomme sa méthode : l'induction."
+  },
+  {
+   "n": 4,
+   "txt": "Cette méthode reposait sur la raison et l'expérience. Elle a ainsi détruit la superstition, le poids du passé et les conventions.",
+   "glose": "Court et clair. La science contre la superstition : il prépare l'idée que sa propre théorie serait, elle aussi, de la science débarrassée des vieilles croyances."
+  },
+  {
+   "n": 5,
+   "txt": "Il y a près de trois cents ans que Lord Bacon a recommandé cette manière d'étudier. Les nations civilisées lui doivent une grande part de leur prospérité et le meilleur de leur savoir. Elle a nettoyé l'esprit des préjugés étroits qu'on appelle théories, mieux que n'aurait pu le faire la plus fine ironie ; elle a ramené l'attention des hommes du ciel vers la terre, par des expériences surprenantes plutôt que par des démonstrations ; elle a formé l'esprit d'invention en ouvrant à tous la perspective de découvertes utiles.",
+   "glose": "Éloge de Francis Bacon, père de la méthode expérimentale. Contenu historique, sans consigne pratique. <em>Tu peux lire ces lignes vite.</em>"
+  },
+  {
+   "n": 6,
+   "txt": "La méthode de Bacon a repris l'esprit et le but des grands philosophes grecs, et les a rendus effectifs par les nouveaux moyens d'observation d'une autre époque. Elle a peu à peu ouvert un champ de connaissance immense : l'espace infini de l'astronomie, l'œuf microscopique de l'embryologie, les âges obscurs de la géologie ; elle a révélé dans le pouls un ordre que la logique d'Aristote n'aurait jamais dévoilé, et décomposé en éléments jusque-là inconnus des combinaisons que nul raisonnement scolastique n'avait pu séparer.",
+   "glose": "Suite de l'éloge, avec une liste de domaines scientifiques. Rien à retenir pour la pratique de la semaine."
+  },
+  {
+   "n": 7,
+   "txt": "Elle a allongé la vie ; elle a soulagé la douleur ; elle a fait disparaître des maladies ; elle a rendu les sols plus fertiles ; elle a donné de nouvelles sécurités au marin ; elle a jeté sur les grands fleuves des ponts d'une forme inconnue de nos pères ; elle a guidé la foudre du ciel vers la terre ; elle a éclairé la nuit de la splendeur du jour ; elle a étendu la portée de la vision humaine ; elle a multiplié la force des muscles ; elle a accéléré le mouvement ; elle a aboli la distance ; elle a facilité les échanges et les affaires ; elle a permis à l'homme de descendre au fond des mers, de s'élever dans les airs, de pénétrer sans danger dans les recoins toxiques de la terre.",
+   "glose": "Longue énumération des bienfaits de la science. C'est un morceau d'éloquence, pas un argument. « Elle a fait disparaître des maladies » est vrai — mais c'est de la médecine qu'il parle ici, pas de la pensée. Retiens ce point : dans quelques paragraphes, il glissera de l'une à l'autre."
+  },
+  {
+   "n": 8,
+   "txt": "Voilà la vraie nature de l'induction, et ce qu'elle permet. Mais plus les hommes ont réussi dans les sciences inductives, plus leur enseignement et leur exemple nous rappellent une exigence : observer les faits un à un, avec soin, patience et exactitude, avec tous les instruments dont on dispose, avant de risquer l'énoncé d'une loi générale.",
+   "glose": "Il rappelle la règle de la méthode : observer d'abord, généraliser ensuite. Ironiquement, c'est exactement la règle qu'il ne suivra pas lui-même quand il posera ses propres lois par simple affirmation."
+  },
+  {
+   "n": 9,
+   "txt": "Il faut établir comment se comporte l'étincelle tirée d'une machine électrique dans toutes les circonstances, pour oser, comme Franklin, poser au nuage — sous la forme d'un cerf-volant — la question de la nature de la foudre. Il faut s'assurer avec l'exactitude d'un Galilée de la manière dont les corps tombent, pour oser, comme Newton, demander à la lune quelle force la retient à la terre.",
+   "glose": "Deux exemples célèbres — Franklin, Newton — pour la même idée : mesurer avant de conclure. Illustration, passe vite."
+  },
+  {
+   "n": 10,
+   "txt": "Bref : par respect pour la vérité, et par espoir d'un progrès régulier et universel, ne jamais laisser un préjugé tyrannique négliger ou mutiler un fait gênant. Et bâtir l'édifice de la science sur une base large et solide : une attention pleine, accordée aux phénomènes les plus isolés comme aux plus fréquents.",
+   "glose": "Fin de la partie sur la méthode. La consigne — ne pas écarter un fait parce qu'il dérange — est saine ; garde-la, il va s'en servir pour justifier qu'on prenne au sérieux les « pouvoirs inhabituels » du paragraphe 12."
+  },
+  {
+   "n": 11,
+   "txt": "L'observation accumule sans cesse des matériaux, mais tous les faits n'ont pas la même valeur pour expliquer la nature. Comme on estime le plus les qualités humaines les plus rares, la science trie les faits et attache une importance de premier plan à cette classe frappante de phénomènes que l'observation quotidienne ne suffit pas à expliquer.",
+   "glose": "Reformulation du 1 et du 8 : le rare compte plus que le banal. C'est le tremplin du paragraphe 12, où il quitte enfin la science pour son sujet."
+  },
+  {
+   "n": 12,
+   "txt": "Si donc nous constatons que certaines personnes semblent posséder un pouvoir inhabituel, que faut-il en conclure ? Première option : nier, dire que ce n'est pas vrai. Mais c'est seulement avouer notre manque d'information, car tout chercheur honnête reconnaît qu'il se produit sans cesse des phénomènes étranges, jusque-là inexpliqués. Ceux qui découvrent le pouvoir créateur de la pensée, eux, cesseront de les tenir pour inexplicables.",
+   "glose": "Enfin le sujet du chapitre. Attention au raisonnement : « des chercheurs honnêtes admettent qu'il existe des phénomènes inexpliqués » est vrai, mais ça ne prouve pas que l'explication soit le « pouvoir créateur de la pensée ». Inexpliqué ne veut pas dire télépathique. Il présente une hypothèse comme une conclusion."
+  },
+  {
+   "n": 13,
+   "txt": "Deuxième option : dire que c'est le résultat d'une intervention surnaturelle. Mais comprendre les lois naturelles nous convainc qu'il n'y a rien de surnaturel. Chaque phénomène résulte d'une cause précise, et cette cause est une loi immuable qui opère avec une précision constante — que la loi soit mise en marche consciemment ou non.",
+   "glose": "Point réellement intéressant, et moderne : il refuse le surnaturel. Pour lui, ce qu'on prend pour du miracle obéit à des lois qu'on n'a pas encore comprises. C'est une position rationaliste — le problème est seulement qu'il baptise « loi » des choses qu'il n'a jamais démontrées."
+  },
+  {
+   "n": 14,
+   "txt": "Troisième option : dire que nous sommes sur un « terrain interdit », qu'il y a des choses que nous ne devrions pas savoir. Cette objection a été opposée à chaque progrès de la connaissance humaine. Tous ceux qui ont avancé une idée neuve — Colomb, Darwin, Galilée, Fulton, Emerson — ont été ridiculisés ou persécutés ; cette objection ne mérite donc aucune considération sérieuse. Au contraire, examinons soigneusement chaque fait porté à notre attention : c'est ainsi que nous découvrirons la loi qui le fonde.",
+   "glose": "Argument classique et un peu commode : « on s'est moqué de Galilée, donc on a tort de se moquer de moi ». Non — on s'est aussi moqué de milliers de gens qui avaient tort. Être raillé ne prouve rien, ni dans un sens ni dans l'autre. C'est une des rhétoriques préférées de toute cette littérature ; repère-la, elle revient."
+  },
+  {
+   "n": 15,
+   "txt": "On découvrira que le pouvoir créateur de la pensée explique toute condition ou expérience possible, qu'elle soit physique, mentale ou spirituelle.",
+   "glose": "La thèse maximale du chapitre, posée en une phrase. « Tout » expliquer par un seul principe, c'est justement ce qui la rend invérifiable : une théorie qui explique tout n'explique rien. Prends-la comme une déclaration d'intention, pas comme un fait établi. Et note le mot <strong>physique</strong> — les deux paragraphes suivants vont y toucher."
+  },
+  {
+   "n": 16,
+   "txt": "La pensée produit des conditions qui correspondent à l'attitude mentale dominante. Donc, si nous craignons un désastre, ce désastre sera le résultat certain de notre pensée — car la peur est une forme de pensée très puissante. C'est cette forme de pensée qui balaie souvent le fruit de longues années de travail et d'efforts.",
+   "glose": "Deux niveaux à séparer. Le vrai : la peur chronique dégrade les décisions, fait éviter les occasions, sabote — sur des années, elle abîme réellement une vie. Le faux et dangereux : « le désastre sera le résultat <em>certain</em> » de la peur. Non. La peur n'attire pas un cancer, un licenciement, un accident. Ce genre de phrase, poussé à bout, conduit à se croire responsable de tout malheur qui arrive — c'est la face culpabilisante de la Loi d'Attraction, déjà signalée en Première Partie."
+  },
+  {
+   "n": 17,
+   "txt": "Si nous pensons à une forme de richesse matérielle, nous pouvons l'obtenir. La pensée concentrée fait apparaître les conditions nécessaires et déclenche l'effort qu'il faut, ce qui amène les circonstances propres à réaliser notre désir. Mais souvent, quand nous obtenons ce que nous croyions vouloir, cela ne produit pas l'effet attendu : la satisfaction n'est que passagère, ou c'est même l'inverse de ce qu'on espérait.",
+   "glose": "<strong>Un des rares paragraphes vraiment porteurs.</strong> La première phrase est la promesse habituelle. Mais la seconde la corrige d'une manière étonnamment lucide : obtenir ce qu'on voulait déçoit souvent. C'est vérifiable dans n'importe quelle vie, et ça amène directement la vraie question du chapitre, au paragraphe 18."
+  },
+  {
+   "n": 18,
+   "txt": "Quelle est donc la bonne manière de procéder ? À quoi faut-il penser pour obtenir ce qu'on désire vraiment ? Ce que toi et moi désirons, ce que tout le monde cherche, c'est le bonheur et l'harmonie. Si nous pouvons être vraiment heureux, nous avons tout ce que le monde peut donner. Et si nous sommes heureux nous-mêmes, nous pouvons rendre les autres heureux.",
+   "glose": "Le déplacement le plus important du chapitre : la vraie cible n'est pas l'objet (la richesse du 17), c'est un état — bonheur et harmonie. « Harmonie » est son mot fétiche, vu en Première Partie : l'absence de conflit intérieur. Prends ce paragraphe comme un correctif du précédent : viser un état plutôt qu'un objet est un meilleur point de départ."
+  },
+  {
+   "n": 19,
+   "txt": "Mais nous ne pouvons pas être heureux sans santé, sans forces, sans amis proches, sans un cadre agréable, sans des ressources suffisantes — pas seulement pour couvrir nos besoins, mais aussi pour nous offrir le confort et les plaisirs auxquels nous avons droit.",
+   "glose": "Il énumère les conditions du bonheur, et il place la santé en premier. Piège à désamorcer tout de suite : la logique du chapitre laisse croire que penser juste suffirait à obtenir la santé. C'est faux. La pensée ne remplace pas un traitement ; on ne soigne pas une maladie par une méditation. Ce garde-fou est non négociable, et il vaut pour tout le passage santé de ce livre — la semaine 22 y reviendra frontalement."
+  },
+  {
+   "n": 20,
+   "txt": "L'ancienne façon de penser, orthodoxe, était de se considérer comme « un ver de terre », de se contenter de sa part quelle qu'elle soit. L'idée moderne, au contraire, est de savoir que nous avons droit au meilleur en toute chose, que « le Père et moi sommes un », et que ce « Père » est l'Esprit Universel, le Créateur, la Substance originelle d'où tout procède.",
+   "glose": "Il oppose une religion de la résignation à sa propre vision. Le passage a une vraie valeur émancipatrice pour son époque — cesser de se croire indigne. La formule « le Père et moi sommes un » est reprise de l'Évangile de Jean et détournée vers sa métaphysique : tu peux y adhérer ou la lire comme le cadre dont il a besoin. Comme toujours, <em>aucun exercice ne te demande d'y croire.</em>"
+  },
+  {
+   "n": 21,
+   "txt": "Admettons que tout cela soit vrai en théorie — c'est enseigné depuis deux mille ans, c'est le fond de tout système de philosophie ou de religion. Comment le rendre concret dans nos vies ? Comment obtenir des résultats réels, tangibles, ici et maintenant ?",
+   "glose": "Bonne question, et honnête : il reconnaît que tout ce qui précède reste théorique. C'est la charnière vers la partie pratique. La réponse commence au paragraphe suivant."
+  },
+  {
+   "n": 22,
+   "txt": "D'abord, il faut mettre notre savoir en pratique. Rien ne s'obtient autrement. L'athlète peut lire toute sa vie des livres sur l'entraînement : tant qu'il ne dépense pas sa force par un vrai travail, il n'en gagnera aucune. Il récoltera exactement ce qu'il donne — mais il devra donner d'abord. C'est pareil pour nous : nous récolterons exactement ce que nous donnons, mais il faut donner en premier. Cela nous reviendra alors au centuple. Et donner n'est ici qu'un processus mental : puisque les pensées sont des causes et les conditions des effets, donner des pensées de courage, d'inspiration, de santé ou d'aide, c'est mettre en marche des causes qui produiront leur effet.",
+   "glose": "Deux idées à séparer. L'image de l'athlète est excellente et vraie : pas de résultat sans pratique, et la pratique vient avant la récompense. Mais la fin réduit « donner » à un processus purement mental — comme si penser des pensées d'aide équivalait à aider. Non : donner, dans la vraie vie, c'est faire, pas seulement penser. Garde la première moitié, méfie-toi de la seconde."
+  },
+  {
+   "n": 23,
+   "txt": "La pensée est une activité créatrice. Mais ne te trompe pas : elle ne crée rien tant qu'elle n'est pas dirigée consciemment, méthodiquement, de façon constructive. Là est toute la différence entre la pensée oisive — simple gaspillage d'énergie — et la pensée constructive, qui permet un accomplissement pratiquement sans limite.",
+   "glose": "La même distinction qu'en Deuxième Partie (paragraphe 28) : penser au fil de l'eau et diriger sa pensée sont deux choses différentes. C'est le nœud utile de tout le livre. « Sans limite » est de l'emphase ; l'idée sous l'emphase — que la pensée dirigée vaut infiniment mieux que la rêverie flottante — tient."
+  },
+  {
+   "n": 24,
+   "txt": "Nous avons vu que tout nous vient par la Loi d'Attraction. Une pensée heureuse ne peut pas exister dans une conscience malheureuse. Il faut donc que la conscience change ; et quand elle change, toutes les conditions nécessaires pour répondre à cette nouvelle conscience changent peu à peu, pour s'accorder aux exigences de la situation nouvelle.",
+   "glose": "Rappel de la Loi d'Attraction (nommée en Deuxième Partie). Note le mot <strong>peu à peu</strong> : ici, au moins, il ne promet pas l'instantané. La part solide : ton état intérieur filtre ce que tu peux ressentir et remarquer — changer l'état change ce qui devient possible. La part fragile reste la même que partout : « toutes les conditions changent » suppose que le monde extérieur obéit à ta conscience, ce qui n'est vrai qu'en partie."
+  },
+  {
+   "n": 25,
+   "txt": "En créant une image mentale, un idéal, nous projetons une pensée dans la Substance Universelle d'où sortent toutes choses. Cette Substance est omniprésente, toute-puissante et omnisciente. Allons-nous indiquer à l'Omniscient par quel canal réaliser notre demande ? Le fini peut-il conseiller l'Infini ? C'est là la cause de tout échec. Nous reconnaissons la présence partout de la Substance Universelle, mais nous oublions qu'elle est aussi toute-puissante et omnisciente — et qu'elle mettra donc en marche des causes que nous ignorons entièrement.",
+   "glose": "Métaphysique, mais avec une conséquence pratique intéressante, qu'il exploitera en semaine 13 : fixe le <em>but</em>, pas le <em>chemin</em>. « Ne dis pas à l'Infini par quel canal » se traduit sans mysticisme : quand tu vises quelque chose, reste ouvert à des voies que tu n'avais pas prévues, au lieu de te crisper sur un seul scénario. Rejoint le paragraphe 40 de la Première Partie : tu es l'interrupteur, pas le moteur."
+  },
+  {
+   "n": 26,
+   "txt": "Nous servons le mieux nos intérêts en reconnaissant la puissance et la sagesse infinies de l'Esprit Universel : nous devenons ainsi le canal par lequel l'Infini réalise notre désir. Autrement dit, reconnaître amène la réalisation. Pour ton exercice de cette semaine, mets donc ce principe en œuvre. Reconnais que tu es une partie du tout, et qu'une partie est forcément de même nature et de même qualité que le tout : la seule différence possible est une différence de degré.",
+   "glose": "<strong>L'exercice de la semaine.</strong> Débarrassé du vocabulaire cosmique, il tient en une phrase : reconnais que tu n'as pas un potentiel de nature inférieure aux autres, seulement à des degrés différents. C'est le même geste qu'en Première Partie — reconnaître avant d'acquérir. L'exercice est ici une contemplation, pas une action : passe la semaine à laisser cette idée s'installer.",
+   "exo": true
+  },
+  {
+   "n": 27,
+   "txt": "Quand ce fait immense commence à imprégner ta conscience, quand tu réalises vraiment que toi — non ton corps, mais le moi, le « je », l'esprit qui pense — tu es une partie intégrante du grand tout, de même substance, de même qualité, de même nature ; que le Créateur ne pouvait rien créer de différent de lui-même : alors tu pourras dire toi aussi « le Père et moi sommes un », et tu comprendras la beauté, la grandeur et les possibilités immenses mises à ta disposition. La leçon se referme sur une prière de Franklin : « Fais croître en moi la sagesse qui découvre mon intérêt le plus vrai ; affermis ma résolution d'accomplir ce que cette sagesse dicte. »",
+   "glose": "Conclusion, sur le registre le plus spirituel du chapitre. La citation de Franklin, elle, est concrète et vaut d'être retenue : elle demande deux choses — voir clair sur ce qui compte vraiment, et tenir la résolution de le faire. Discernement plus persévérance : c'est un bon résumé, laïque, de tout ce que le livre essaie de construire."
+  }
+ ]
+}

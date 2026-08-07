@@ -1,0 +1,188 @@
+{
+ "part": 11,
+ "titre": "Onzième Partie",
+ "intro": "36 paragraphes. Cette partie porte sur le raisonnement inductif et l'idée de « loi » : on compare des cas, on dégage une règle, on s'y accorde. Haanel en tire une méthode — croire la chose déjà obtenue pour l'obtenir. Sous chaque paragraphe, ce qu'il dit en français d'aujourd'hui. Traduction faite depuis le texte anglais original de 1912, domaine public.",
+ "p": [
+  {
+   "n": 1,
+   "txt": "Le raisonnement inductif est le travail de l'esprit conscient qui compare plusieurs cas séparés jusqu'à repérer le facteur commun qui les explique tous.",
+   "glose": "Définition sobre et exacte de l'induction : on part d'observations, on remonte à la règle. C'est la démarche des sciences expérimentales, et c'est le vrai sujet de la partie. <strong>Retiens que pour Haanel, une « loi » n'est pas un décret magique, c'est une régularité qu'on constate.</strong>"
+  },
+  {
+   "n": 2,
+   "txt": "L'induction avance en comparant les faits. C'est cette méthode d'étude de la nature qui a mené à la découverte d'un règne de la loi — un tournant dans le progrès humain.",
+   "glose": "Reformulation du 1, avec un ajout historique juste : c'est bien la méthode inductive qui a fondé la science moderne. Passe vite."
+  },
+  {
+   "n": 3,
+   "txt": "C'est la ligne de partage entre la superstition et l'intelligence. Elle a chassé de nos vies l'incertitude et le caprice, et mis à leur place la loi, la raison et la certitude.",
+   "glose": "« La certitude » est excessif — la science ne donne pas de certitude, elle donne des modèles révisables. Mais le contraste qu'il vise est bon : chercher une régularité plutôt que croire au sort et aux présages."
+  },
+  {
+   "n": 4,
+   "txt": "C'est le « gardien à la porte » évoqué dans une leçon précédente.",
+   "glose": "Il rattache l'induction au « gardien à la porte » de la Deuxième Partie — l'esprit conscient qui filtre ce qui entre. Le lien est un peu forcé : là c'était filtrer les suggestions, ici c'est vérifier par comparaison. Même idée de fond : ne rien avaler sans examen."
+  },
+  {
+   "n": 5,
+   "txt": "Grâce à ce principe, le monde que nos sens tenaient pour acquis a été bouleversé : le soleil a été arrêté dans sa course, la Terre soi-disant plate est devenue une boule lancée autour de lui, la matière inerte s'est révélée faite d'éléments actifs, et partout où l'on pointe le télescope ou le microscope, l'univers apparaît plein de force, de mouvement et de vie. Alors une question s'impose : par quel moyen les formes délicates de l'organisation, au milieu de tout cela, restent-elles en ordre et en état ?",
+   "glose": "Il empile les grandes révolutions scientifiques (Copernic, Galilée) pour impressionner, puis pose sa vraie question : qu'est-ce qui maintient l'ordre du vivant ? Prose chargée de 1912 ; l'idée tient en une ligne. <em>Lis pour la question finale, pas pour l'inventaire.</em>"
+  },
+  {
+   "n": 6,
+   "txt": "Les pôles semblables et les forces semblables se repoussent ou s'ignorent, et cela suffit en gros à assigner leur place et leur distance aux astres, aux hommes et aux forces. Comme des gens de qualités différentes s'associent, les pôles opposés s'attirent ; des éléments sans propriété commune, comme les acides et les gaz, se lient de préférence ; et un échange général s'entretient entre l'excédent et le besoin.",
+   "glose": "Analogie datée entre la physique (pôles, acides), les astres et les humains. La science de son temps lui sert de métaphore morale, ce qui ne prouve rien. Ce qu'il prépare : l'idée que le besoin appelle sa réponse, développée au paragraphe suivant."
+  },
+  {
+   "n": 7,
+   "txt": "Comme l'œil cherche et trouve satisfaction dans les couleurs complémentaires de celles qu'on lui montre, le besoin, le manque et le désir, au sens le plus large, provoquent, guident et déterminent l'action.",
+   "glose": "Le cœur du raisonnement de la partie : <strong>le besoin oriente l'action.</strong> Formulé ainsi, c'est presque une évidence — on agit parce qu'il manque quelque chose. Haanel va en tirer beaucoup plus (le manque « crée » sa réponse), ce qui est un autre débat."
+  },
+  {
+   "n": 8,
+   "txt": "Nous pouvons prendre conscience de ce principe et agir en accord avec lui. Cuvier voit une dent d'une espèce animale disparue. Cette dent réclame un corps pour remplir sa fonction, et elle définit ce corps avec une telle précision que Cuvier parvient à reconstruire l'animal entier.",
+   "glose": "L'exemple de Cuvier reconstruisant un animal à partir d'une dent est réel et frappant : une pièce suppose l'ensemble cohérent qui va avec. Bon exemple d'induction. Ce que Haanel y ajoute — la dent « réclame » un corps — est une image, pas un mécanisme."
+  },
+  {
+   "n": 9,
+   "txt": "On observe des perturbations dans le mouvement d'Uranus. Le Verrier a besoin d'un autre astre à un endroit précis pour que le système solaire tienne en ordre, et Neptune apparaît à la place et à l'heure annoncées.",
+   "glose": "Autre exemple réel et magnifique : Neptune a bien été prédite par le calcul avant d'être observée. C'est de la vraie induction — poser une cause manquante pour rendre compte des faits. Haanel choisit ici de bons exemples ; le glissement viendra après."
+  },
+  {
+   "n": 10,
+   "txt": "Les besoins instinctifs de l'animal et les besoins intellectuels de Cuvier, les besoins de la nature et ceux de l'esprit de Le Verrier étaient semblables — et les résultats aussi : ici la pensée d'une existence, là une existence. Un besoin bien défini et conforme à une loi fournit donc la raison des opérations les plus complexes de la nature.",
+   "glose": "<strong>Ici se produit le glissement.</strong> Il met sur le même plan le besoin qui pousse un savant à chercher (Cuvier, Le Verrier) et le besoin qui existerait dans la nature elle-même. Le premier est réel, le second est une projection. C'est l'endroit où l'induction cède la place à la métaphysique — repère-le."
+  },
+  {
+   "n": 11,
+   "txt": "Après avoir noté correctement les réponses que donne la nature et étendu nos sens sur elle avec la science qui grandit, après avoir pris en main les leviers qui font bouger la Terre, nous devenons conscients d'un contact si étroit, si varié et si profond avec le monde extérieur, que nos besoins et nos buts se retrouvent liés au bon fonctionnement de cette vaste organisation — autant que la vie, la liberté et le bonheur d'un citoyen sont liés à l'existence de son gouvernement.",
+   "glose": "Longue phrase pour une idée simple : plus on connaît le monde, plus on s'y sent intégré. La comparaison avec le citoyen et son État prépare le paragraphe suivant. Passe sans t'attarder."
+  },
+  {
+   "n": 12,
+   "txt": "Les intérêts de l'individu sont protégés par la force du pays qui s'ajoute à la sienne, et ses besoins peuvent compter sur un approvisionnement d'autant plus sûr qu'ils sont ressentis de façon plus large et plus constante. De la même façon, être un citoyen conscient de la « République de la nature » nous protège des tracas des petits agents, par alliance avec des puissances supérieures. Et en faisant appel aux lois fondamentales — la résistance ou la facilité qu'offrent les agents mécaniques ou chimiques —, on répartit le travail entre eux et l'homme, au meilleur avantage de l'inventeur.",
+   "glose": "Il file la comparaison citoyen/nature. Traduction pratique : connaître les lois d'un domaine permet de faire faire le travail par ces lois plutôt qu'à la main. C'est vrai de tout métier technique. Le vocabulaire de 1912 alourdit un propos raisonnable."
+  },
+  {
+   "n": 13,
+   "txt": "Si Platon avait pu voir les images que le soleil produit avec l'aide du photographe, ou cent autres exemples de ce que l'homme fait par induction, il aurait peut-être songé à l'« accouchement des esprits » de son maître. Et il aurait pu imaginer un pays où tout le travail manuel, mécanique et répétitif serait confié à la nature, où nos besoins seraient satisfaits par de pures opérations mentales déclenchées par la volonté, et où l'offre serait créée par la demande.",
+   "glose": "Rêverie sur un futur où la pensée suffirait à tout obtenir. La dernière formule — « l'offre créée par la demande » — est le slogan de sa méthode. Belle image, mais c'est une projection, pas un constat. La photographie, elle, illustre bien ce que l'induction rend réellement possible."
+  },
+  {
+   "n": 14,
+   "txt": "Aussi lointain que paraisse ce pays, l'induction a appris aux hommes à avancer vers lui et les a entourés de bienfaits qui sont à la fois la récompense de la constance passée et un encouragement à s'y consacrer davantage.",
+   "glose": "Transition emphatique. Rien de neuf : les progrès obtenus encouragent à continuer. Lis vite."
+  },
+  {
+   "n": 15,
+   "txt": "L'induction aide aussi à concentrer et à renforcer nos facultés pour le reste, en apportant des solutions sûres aux problèmes individuels comme universels, par le seul travail de l'esprit sous sa forme la plus pure.",
+   "glose": "« Solutions sûres à tous les problèmes » est une promesse trop large — l'induction éclaire, elle ne résout pas tout. À prendre comme un enthousiasme, pas comme une garantie."
+  },
+  {
+   "n": 16,
+   "txt": "Voici donc une méthode dont l'esprit est de croire que ce qu'on cherche est déjà accompli, afin de l'accomplir. Une méthode léguée par ce même Platon qui, en dehors de ce domaine, n'a jamais su expliquer comment les idées devenaient des réalités.",
+   "glose": "<strong>Le cœur de la partie, énoncé sans détour :</strong> croire la chose déjà obtenue pour l'obtenir. Attention au tour de passe-passe : il vient de parler d'induction (observer pour trouver la loi), et il bascule vers son inverse (décréter d'avance le résultat). Ce sont deux démarches opposées, et il les présente comme une seule."
+  },
+  {
+   "n": 17,
+   "txt": "Cette idée est aussi développée par Swedenborg dans sa doctrine des correspondances. Et un maître plus grand encore a dit : « Tout ce que vous demanderez en priant, croyez que vous l'avez reçu, et cela vous sera accordé. » (Marc 11:24) La différence des temps, dans cette phrase, est remarquable.",
+   "glose": "Il appuie sa méthode sur Swedenborg et sur l'Évangile. La remarque sur les temps du verbe (« croyez que vous l'avez reçu » au passé, avant l'obtention) est le seul point d'analyse — et c'est celui qu'il exploite au paragraphe suivant."
+  },
+  {
+   "n": 18,
+   "txt": "Nous devons d'abord croire que notre désir est déjà réalisé ; sa réalisation suivra ensuite.",
+   "glose": "La méthode réduite à une phrase. C'est le principe de toute la visualisation du livre, et l'ancêtre direct de « la pensée positive ». <strong>La part utile : agir comme si un but était atteignable change ce qu'on tente. La part fausse : y croire ne suffit pas à le produire.</strong> Garde la posture, méfie-toi de la promesse."
+  },
+  {
+   "n": 19,
+   "txt": "C'est une consigne concise pour se servir de la puissance créatrice de la pensée : imprimer dans l'esprit subjectif universel la chose précise qu'on désire, comme un fait déjà existant.",
+   "glose": "Reformulation du 18 dans son vocabulaire métaphysique (« esprit subjectif universel »). Passe vite."
+  },
+  {
+   "n": 20,
+   "txt": "Nous pensons alors sur le plan de l'absolu, en écartant toute considération de conditions ou de limites : nous plantons une graine qui, si on la laisse tranquille, finira par germer et donner un fruit visible.",
+   "glose": "Retour de l'image de la graine (Première Partie). « Écarter toute considération de conditions ou de limites » est le point risqué : ignorer les contraintes réelles n'est pas de la pensée créatrice, c'est du déni. À lire avec la même réserve que le §8 de la Première Partie."
+  },
+  {
+   "n": 21,
+   "txt": "Pour récapituler : le raisonnement inductif est le travail de l'esprit conscient qui compare plusieurs cas séparés jusqu'à repérer le facteur commun qui les explique tous. On voit, dans chaque pays du monde, des gens obtenir des résultats par un procédé qu'ils ne semblent pas comprendre eux-mêmes, et auquel ils attachent en général plus ou moins de mystère. Notre raison nous est donnée pour découvrir la loi selon laquelle ces résultats se produisent.",
+   "glose": "Reprise du 1, avec une intention honnête : démystifier. Sa promesse est de remplacer le « mystère » par une loi observable. C'est le meilleur de son projet — dommage qu'il la mélange ailleurs avec des affirmations invérifiables."
+  },
+  {
+   "n": 22,
+   "txt": "On voit ce processus à l'œuvre chez ces natures heureuses qui possèdent d'emblée ce que d'autres doivent acquérir par le travail : elles n'ont jamais de conflit avec leur conscience parce qu'elles agissent toujours juste, ne manquent jamais de tact, apprennent tout facilement, mènent à bien tout ce qu'elles entreprennent avec une aisance heureuse, et vivent en accord constant avec elles-mêmes, sans jamais trop réfléchir à ce qu'elles font ni éprouver de difficulté.",
+   "glose": "Portrait des gens « doués sans effort ». Il présente cette facilité comme le résultat de sa méthode, alors que c'est surtout ce qu'il faudrait expliquer. Prends-le comme une description séduisante, pas comme une preuve que la méthode y mène."
+  },
+  {
+   "n": 23,
+   "txt": "Le fruit de cette pensée est comme un don des dieux — mais un don que peu de gens, encore, perçoivent, apprécient ou comprennent. Reconnaître la puissance remarquable que possède l'esprit dans de bonnes conditions, et le fait qu'on peut l'utiliser, la diriger et la rendre disponible pour résoudre chaque problème humain, est d'une importance capitale.",
+   "glose": "Emphase (« don des dieux », « résoudre chaque problème humain »). La part défendable : l'attention et l'attitude dirigées changent réellement ce qu'on accomplit. La part exagérée : « chaque problème humain ». Fais le tri."
+  },
+  {
+   "n": 24,
+   "txt": "Toute vérité est la même, qu'on l'exprime en termes scientifiques modernes ou dans la langue des temps apostoliques. Certains esprits craintifs ne voient pas que la vérité, précisément parce qu'elle est complète, demande à être formulée de plusieurs façons — aucune formule humaine ne peut en montrer toutes les faces.",
+   "glose": "Il prépare son grand rapprochement (science = religion, §26). L'argument est commode : présenter des énoncés très différents comme « la même vérité sous d'autres mots » permet d'éviter de les confronter. À lire comme une position, pas comme un fait."
+  },
+  {
+   "n": 25,
+   "txt": "Changer l'accent, employer un langage neuf, proposer des interprétations inédites ou des points de vue nouveaux, ce ne sont pas — comme certains le croient — des signes qu'on s'éloigne de la vérité. Au contraire : c'est la preuve qu'on la saisit dans de nouveaux rapports avec les besoins humains, et qu'elle devient plus largement comprise.",
+   "glose": "Reformulation du 24. Passe vite."
+  },
+  {
+   "n": 26,
+   "txt": "La vérité doit être redite à chaque génération et à chaque peuple en termes nouveaux. Ainsi, quand le grand Maître dit « Croyez que vous recevez, et vous recevrez », quand Paul dit « La foi est la substance des choses qu'on espère, la preuve de celles qu'on ne voit pas », et quand la science moderne dit « la Loi d'Attraction est la loi par laquelle la pensée entre en rapport avec son objet » — chacune de ces phrases, analysée, contient exactement la même vérité. La seule différence est la forme.",
+   "glose": "<strong>Nouvelle mention de la « Loi d'Attraction ».</strong> Il assimile un verset, une définition de la foi et une formule pseudo-scientifique, et affirme que c'est « exactement la même vérité ». C'est un tour rhétorique commode. La « Loi d'Attraction » ici n'a rien de scientifique, quoi qu'en dise la phrase : c'est cette littérature-là que <em>Le Secret</em> reprendra en 2006. Adhère ou non, mais ne prends pas l'étiquette « science » pour argent comptant."
+  },
+  {
+   "n": 27,
+   "txt": "Nous sommes au seuil d'une ère nouvelle. Le moment est venu où l'homme a percé les secrets de la maîtrise, et où se prépare un ordre social nouveau, plus merveilleux que tout ce qu'on avait rêvé. Le conflit entre la science moderne et la théologie, l'étude comparée des religions, la force énorme des mouvements sociaux nouveaux : tout cela déblaie le terrain pour cet ordre nouveau. Ces courants ont peut-être détruit des formes anciennes devenues dépassées et impuissantes, mais rien de précieux n'a été perdu.",
+   "glose": "Optimisme d'époque sur une « ère nouvelle » imminente. Écrit deux ans avant la Première Guerre mondiale, ce qui invite à la prudence sur ce genre d'annonce. Aucun exercice ne repose dessus."
+  },
+  {
+   "n": 28,
+   "txt": "Une foi nouvelle est née, une foi qui exige une forme d'expression nouvelle. Et cette foi prend forme dans une conscience profonde de la puissance, qui se manifeste dans l'activité spirituelle qu'on voit partout aujourd'hui.",
+   "glose": "Prolonge le 27. Discours d'ambiance, sans contenu actionnable. Passe."
+  },
+  {
+   "n": 29,
+   "txt": "L'esprit qui dort dans le minéral, respire dans le végétal, se meut dans l'animal et atteint son plus haut développement chez l'homme, c'est l'Esprit Universel. Il nous revient de franchir le fossé entre l'être et le faire, entre la théorie et la pratique, en démontrant que nous comprenons le pouvoir qui nous a été donné.",
+   "glose": "La formule « dort dans le minéral, respire dans le végétal… » est une image métaphysique classique, pas une description biologique. Le seul point utile est la fin : <strong>franchir l'écart entre savoir et faire.</strong> C'est le refrain du livre entier — la valeur est dans l'application."
+  },
+  {
+   "n": 30,
+   "txt": "De loin la plus grande découverte de tous les siècles est la puissance de la pensée. Cette découverte a mis un peu de temps à atteindre la conscience générale, mais elle est arrivée : dans chaque domaine de recherche, l'importance de cette plus grande de toutes les découvertes se démontre déjà.",
+   "glose": "Affirmation grandiose et invérifiable (« la plus grande découverte de tous les siècles »). C'est de la conviction, pas un résultat. À lire comme l'enthousiasme d'un auteur pour son sujet."
+  },
+  {
+   "n": 31,
+   "txt": "Tu demandes en quoi consiste la puissance créatrice de la pensée ? Elle consiste à créer des idées, qui se concrétisent ensuite en s'appropriant, en inventant, en observant, en discernant, en découvrant, en analysant, en ordonnant, en gouvernant, en combinant et en appliquant la matière et la force. Elle le peut parce qu'elle est une puissance créatrice intelligente.",
+   "glose": "Réponse plus concrète qu'ailleurs, et plutôt saine : la pensée « crée » en produisant des idées qui se réalisent par une chaîne d'actions bien réelles (inventer, observer, analyser…). <strong>Prise ainsi, sa « puissance créatrice » n'a rien de magique : c'est le travail intellectuel qui débouche sur des actes.</strong> Un des passages les plus défendables."
+  },
+  {
+   "n": 32,
+   "txt": "La pensée atteint son activité la plus haute quand elle plonge dans sa propre profondeur mystérieuse, quand elle rompt les limites étroites du moi et passe de vérité en vérité jusqu'à la région de la lumière éternelle, où tout ce qui est, fut ou sera se fond en une grande harmonie.",
+   "glose": "Passage lyrique, quasi mystique. Belle prose, contenu vérifiable nul. À lire comme une respiration, pas comme une instruction."
+  },
+  {
+   "n": 33,
+   "txt": "De ce travail de contemplation de soi naît l'inspiration, qui est une intelligence créatrice. Et elle est supérieure à tout élément, toute force et toute loi de la nature, parce qu'elle peut les comprendre, les modifier, les gouverner et les mettre au service de ses propres fins — et donc les posséder.",
+   "glose": "« Supérieure à toute loi de la nature » est faux au sens strict : la pensée n'annule pas la gravité. Sens acceptable : comprendre une loi permet de s'en servir. Même idée qu'au §12 ; il la surcharge ici d'une grandiloquence de trop."
+  },
+  {
+   "n": 34,
+   "txt": "La sagesse commence avec l'éveil de la raison, et la raison est la compréhension des connaissances et des principes qui permettent de saisir le vrai sens des choses. La sagesse est donc une raison éclairée — et cette sagesse mène à l'humilité, car l'humilité fait une grande part de la sagesse.",
+   "glose": "Rare passage sobre et juste dans un chapitre chargé : la connaissance bien comprise rend humble, pas arrogant. C'est un contrepoids bienvenu à l'enflure des paragraphes précédents. À retenir."
+  },
+  {
+   "n": 35,
+   "txt": "Nous connaissons tous des gens qui ont réalisé l'apparemment impossible, qui ont réalisé des rêves de toute une vie, qui ont tout changé, y compris eux-mêmes. Nous nous sommes parfois émerveillés devant une puissance qui semblait irrésistible, toujours disponible juste au moment où elle était le plus nécessaire. Mais tout est clair désormais : il suffit de comprendre certains principes fondamentaux précis et de les appliquer correctement.",
+   "glose": "Il ramène tout à sa thèse avant l'exercice. « Il suffit de comprendre et d'appliquer » sous-entend que celui qui échoue s'y est mal pris — c'est le revers culpabilisant de la méthode, le même qu'au §8 de la Première Partie. Les réussites existent ; elles ne prouvent pas à elles seules la recette."
+  },
+  {
+   "n": 36,
+   "txt": "Pour ton exercice de la semaine, concentre-toi sur la citation biblique : « Tout ce que vous désirez, quand vous priez, croyez que vous l'avez reçu, et cela vous sera accordé. » Remarque qu'il n'y a pas de limite : « tout ce que » est très net et laisse entendre que la seule limite tient à notre capacité de penser, d'être à la hauteur de la situation, de nous montrer prêts au moment voulu, et de nous rappeler que la foi n'est pas une ombre mais une substance : « la substance des choses qu'on espère, la preuve de celles qu'on ne voit pas ».",
+   "glose": "<strong>L'exercice de la semaine : se concentrer sur cette phrase et sur ce qu'elle veut dire.</strong> Sur le plan pratique, la consigne revient à s'entraîner à croire un but atteignable avant de l'avoir atteint — une posture qui aide à agir. Deux mises en garde. « Il n'y a pas de limite » est faux : la santé, les autres et le réel en posent. Et si la question qui t'occupe est une maladie, ce paragraphe ne remplace pas un médecin — une méditation ne soigne pas, elle accompagne. Fais l'exercice comme un exercice mental, pas comme un traitement.",
+   "exo": true
+  }
+ ]
+}
