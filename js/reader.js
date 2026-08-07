@@ -18,7 +18,7 @@ async function loadPart(n,lang){
  return L;
 }
 async function read(n){
- if(AVAIL.indexOf(n)<0)return;           // partie pas encore écrite : rien à ouvrir
+ if(!DEV && AVAIL.indexOf(n)<0)return;   // partie pas encore écrite : rien à ouvrir (sauf mode dev)
  let L;
  try{L=await loadPart(n,LG)}catch(e){back();return}  // échec de chargement : retour propre à l'accueil
  RDL=L;RD.part=n;RD.i=(ST.pos&&ST.pos[n])||0;

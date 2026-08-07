@@ -8,6 +8,10 @@ var W=null;     // les 24 semaines françaises (data/weeks.fr.json)
 var Wv=null;    // semaines dans la langue courante (fusion FR + surcharges JA)
 var U=FRUI;     // dictionnaire d'interface courant
 var AVAIL=[];   // numéros des parties dont la lecture existe (content/index.json)
+// Mode dev : activé par ?dev dans l'URL, jamais persisté — invisible dans l'app installée.
+// Déverrouille toutes les semaines et autorise la lecture de n'importe quelle partie écrite,
+// sans toucher à la vraie progression (ST). Uniquement pour relire/prévisualiser en local.
+var DEV=/[?&]dev\b/.test(location.search);
 
 function applyLang(){
  LG=ST.lang||'fr';
@@ -86,10 +90,22 @@ function render(){
 
  const next=Wv.filter(x=>x.n>c);
  if(next.length){html+=`<p class="sechead">${U.lockHead}</p>`+next.map(x=>
-   `<div class="row lock"><span class="idx">${x.n}</span><span class="nm">${x.n===c+1?x.t:'—'}</span><span class="st">${x.n===c+1?U.sess(7-d):''}</span></div>`).join('')
-   +`<p class="src" style="border:0;margin-top:16px">${U.lockNote}</p>`}
+   DEV
+    ? `<div class="row past" onclick="open_(${x.n})"><span class="idx">${x.n}</span><span class="nm">${x.t}</span><span class="st">dev</span></div>`
+    : `<div class="row lock"><span class="idx">${x.n}</span><span class="nm">${x.n===c+1?x.t:'—'}</span><span class="st">${x.n===c+1?U.sess(7-d):''}</span></div>`).join('')
+   +(DEV?'':`<p class="src" style="border:0;margin-top:16px">${U.lockNote}</p>`)}
 
- document.getElementById('weeks').innerHTML=html;
+ const devBar = DEV ? `<div class="card" style="border-color:var(--brass)">
+   <p class="wknum" style="color:var(--brass)">Mode dev</p>
+   <div class="consigne"><p>Accès libre : toutes les semaines sont ouvrables et tu peux lire n'importe quelle partie déjà écrite, sans faire les séances. Ta vraie progression n'est pas modifiée.</p></div>
+   <div class="days" style="justify-content:flex-start;gap:8px">
+     <input id="devpart" type="number" min="1" max="24" value="2" aria-label="Numéro de partie" style="width:70px;background:var(--ink3);color:var(--paper);border:1px solid var(--line);border-radius:8px;padding:8px;font:inherit">
+     <button class="btn" style="width:auto;padding:8px 18px" onclick="read(parseInt(document.getElementById('devpart').value,10)||1)">Lire cette partie</button>
+   </div>
+   <p class="src" style="border:0;margin-top:12px">Seules les parties dont le contenu existe s'ouvriront. Retire <code>?dev</code> de l'URL pour revenir au mode normal.</p>
+ </div>` : '';
+
+ document.getElementById('weeks').innerHTML=devBar+html;
 
  document.getElementById('journal').innerHTML = ST.journal.length
   ? ST.journal.slice().reverse().map(e=>`<div class="jentry"><p class="jmeta">${e.date} · semaine ${e.week}</p><p class="jtext">${e.txt.replace(/[<>]/g,'')}</p></div>`).join('')
