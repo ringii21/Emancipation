@@ -47,9 +47,9 @@
   <div id="journal"></div>
 </div></div>
 
-<div class="pane" id="pane-soon"><div class="wrap">
-  <header><p class="eyebrow">En construction</p><h1>La <em>suite</em></h1></header>
-  <div class="card"><div class="consigne"><p>Le refuge, le rituel du matin, les exercices pour couper une habitude et l'onglet Gourmet arrivent ensuite.</p><p>On construit un module à la fois, dans l'ordre. C'est le principe.</p></div></div>
+<div class="pane" id="pane-pensees"><div class="wrap">
+  <header><p class="eyebrow" id="pnEyebrow">Pensées constructives</p><h1 id="pnH1">Pensées <em>constructives</em></h1></header>
+  <div id="pensees"></div>
 </div></div>
 
 <div id="session">
@@ -63,12 +63,24 @@
   </div>
 </div>
 
+<div id="pcSession">
+  <div class="ring"><svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="46"/><circle class="fg" id="pc-arc" cx="50" cy="50" r="46"/></svg><div class="clock" id="pc-clock">5:00</div></div>
+  <p class="pc-phase" id="pc-phase"></p>
+  <p class="cue" id="pc-cue"></p>
+  <div class="picker" id="pc-picker"></div>
+  <div class="warn pc-swarn" id="pc-warn"></div>
+  <div class="sessbtns">
+    <button class="btn" id="pc-start">Commencer</button>
+    <button class="btn ghost" id="pc-quit">Quitter</button>
+  </div>
+</div>
+
 <button id="langbtn" onclick="switchLang()">日本語</button>
 
 <nav>
   <button class="act" data-p="key"><svg viewBox="0 0 24 24"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v4"/></svg><span class="nl">La Clé</span></button>
   <button data-p="journal"><svg viewBox="0 0 24 24"><path d="M5 4h13v16H5z"/><path d="M9 9h6M9 13h4"/></svg><span class="nl">Carnet</span></button>
-  <button data-p="soon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M8 12h8"/></svg><span class="nl">Suite</span><span class="soon nsoon">bientôt</span></button>
+  <button data-p="pensees"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M8 12h8"/></svg><span class="nl">Suite</span></button>
 </nav>
 
 <script src="js/i18n.js"></script>
@@ -77,5 +89,6 @@
 <script src="js/reader.js"></script>
 <script src="js/session.js"></script>
 <script src="js/app.js"></script>
+<script src="js/pensees.js"></script>
 </body>
 </html>

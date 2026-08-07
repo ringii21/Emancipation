@@ -1,0 +1,62 @@
+{
+ "lang": "fr",
+ "accueil": {
+  "question": "Qu'est-ce qui t'amène aujourd'hui ?",
+  "sousTitre": "Une phrase suffit : raconte ce qui se passe, ou choisis un état. Tu peux aussi aller directement à un exercice.",
+  "placeholder": "Écris ce que tu ressens, comme ça vient.",
+  "etats": [
+   {"id":"anxiete","label":"Anxieuse, tendue","motscles":["angoiss","panique","peur","stress","cœur qui bat","souffle court","oppress"]},
+   {"id":"rumination","label":"La tête qui tourne en boucle","motscles":["rumin","en boucle","je pense sans arrêt","je n'arrive pas à arrêter","obsèd","ça tourne","ressass"]},
+   {"id":"durSoi","label":"Dure avec moi-même","motscles":["nulle","je m'en veux","honte","je suis incapable","je me déteste","pas assez","coupable"]},
+   {"id":"triste","label":"Triste, à plat","motscles":["triste","déprim","vide","envie de pleurer","découragé","plus goût","seul"]},
+   {"id":"calme","label":"Ça va, je veux avancer un peu","motscles":["ça va","tranquille","poser","travailler sur moi","avancer","réfléchir"]},
+   {"id":"perdue","label":"Je ne sais pas trop","motscles":["je ne sais pas","confus","perdu","bizarre","mélang","flou","sais pas quoi"]}
+  ],
+  "suggestionIntro": "Peut-être ceci, maintenant :",
+  "aucuneSuggestion": "Rien ne ressort clairement de ce que tu as écrit, et ce n'est pas grave. Choisis un exercice ci-dessous, celui qui te parle.",
+  "voirTout": "Voir tous les exercices"
+ },
+ "gardeFouGlobal": "Ces exercices sont des outils d'auto-observation et de régulation. Ils ne remplacent pas un professionnel de santé. Si ce que tu traverses est lourd ou dure, parles-en à un médecin, un psychologue ou une personne de confiance.",
+ "exercices": [
+  {"id":"souffle","cadre":"Cohérence cardiaque","titre":"Ralentir le souffle","resume":"Respirer lentement et régulièrement quelques minutes pour laisser le corps redescendre.","type":"souffle",
+   "souffle":{"inspir":5,"expir":5,"durees":[3,5,10],"defaut":5,"phaseIn":"Inspire","phaseOut":"Expire","prete":"Installe-toi comme tu peux, assise ou allongée. Suis le rythme sans forcer : si cinq secondes te semblent longues, respire un peu moins profond, ça marche quand même.","fin":"Terminé."},
+   "gardeFou":"Un outil de régulation immédiate, pas un traitement. Si tu te sens la tête qui tourne, arrête et respire normalement."},
+  {"id":"examiner","cadre":"TCC","titre":"Examiner une pensée","resume":"Prendre une pensée qui pèse et regarder de près sur quoi elle repose vraiment.","type":"etapes",
+   "etapes":[
+    {"champ":"situation","question":"Dans quelle situation cette pensée est arrivée ? Décris-la simplement.","saisie":"texte"},
+    {"champ":"pensee","question":"Quelle est la pensée, dite avec tes mots ?","saisie":"texte"},
+    {"champ":"intensite","question":"À quel point tu y crois, là, maintenant ?","saisie":"echelle","bornes":["à peine","totalement"]},
+    {"champ":"pour","question":"Qu'est-ce qui appuie cette pensée ? Les faits, pas les impressions.","saisie":"texte"},
+    {"champ":"contre","question":"Et qu'est-ce qui la contredit, ou la nuance ?","saisie":"texte"},
+    {"champ":"juste","question":"En tenant compte des deux, quelle formulation serait plus juste ? Pas plus positive : plus juste.","saisie":"texte"}
+   ],
+   "cloture":"Tu as regardé la pensée au lieu de la subir. Elle est peut-être toujours là, et c'est normal ; l'exercice n'efface rien, il remet à sa place.",
+   "gardeFou":"Cet exercice s'inspire des thérapies cognitives et comportementales. Il ne remplace pas un psychothérapeute. Si tes pensées portent sur te faire du mal ou en finir, ce n'est pas une chose à porter seule : parles-en à un médecin, ou appelle une ligne d'écoute (en France, le 3114, gratuit, jour et nuit)."},
+  {"id":"distance","cadre":"ACT","titre":"Mettre une pensée à distance","resume":"Prendre du recul avec une pensée collante, pour la voir comme une pensée et pas comme un fait.","type":"etapes",
+   "etapes":[
+    {"champ":"pensee","question":"Quelle pensée tourne en boucle en ce moment ?","saisie":"texte"},
+    {"champ":"reformule","question":"Reprends-la en commençant par « J'ai la pensée que… ». Écris la phrase entière.","saisie":"texte"},
+    {"champ":"observe","question":"En la regardant à distance comme ça, qu'est-ce qui change, même un tout petit peu ?","saisie":"texte"}
+   ],
+   "cloture":"Rien à conclure. Tu as juste posé un peu d'espace entre toi et la pensée. Elle reste, mais elle n'est plus collée à toi.",
+   "gardeFou":"Cet exercice s'inspire de la thérapie d'acceptation et d'engagement (ACT). Ce n'est pas un traitement. Si les pensées deviennent trop lourdes à tenir, fais-toi accompagner par un professionnel."},
+  {"id":"essentiel","cadre":"ACT","titre":"Revenir à l'essentiel","resume":"Nommer ce qui compte vraiment pour toi, et un petit pas dans cette direction.","type":"etapes",
+   "etapes":[
+    {"champ":"domaine","question":"Quel domaine compte pour toi en ce moment ?","saisie":"choix","options":["Relations","Santé","Travail","Création","Apprendre","Prendre soin de soi"]},
+    {"champ":"direction","question":"Dans ce domaine, vers quoi tu voudrais aller ? Pas un objectif chiffré, une direction.","saisie":"texte"},
+    {"champ":"pas","question":"Un tout petit pas dans ce sens, quelque chose à ta portée aujourd'hui ou demain ?","saisie":"texte"}
+   ],
+   "cloture":"Rien ne t'oblige à le faire. L'avoir nommé suffit pour aujourd'hui. C'est déjà savoir où tu regardes.",
+   "gardeFou":"Un exercice de repérage, pas un plan à tenir. Si le pas noté te paraît impossible demain, ce n'est pas un échec : tu peux le refaire plus petit."},
+  {"id":"ancrage","cadre":"Régulation","titre":"Revenir dans le présent","resume":"Se rattacher à ce qui est là, par les sens, quand tout part dans la tête.","type":"sens",
+   "etapes":[
+    {"compte":5,"question":"5 choses que tu vois autour de toi."},
+    {"compte":4,"question":"4 choses que tu entends."},
+    {"compte":3,"question":"3 choses que tu peux toucher."},
+    {"compte":2,"question":"2 choses que tu sens (odeurs)."},
+    {"compte":1,"question":"1 chose que tu goûtes, ou le goût que tu as en bouche."}
+   ],
+   "cloture":"Tu es revenue un peu dans l'instant. C'est tout ce que fait cet exercice, et c'est déjà quelque chose.",
+   "gardeFou":"Une technique de régulation immédiate. Elle aide sur le moment mais ne traite pas la cause. Si les moments où tu décroches reviennent souvent, parles-en à un professionnel."}
+ ]
+}

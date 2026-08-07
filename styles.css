@@ -149,3 +149,47 @@ body.ja .aff,body.ja .warn{font-style:normal}
   padding:7px 13px;font-size:12px;font-family:"DM Sans",system-ui,sans-serif;letter-spacing:.04em}
 #langbtn:active{transform:scale(.95)}
 .jaNote{font-size:12.5px;color:var(--sage);border-left:2px solid var(--sage);padding-left:12px;margin:14px 0 0;line-height:1.7}
+
+/* ══════ Module 4 — Pensées constructives ══════ */
+/* boutons d'état + cartes cliquables (réutilisent .btn / .btn.ghost / .card) */
+.pc-etats{display:flex;flex-direction:column;gap:0;margin-top:6px}
+.pc-etats .btn.ghost{text-align:left;margin-top:8px}
+.pc-card{cursor:pointer}
+.pc-card:active{transform:scale(.995)}
+.pc-choices{display:flex;flex-direction:column;gap:0;margin-top:12px}
+.pc-choices .btn.ghost{text-align:left}
+.btn.ghost.sel{border-color:var(--brass);color:var(--brass)}
+.pc-q{display:block;font-family:"DM Sans",system-ui,sans-serif;font-size:12px;color:var(--muted);
+      letter-spacing:.02em;margin:0 0 3px;text-transform:none}
+.pc-scale{display:flex;justify-content:space-between;align-items:center;margin-top:8px;
+          font-size:12px;color:var(--muted)}
+.pc-scale span:nth-child(2){color:var(--brass);font-family:"Fraunces",serif;font-size:16px}
+
+/* pas-à-pas (etapes / sens) — esprit .rdstage */
+.pc-stage{min-height:calc(100dvh - 420px);display:flex;flex-direction:column;justify-content:center;padding:22px 0}
+.pc-nav{display:flex;gap:10px;margin-top:20px}
+.pc-nav .btn{margin-top:0}
+.pc-nav .btn.ghost{margin-top:0;flex:1}
+
+/* curseur — thème encre / laiton */
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;margin-top:16px;
+  background:var(--ink3);border-radius:2px;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;
+  border-radius:50%;background:var(--brass);border:none;cursor:pointer}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--brass);border:none;cursor:pointer}
+input[type=range]:focus{outline:none}
+
+/* overlay respiratoire — calqué sur #session */
+#pcSession{position:fixed;inset:0;background:var(--ink);z-index:50;display:none;
+  flex-direction:column;align-items:center;justify-content:center;overflow-y:auto;
+  padding:calc(env(safe-area-inset-top) + 36px) 26px calc(env(safe-area-inset-bottom) + 36px)}
+#pcSession.on{display:flex}
+.pc-phase{font-family:"Fraunces",serif;font-weight:300;font-size:22px;color:var(--brass);
+  margin:0 0 14px;letter-spacing:.02em;min-height:26px;text-align:center}
+.pc-swarn{max-width:330px;margin:22px 0 0!important}
+body.ja .pc-phase{font-family:"Fraunces","Hiragino Mincho ProN","Yu Mincho",serif;font-weight:400}
+
+@media(prefers-reduced-motion:reduce){
+  #pc-arc{transition:none!important}
+  .pc-card:active{transform:none}
+}

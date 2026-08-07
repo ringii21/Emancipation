@@ -24,12 +24,10 @@ function applyLang(){
  q('#pane-key h1').innerHTML=U.h1;
  q('#pane-journal .eyebrow').textContent=U.jEyebrow;
  q('#pane-journal h1').innerHTML=U.jH1;
- q('#pane-soon .eyebrow').textContent=U.sEyebrow;
- q('#pane-soon h1').innerHTML=U.sH1;
- q('#pane-soon .consigne').innerHTML=U.soonBody;
+ q('#pnEyebrow').textContent=U.pnEyebrow;
+ q('#pnH1').innerHTML=U.pnH1;
  const nl=document.querySelectorAll('nav .nl');
- nl[0].textContent=U.navKey; nl[1].textContent=U.navJournal; nl[2].textContent=U.navSoon;
- q('.nsoon').textContent=U.soonTag;
+ nl[0].textContent=U.navKey; nl[1].textContent=U.navJournal; nl[2].textContent=U.navPensees;
  q('.backbtn').textContent=U.quit;
  q('#quit').textContent=U.quitSess;
  document.getElementById('langbtn').textContent=U.langLabel;
@@ -39,6 +37,7 @@ async function switchLang(){
  const c=cur();
  if(AVAIL.indexOf(c)>=0){try{await loadPart(c,LG)}catch(e){}}
  render();
+ if(window.renderPensees)renderPensees();
  if(RD.part && document.getElementById('pane-read').classList.contains('act')){
   // lecteur ouvert : recharge la partie dans la nouvelle langue, même position
   try{RDL=await loadPart(RD.part,LG);if(RD.i>RDL.p.length)RD.i=RDL.p.length;paint()}catch(e){back()}
@@ -138,4 +137,5 @@ if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWor
  const c=cur();
  if(AVAIL.indexOf(c)>=0){try{await loadPart(c,LG)}catch(e){}}  // précharge la partie courante pour le libellé du bouton
  render();
+ if(window.initPensees)initPensees();
 })();
