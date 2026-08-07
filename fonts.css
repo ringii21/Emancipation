@@ -1,0 +1,47 @@
+/* Polices auto-hébergées — rien ne quitte l'appareil.
+   Fraunces & DM Sans : fontes variables (un seul fichier couvre la plage de graisses).
+   Spectral : graisses fixes. Sous-ensemble latin (couvre le français, œ et accents inclus).
+   Licences : SIL Open Font License 1.1 pour les trois familles. */
+
+@font-face{
+  font-family:"Fraunces";
+  src:url("fonts/Fraunces.woff2") format("woff2");
+  font-weight:300 400;
+  font-style:normal;
+  font-display:swap;
+}
+@font-face{
+  font-family:"Fraunces";
+  src:url("fonts/Fraunces-Italic.woff2") format("woff2");
+  font-weight:300 400;
+  font-style:italic;
+  font-display:swap;
+}
+@font-face{
+  font-family:"Spectral";
+  src:url("fonts/Spectral-Light.woff2") format("woff2");
+  font-weight:300;
+  font-style:normal;
+  font-display:swap;
+}
+@font-face{
+  font-family:"Spectral";
+  src:url("fonts/Spectral-LightItalic.woff2") format("woff2");
+  font-weight:300;
+  font-style:italic;
+  font-display:swap;
+}
+@font-face{
+  font-family:"Spectral";
+  src:url("fonts/Spectral-Regular.woff2") format("woff2");
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
+}
+@font-face{
+  font-family:"DM Sans";
+  src:url("fonts/DMSans.woff2") format("woff2");
+  font-weight:400 500;
+  font-style:normal;
+  font-display:swap;
+}
