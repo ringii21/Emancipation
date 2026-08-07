@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="La Clé">
+<meta name="theme-color" content="#0E141A">
+<title>La Clé — 24 semaines</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="styles.css">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+</head>
+<body>
+
+<div class="pane act" id="pane-key"><div class="wrap">
+  <header>
+    <p class="eyebrow">Charles Haanel · 1912</p>
+    <h1>La Clé<br><em>maîtresse</em></h1>
+    <div class="dial" id="dial"></div>
+    <p class="dialcap" id="dialcap">—</p>
+  </header>
+  <div id="weeks"></div>
+</div></div>
+
+<div class="pane" id="pane-read">
+  <div class="wrap" style="padding-bottom:150px">
+    <div class="rdtop">
+      <div class="rdrow">
+        <button class="backbtn" onclick="back()">← Quitter</button>
+        <span class="rdcount" id="rd-count">—</span>
+      </div>
+      <div class="rdprog"><i id="rd-prog" style="width:0"></i></div>
+    </div>
+    <div class="rdstage" id="rd-stage"></div>
+  </div>
+  <div class="rdnav" id="rd-nav">
+    <button id="rd-prev" onclick="step(-1)">←</button>
+    <button class="main" id="rd-next" onclick="step(1)">Suivant</button>
+  </div>
+</div>
+
+<div class="pane" id="pane-journal"><div class="wrap">
+  <header><p class="eyebrow">Ce que tu as observé</p><h1>Le <em>carnet</em></h1></header>
+  <div id="journal"></div>
+</div></div>
+
+<div class="pane" id="pane-soon"><div class="wrap">
+  <header><p class="eyebrow">En construction</p><h1>La <em>suite</em></h1></header>
+  <div class="card"><div class="consigne"><p>Le refuge, le rituel du matin, les exercices pour couper une habitude et l'onglet Gourmet arrivent ensuite.</p><p>On construit un module à la fois, dans l'ordre. C'est le principe.</p></div></div>
+</div></div>
+
+<div id="session">
+  <div class="ring"><svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="46"/><circle class="fg" id="arc" cx="50" cy="50" r="46"/></svg><div class="clock" id="clock">15:00</div></div>
+  <p class="cue" id="cue"></p>
+  <div class="vbar" style="max-width:330px;width:100%"><button id="sayCue" class="ttsbtn">▸</button></div>
+  <div class="picker" id="picker"></div>
+  <div class="sessbtns">
+    <button class="btn" id="startStop">Commencer</button>
+    <button class="btn ghost" id="quit">Quitter la séance</button>
+  </div>
+</div>
+
+<button id="langbtn" onclick="switchLang()">日本語</button>
+
+<nav>
+  <button class="act" data-p="key"><svg viewBox="0 0 24 24"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v4"/></svg><span class="nl">La Clé</span></button>
+  <button data-p="journal"><svg viewBox="0 0 24 24"><path d="M5 4h13v16H5z"/><path d="M9 9h6M9 13h4"/></svg><span class="nl">Carnet</span></button>
+  <button data-p="soon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M8 12h8"/></svg><span class="nl">Suite</span><span class="soon nsoon">bientôt</span></button>
+</nav>
+
+<script src="js/i18n.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/voice.js"></script>
+<script src="js/reader.js"></script>
+<script src="js/session.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
