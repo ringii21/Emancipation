@@ -1,0 +1,960 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="La Clé">
+<meta name="theme-color" content="#0E141A">
+<title>La Clé — 24 semaines</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+
+<style>
+:root{--ink:#0E141A;--ink2:#161F28;--ink3:#1E2A35;--line:#2A3742;
+      --paper:#E6E4DC;--muted:#7E8B97;--brass:#D2B071;--sage:#83A38C;--r:14px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{background:var(--ink);color:var(--paper);font-family:"DM Sans",system-ui,sans-serif;
+     min-height:100dvh;padding-bottom:env(safe-area-inset-bottom);overscroll-behavior-y:none}
+.wrap{max-width:640px;margin:0 auto;padding:0 20px 120px}
+
+header{padding:calc(env(safe-area-inset-top) + 28px) 0 18px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+h1{font-family:"Fraunces",serif;font-weight:300;font-size:30px;line-height:1.15;margin:0;letter-spacing:-.01em}
+h1 em{font-style:italic;color:var(--brass)}
+
+.dial{display:flex;gap:6px 9px;margin:22px 0 8px;flex-wrap:wrap}
+.dweek{display:flex;gap:3px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--ink3);transition:background .3s}
+.dot.on{background:var(--brass)}
+.dot.cur{box-shadow:0 0 0 2px rgba(210,176,113,.25)}
+.dialcap{font-size:12.5px;color:var(--muted);margin:0;line-height:1.5}
+
+.card{background:var(--ink2);border:1px solid var(--line);border-radius:var(--r);padding:22px;margin:14px 0}
+.wknum{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin:0 0 6px}
+.wktitle{font-family:"Fraunces",serif;font-weight:300;font-size:23px;margin:0 0 14px;line-height:1.2}
+.consigne{font-family:"Spectral",Georgia,serif;font-weight:300;font-size:17px;line-height:1.62;color:#D5D2C8}
+.consigne p{margin:0 0 12px}.consigne p:last-child{margin:0}
+.aff{color:var(--brass);font-family:"Spectral",serif;font-style:italic;font-size:16.5px;
+     border-left:2px solid var(--brass);padding-left:14px;margin:16px 0 0!important}
+.warn{color:var(--sage);font-size:15px;font-family:"Spectral",serif;
+      border-left:2px solid var(--sage);padding-left:14px;margin:16px 0 0!important}
+.src{font-size:11px;color:var(--muted);letter-spacing:.05em;margin:16px 0 0;padding-top:12px;border-top:1px solid var(--line)}
+
+.days{display:flex;gap:6px;margin:18px 0 0}
+.day{flex:1;aspect-ratio:1;border-radius:8px;border:1px solid var(--line);background:transparent;
+     color:var(--muted);font-size:12px;display:grid;place-items:center;transition:all .2s}
+.day.done{background:var(--brass);border-color:var(--brass);color:var(--ink)}
+.day.today{border-color:var(--brass);color:var(--brass)}
+
+.btn{width:100%;padding:16px;border-radius:11px;border:none;background:var(--brass);color:var(--ink);
+     font-family:"DM Sans";font-weight:500;font-size:16px;margin-top:18px}
+.btn:active{transform:scale(.985)}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--paper);font-weight:400;font-size:14px;padding:13px;margin-top:9px}
+.btn:disabled{background:var(--ink3);color:var(--muted)}
+
+details{margin-top:16px}
+summary{list-style:none;cursor:pointer;font-size:14px;color:var(--sage);padding:12px 0;
+        border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--muted);font-size:17px}
+details[open] summary::after{content:"−"}
+.explain{font-family:"Spectral",serif;font-weight:300;font-size:15.5px;line-height:1.68;color:#B9BCB6;padding:2px 0 6px}
+.explain p{margin:0 0 12px}.explain p:last-child{margin:0}
+.explain strong{color:var(--paper);font-weight:400}
+
+/* semaines passées / verrouillées : lignes compactes */
+.row{display:flex;align-items:center;gap:13px;padding:14px 4px;border-bottom:1px solid var(--line)}
+.row .idx{font-size:11px;color:var(--muted);width:22px;flex:none;letter-spacing:.08em}
+.row .nm{font-family:"Spectral",serif;font-weight:300;font-size:16px;flex:1;color:#B9BCB6}
+.row.lock .nm{color:#5C6874}
+.row .st{font-size:11px;color:var(--brass);letter-spacing:.06em}
+.row.lock .st{color:#4A5560}
+.row.past{cursor:pointer}
+.sechead{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:34px 0 4px}
+
+#session{position:fixed;inset:0;background:var(--ink);z-index:50;display:none;
+         flex-direction:column;align-items:center;justify-content:center;padding:36px 26px;overflow-y:auto}
+#session.on{display:flex}
+.ring{width:min(62vw,230px);aspect-ratio:1;position:relative;margin-bottom:30px;flex:none}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:1.5}
+.ring .bg{stroke:var(--ink3)}
+.ring .fg{stroke:var(--brass);stroke-linecap:round;transition:stroke-dashoffset .9s linear}
+.clock{position:absolute;inset:0;display:grid;place-items:center;font-family:"Fraunces",serif;font-weight:300;font-size:40px}
+.cue{font-family:"Spectral",serif;font-weight:300;font-style:italic;font-size:16px;color:var(--muted);
+     text-align:center;max-width:330px;line-height:1.6;margin:0 0 26px}
+.picker{display:flex;gap:9px;margin-bottom:24px}
+.picker button{padding:9px 17px;border-radius:20px;background:transparent;border:1px solid var(--line);
+               color:var(--muted);font-family:"DM Sans";font-size:13px}
+.picker button.sel{border-color:var(--brass);color:var(--brass)}
+.sessbtns{width:100%;max-width:330px}
+
+textarea{width:100%;background:var(--ink);border:1px solid var(--line);border-radius:10px;color:var(--paper);
+         padding:13px;font-family:"Spectral",serif;font-weight:300;font-size:15px;line-height:1.55;
+         resize:vertical;min-height:88px;margin-top:12px}
+textarea:focus{outline:none;border-color:var(--brass)}
+.jentry{border-left:2px solid var(--line);padding-left:13px;margin:16px 0}
+.jmeta{font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin:0 0 5px}
+.jtext{font-family:"Spectral",serif;font-weight:300;font-size:15px;line-height:1.6;margin:0;color:#C4C7C1;white-space:pre-wrap}
+
+nav{position:fixed;bottom:0;left:0;right:0;background:rgba(14,20,26,.94);backdrop-filter:blur(14px);
+    border-top:1px solid var(--line);display:flex;padding:9px 0 calc(env(safe-area-inset-bottom) + 9px);z-index:40}
+nav button{flex:1;background:none;border:none;color:var(--muted);font-family:"DM Sans";font-size:10.5px;
+           display:flex;flex-direction:column;align-items:center;gap:5px;padding:5px 0}
+nav button.act{color:var(--brass)}
+nav svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.5}
+.soon{font-size:9px;opacity:.55}
+.pane{display:none}.pane.act{display:block}
+/* lecteur interactif */
+.rdtop{position:sticky;top:0;background:var(--ink);padding:calc(env(safe-area-inset-top) + 14px) 0 12px;z-index:5}
+.rdrow{display:flex;justify-content:space-between;align-items:center;margin-bottom:11px}
+.rdcount{font-size:11.5px;letter-spacing:.14em;color:var(--brass);text-transform:uppercase}
+.rdprog{height:2px;background:var(--ink3);border-radius:2px;overflow:hidden}
+.rdprog i{display:block;height:100%;background:var(--brass);transition:width .35s ease}
+.rdstage{min-height:calc(100dvh - 320px);display:flex;flex-direction:column;justify-content:center;padding:22px 0}
+.rdpara{font-family:"Spectral",serif;font-weight:300;font-size:20px;line-height:1.62;color:#DFDCD3;margin:0}
+.rdpara.exo{border-left:2px solid var(--brass);padding-left:18px}
+.rdtag{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--sage);margin:0 0 14px}
+.gtxt{font-family:"DM Sans",sans-serif;font-size:15px;line-height:1.68;color:#A8AFA9;
+      background:rgba(131,163,140,.07);border-left:2px solid var(--sage);
+      padding:15px 16px;border-radius:0 8px 8px 0;margin-top:6px}
+.gtxt strong{color:var(--paper);font-weight:500}
+.gtxt em{color:var(--sage);font-style:italic}
+.pgloss summary{border-top:1px solid var(--line);margin-top:26px;font-size:13.5px}
+.rdnav{position:fixed;bottom:calc(env(safe-area-inset-bottom) + 0px);left:0;right:0;
+       background:rgba(14,20,26,.95);backdrop-filter:blur(14px);border-top:1px solid var(--line);
+       padding:12px 20px calc(env(safe-area-inset-bottom) + 12px);display:none;gap:10px;z-index:45}
+.rdnav.on{display:flex}
+.rdnav button{flex:1;padding:15px;border-radius:11px;border:1px solid var(--line);background:transparent;
+              color:var(--paper);font-family:"DM Sans";font-size:15px}
+.rdnav button.main{background:var(--brass);border-color:var(--brass);color:var(--ink);font-weight:500;flex:2}
+.rdnav button:disabled{opacity:.3}
+.backbtn{background:none;border:none;color:var(--sage);font-family:"DM Sans";font-size:14px;padding:0}
+.done-card{text-align:center;padding:30px 0}
+.done-card h2{font-family:"Fraunces",serif;font-weight:300;font-size:26px;margin:0 0 14px}
+.done-card p{font-family:"Spectral",serif;font-weight:300;font-size:16.5px;line-height:1.65;color:#B9BCB6;margin:0 0 14px}
+.loops{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--brass);margin-top:20px}
+.empty{font-family:"Spectral",serif;font-weight:300;font-style:italic;color:var(--muted);
+       font-size:16px;line-height:1.6;text-align:center;padding:60px 20px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+body.ja{font-family:"DM Sans","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif}
+body.ja h1,body.ja .wktitle,body.ja .done-card h2{font-family:"Fraunces","Hiragino Mincho ProN","Yu Mincho",serif;font-weight:400;letter-spacing:0}
+body.ja .consigne,body.ja .rdpara,body.ja .aff,body.ja .warn,body.ja .explain,body.ja .gtxt{
+  font-family:"Spectral","Hiragino Mincho ProN","Yu Mincho",Georgia,serif;line-height:1.92;letter-spacing:.01em}
+body.ja .eyebrow,body.ja .wknum{letter-spacing:.08em}
+body.ja .aff,body.ja .warn{font-style:normal}
+.vbar{display:flex;gap:7px;margin:14px 0 0;flex-wrap:wrap}
+.vbar button{flex:1 1 auto;min-width:118px;padding:10px 12px;border-radius:9px;border:1px solid var(--line);
+  background:transparent;color:var(--paper);font-family:"DM Sans",system-ui,sans-serif;font-size:13px}
+.vbar button.on{border-color:var(--brass);color:var(--brass)}
+.vbar button.recing{border-color:#C97B6B;color:#C97B6B}
+.vbar button.tiny{flex:0 0 auto;min-width:0;color:var(--muted);font-size:12px;padding:10px}
+.vhint{font-size:12px;color:var(--muted);margin:9px 0 0;line-height:1.6}
+.autorow{display:flex;align-items:center;gap:9px;margin:12px 0 0;font-size:12.5px;color:var(--muted)}
+.autorow button{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:5px 11px;font-size:12px}
+.autorow button.on{border-color:var(--sage);color:var(--sage)}
+#langbtn{position:fixed;top:calc(env(safe-area-inset-top) + 14px);right:16px;z-index:60;
+  background:var(--ink2);border:1px solid var(--line);color:var(--brass);border-radius:20px;
+  padding:7px 13px;font-size:12px;font-family:"DM Sans",system-ui,sans-serif;letter-spacing:.04em}
+#langbtn:active{transform:scale(.95)}
+.jaNote{font-size:12.5px;color:var(--sage);border-left:2px solid var(--sage);padding-left:12px;margin:14px 0 0;line-height:1.7}
+</style>
+
+<div class="pane act" id="pane-key"><div class="wrap">
+  <header>
+    <p class="eyebrow">Charles Haanel · 1912</p>
+    <h1>La Clé<br><em>maîtresse</em></h1>
+    <div class="dial" id="dial"></div>
+    <p class="dialcap" id="dialcap">—</p>
+  </header>
+  <div id="weeks"></div>
+</div></div>
+
+<div class="pane" id="pane-read">
+  <div class="wrap" style="padding-bottom:150px">
+    <div class="rdtop">
+      <div class="rdrow">
+        <button class="backbtn" onclick="back()">← Quitter</button>
+        <span class="rdcount" id="rd-count">—</span>
+      </div>
+      <div class="rdprog"><i id="rd-prog" style="width:0"></i></div>
+    </div>
+    <div class="rdstage" id="rd-stage"></div>
+  </div>
+  <div class="rdnav" id="rd-nav">
+    <button id="rd-prev" onclick="step(-1)">←</button>
+    <button class="main" id="rd-next" onclick="step(1)">Suivant</button>
+  </div>
+</div>
+
+<div class="pane" id="pane-journal"><div class="wrap">
+  <header><p class="eyebrow">Ce que tu as observé</p><h1>Le <em>carnet</em></h1></header>
+  <div id="journal"></div>
+</div></div>
+
+<div class="pane" id="pane-soon"><div class="wrap">
+  <header><p class="eyebrow">En construction</p><h1>La <em>suite</em></h1></header>
+  <div class="card"><div class="consigne"><p>Le refuge, le rituel du matin, les exercices pour couper une habitude et l'onglet Gourmet arrivent ensuite.</p><p>On construit un module à la fois, dans l'ordre. C'est le principe.</p></div></div>
+</div></div>
+
+<div id="session">
+  <div class="ring"><svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="46"/><circle class="fg" id="arc" cx="50" cy="50" r="46"/></svg><div class="clock" id="clock">15:00</div></div>
+  <p class="cue" id="cue"></p>
+  <div class="vbar" style="max-width:330px;width:100%"><button id="sayCue" class="ttsbtn">▸</button></div>
+  <div class="picker" id="picker"></div>
+  <div class="sessbtns">
+    <button class="btn" id="startStop">Commencer</button>
+    <button class="btn ghost" id="quit">Quitter la séance</button>
+  </div>
+</div>
+
+<button id="langbtn" onclick="switchLang()">日本語</button>
+
+<nav>
+  <button class="act" data-p="key"><svg viewBox="0 0 24 24"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v4"/></svg><span class="nl">La Clé</span></button>
+  <button data-p="journal"><svg viewBox="0 0 24 24"><path d="M5 4h13v16H5z"/><path d="M9 9h6M9 13h4"/></svg><span class="nl">Carnet</span></button>
+  <button data-p="soon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M8 12h8"/></svg><span class="nl">Suite</span><span class="soon nsoon">bientôt</span></button>
+</nav>
+
+<script>
+/* ══════ Les 24 semaines — traduites du texte original, § par § ══════ */
+const W=[
+{n:1,t:"Le contrôle du corps",c:"Ne bouge pas. C'est tout ce qui est demandé.",s:"Première Partie, §44–45",
+x:`<p>Choisis une pièce où tu peux être seul et non dérangé. Assieds-toi droit, confortablement, mais ne t'avachis pas.</p><p>Laisse tes pensées aller où elles veulent, mais reste parfaitement immobile pendant quinze à trente minutes.</p><p>Continue ainsi trois ou quatre jours, ou une semaine, jusqu'à obtenir le contrôle complet de ton corps.</p>`,
+e:`<p><strong>Ce n'est pas de la méditation.</strong> Haanel ne te demande rien sur tes pensées cette semaine. Elles ont le droit de partir dans tous les sens.</p><p>La seule consigne est physique : ne pas bouger. Il commence par là parce que c'est la seule chose vérifiable. Soit tu as bougé, soit non. Pas de "je crois que j'ai à peu près réussi".</p><p>Sa logique : tant que ton corps te commande — tu te grattes, tu changes de position — ton mental ne t'obéira jamais. Il refuse de passer à la suite tant que ce socle n'est pas là.</p><p>Il prévient lui-même : <strong>beaucoup trouveront ça extrêmement difficile.</strong> Si tu galères, tu es dans la normale du texte, pas en échec.</p>`},
+
+{n:2,t:"L'inhibition de la pensée",c:"Ne suis pas la pensée. Reviens.",s:"Deuxième Partie, §29–31",
+x:`<p>Même pièce, même chaise, même position si possible. Sinon, fais au mieux avec ce que tu as.</p><p>Reste parfaitement immobile comme la semaine dernière, mais cette fois : inhibe toute pensée. Continue jusqu'à en obtenir la maîtrise.</p><p>Tu n'y parviendras que quelques instants à la fois. L'exercice garde sa valeur : il te démontre concrètement l'immense quantité de pensées qui cherchent constamment à entrer dans ton monde mental.</p>`,
+e:`<p><strong>« Inhiber toute pensée » ne veut pas dire faire le vide vingt minutes.</strong> Personne n'y arrive, et Haanel te le dit lui-même au paragraphe suivant.</p><p>Inhiber, ici, c'est ne pas nourrir. La pensée arrive, tu ne la suis pas, tu ne développes pas, tu ne réponds pas. Elle passe.</p><p><strong>Le résultat attendu n'est pas le silence, c'est un constat :</strong> tu vois enfin le trafic. Combien de pensées défilent sans que tu les aies choisies.</p><p>Ce que ça te donne selon lui : le contrôle sur les pensées de souci, d'inquiétude et de peur. Pas en les combattant — en cessant de les suivre.</p>`},
+
+{n:3,t:"La détente",c:"Chaque muscle. Chaque nerf. Relâche.",s:"Troisième Partie, §29–33",
+x:`<p>Va un pas plus loin. Non seulement rester immobile et inhiber la pensée, mais aussi : relâcher, lâcher prise, laisser les muscles reprendre leur condition normale.</p><p>Cela retire toute pression des nerfs et élimine la tension qui produit si souvent l'épuisement physique.</p><p>Fais-le aussi complètement que possible. Décide mentalement de détendre chaque muscle et chaque nerf, jusqu'à te sentir calme, reposé, et en paix avec toi-même et avec le monde.</p>`,
+e:`<p><strong>Remarque la méthode :</strong> il n'enlève jamais rien. Semaine 3 = semaine 1 + semaine 2 + la détente. Une couche par semaine, jamais plus.</p><p>Sa thèse sur la tension mérite d'être lue à l'envers de ce qu'on croit : pour lui la tension physique <strong>produit</strong> l'inquiétude, le souci et la peur. Pas l'inverse. Le corps crispé fabrique le mental agité.</p><p>C'est le premier exercice où on te demande de te sentir <em>bien</em>, pas seulement de tenir. « En paix avec toi-même et avec le monde » est une consigne, pas une formule.</p>`},
+
+{n:4,t:"Le lâcher-prise mental",c:"Laisse partir. C'est une décision, pas un sentiment.",s:"Quatrième Partie, §9–12 et §29–32",
+x:`<p>Après ta position habituelle, retire toute tension par une relaxation complète.</p><p>Puis lâche mentalement toute condition adverse : la haine, la colère, l'inquiétude, la jalousie, l'envie, le chagrin, la contrariété, la déception, sous toutes leurs formes.</p><p>Tu diras peut-être que tu ne peux pas lâcher ces choses. Tu le peux : par décision mentale, par intention volontaire et par persistance. Tu ne réussiras pas du premier coup.</p><p class="aff">Affirmation de la semaine — matin, soir, et aussi souvent que tu y penses :<br>« Je peux être ce que je décide d'être. »</p>`,
+e:`<p><strong>Le point dur :</strong> Haanel dit que si tu n'arrives pas à lâcher, c'est que tu te laisses gouverner par l'émotion au lieu de l'intellect. C'est brutal et discutable — la psychologie moderne dirait qu'on ne décide pas d'arrêter d'être en colère. Mais ce qu'il demande concrètement est plus fin : ne pas <em>entretenir</em>. La colère arrive ; tu ne lui donnes pas les vingt minutes suivantes.</p><p><strong>L'avertissement sur l'affirmation est le passage le plus important du livre</strong>, et celui que tout le monde saute. Il dit : si tu commences une chose sans la finir, si tu prends une résolution sans la tenir, tu prends l'habitude de l'échec.</p><p>Donc : ne commence pas l'affirmation si tu n'as pas l'intention de la tenir. Une semaine sérieuse vaut mieux qu'un mois entamé puis abandonné.</p>`},
+
+{n:5,t:"Le lieu",c:"Vois-le en entier. Les arbres, les gens, tout.",s:"Cinquième Partie, §30",
+x:`<p>Va dans ta pièce, même siège, même position.</p><p>Choisis mentalement un lieu auquel se rattachent des associations agréables. Fabrique-en une image mentale complète : vois les bâtiments, le terrain, les arbres, les amis, tout, en entier.</p><p>Au début tu penseras à absolument tout sauf à cette image. Ne te décourage pas. La persistance l'emportera — mais la persistance exige que tu fasses cet exercice chaque jour, sans exception.</p>`,
+e:`<p><strong>Bascule du système.</strong> Les quatre premières semaines nettoyaient : immobiliser, taire, détendre, évacuer. À partir d'ici on construit.</p><p>Pourquoi un lieu réel et agréable plutôt que ce que tu veux obtenir ? Parce qu'un souvenir agréable contient déjà les détails et l'émotion, sans que tu aies à les inventer. Les gammes sur du matériel que ton cerveau connaît.</p><p><strong>« Chaque jour, sans exception » est dans le texte</strong>, pas un ajout de ma part. C'est la seule semaine où il le formule aussi sèchement.</p>`},
+
+{n:6,t:"L'attention",c:"Chaque détail. Puis les yeux fermés.",s:"Sixième Partie, §24–25",
+x:`<p>Apporte une photographie avec toi, au même siège, dans la même pièce, dans la même position.</p><p>Examine-la attentivement pendant au moins dix minutes : l'expression des yeux, la forme des traits, les vêtements, la façon dont les cheveux sont arrangés. Note absolument tout ce qu'elle montre.</p><p>Puis couvre-la, ferme les yeux, et essaie de la voir mentalement. Si tu vois chaque détail parfaitement, tu peux te féliciter. Sinon, recommence jusqu'à y arriver.</p>`,
+e:`<p><strong>Son image, et elle est bonne :</strong> l'attention est une loupe. Les rayons du soleil ne font rien tant qu'on bouge le verre. Immobilise-le sur un point, et ça brûle. La puissance ne vient pas de l'intensité mais du fait de ne pas bouger.</p><p>Il ajoute un défi testable tout de suite : choisis un objet, concentre-toi dix minutes dessus. Tu n'y arriveras pas. Ton esprit partira une douzaine de fois. C'est le point de départ, pas une honte.</p><p>Pourquoi une photo et pas un objet ? Un visage a une quantité de détails qu'on croit connaître et qu'on est incapable de restituer. Le test le plus impitoyable de ce qu'on regarde vraiment.</p><p>Il appelle cette semaine <strong>« préparer le sol ».</strong></p>`},
+
+{n:7,t:"L'ami",c:"Vois son visage. Fais-le sourire.",s:"Septième Partie, §31",
+x:`<p>Visualise ton ami. Vois-le exactement comme tu l'as vu la dernière fois : la pièce, les meubles. Rappelle-toi la conversation.</p><p>Puis vois son visage, vois-le distinctement. Parle-lui maintenant d'un sujet qui vous intéresse tous les deux ; vois son expression changer, regarde-le sourire.</p><p>Tu y arrives ? Alors suscite son intérêt, raconte-lui une histoire d'aventure, vois ses yeux s'illuminer. Si tu peux faire tout cela, ton imagination est bonne et tu fais d'excellents progrès.</p>`,
+e:`<p>Semaine 6 : une image fixe. Semaine 7 : une image <strong>animée</strong>, avec du son et de l'émotion. Il ne te demande plus de reproduire, il te demande de faire bouger.</p><p>Le critère de réussite est précis et malin : <em>regarde-le sourire</em>. Si tu peux provoquer un changement d'expression dans ton image mentale, c'est que tu la diriges — tu ne la subis plus.</p><p>Prends quelqu'un que tu as vu récemment. Un visage trop ancien te fera reconstruire un souvenir au lieu de piloter une image.</p>`},
+
+{n:8,t:"Le cuirassé",c:"Remonte la chaîne des causes. Jusqu'à toi.",s:"Huitième Partie, §30–33",
+x:`<p>Prends la même position et visualise un cuirassé : le monstre flottant, silencieux, dont la plus grande part est sous l'eau. Aussi lourd qu'un immeuble de vingt étages. Des centaines d'hommes prêts à agir.</p><p>Puis remonte. Suis les plaques d'acier à travers les fonderies, vois les milliers d'hommes qui les produisent. Remonte au minerai sortant de la mine, chargé sur les wagons, fondu, traité. Remonte à l'architecte et aux ingénieurs qui ont planifié le navire. Puis demande-toi pourquoi ils l'ont planifié.</p><p>Tu es maintenant si loin en arrière que le navire n'existe plus : ce n'est qu'une pensée dans le cerveau de l'architecte. Mais d'où venait l'ordre ? Et derrière l'ordre, qui ? Remonte jusqu'à toi.</p>`,
+e:`<p><strong>Le seul exercice du livre qui n'est pas de la visualisation mais de l'analyse.</strong> Il te fait remonter une chaîne causale jusqu'à ce que l'objet le plus massif du monde se dissolve en une pensée.</p><p>C'est sa démonstration centrale, faite en exercice plutôt qu'en argument. Il conclut : quand la pensée est entraînée à regarder sous la surface, ce qu'on croyait insignifiant devient l'essentiel.</p><p>L'objet n'a aucune importance. Refais-le avec ta chaise, ton téléphone, la route devant chez toi. C'est l'exercice le plus transposable des vingt-quatre.</p>`},
+
+{n:9,t:"La fleur",c:"De la graine jusqu'au parfum.",s:"Neuvième Partie, §32–34",
+x:`<p>Visualise une plante. Prends une fleur, celle que tu admires le plus. Fais-la passer de l'invisible au visible : plante la graine, arrose-la, prends-en soin, place-la où elle recevra le soleil du matin.</p><p>Observe la graine éclater. Vois les racines pénétrer la terre et se développer dans toutes les directions — des cellules vivantes qui se divisent, bientôt des millions, chacune intelligente, chacune sachant ce qu'elle veut et comment l'obtenir.</p><p>Vois la tige s'élever, percer la surface, se diviser en branches parfaitement formées. Vois les feuilles, puis les petites tiges portant chacune un bouton. Regarde le bouton se déployer : ta fleur apparaît.</p><p>Et si tu te concentres intensément, tu deviendras conscient d'un parfum.</p>`,
+e:`<p>Le premier exercice où tu <strong>crées</strong> au lieu de reproduire.</p><p>Note ce qu'il vise à la fin : le parfum. Une odeur. C'est le sens le plus difficile à évoquer volontairement — c'est son critère de réussite, et il n'est pas décoratif.</p><p>Il précise que le processus est identique que tu te concentres sur une fleur, sur la santé, sur un idéal ou sur un problème compliqué. La fleur est un terrain neutre, choisi parce que tu n'as aucun enjeu émotionnel dessus.</p>`},
+
+{n:10,t:"La géométrie",c:"Le trait, le carré, le cercle, le cône.",s:"Dixième Partie, §24–25",
+x:`<p>Choisis un espace vide sur le mur, depuis l'endroit où tu es assis d'habitude.</p><p>Dessine mentalement une ligne horizontale noire d'environ quinze centimètres. Vois-la aussi nettement que si elle était peinte. Ajoute deux lignes verticales à ses extrémités. Puis une quatrième qui les relie : tu as un carré. Vois-le parfaitement.</p><p>Quand tu y arrives, dessine un cercle à l'intérieur du carré. Place un point au centre du cercle. Tire ce point vers toi d'environ vingt-cinq centimètres : tu as un cône sur base carrée.</p><p>Tout ton travail était noir. Passe-le en blanc, puis en rouge, puis en jaune.</p>`,
+e:`<p>Aucune émotion, aucun souvenir, aucun parfum : de la géométrie pure. C'est délibéré. Après la fleur, chargée d'agrément, il te met sur du matériel froid pour vérifier que la faculté tient sans le carburant du plaisir.</p><p>Deux tests de contrôle cachés dans la consigne : <strong>tirer le point vers toi</strong> (tu passes en 3D) et <strong>changer les couleurs</strong>. Tu ne regardes plus une image — tu la manipules.</p><p>Il conclut : si tu peux faire ça, tu seras bientôt capable de te concentrer sur n'importe quel problème.</p>`},
+
+{n:11,t:"La foi raisonnée",c:"Aucune limite n'est posée. Sauf par toi.",s:"Onzième Partie, §35",
+x:`<p>Concentre-toi sur cette phrase : « Tout ce que vous demanderez en priant, croyez que vous l'avez reçu, et vous l'obtiendrez. »</p><p>Remarque qu'aucune limitation n'est posée. « Tout » est très précis : la seule limite est notre capacité à penser, à être à la hauteur de l'occasion, à répondre à l'urgence.</p><p>Et à se rappeler que la foi n'est pas une ombre mais une substance — « la substance des choses espérées, la preuve de celles qu'on ne voit pas ».</p>`,
+e:`<p>Attention au piège de lecture. Toute la onzième partie est consacrée au <strong>raisonnement inductif</strong> : Haanel y défend l'observation méthodique, pas la croyance aveugle. Puis il te fait méditer un verset.</p><p>Ce n'est pas contradictoire dans son système : pour lui la foi est un état mental qui produit des effets observables, pas une adhésion religieuse.</p><p>Si le vocabulaire biblique te bloque, la consigne fonctionnelle est celle-ci : tenir une chose pour déjà obtenue, et observer ce que ça change dans ta manière d'agir cette semaine. Le mot décisif est <strong>substance</strong> — quelque chose qui a du poids, pas un vœu.</p>`},
+
+{n:12,t:"L'unité",c:"Détends-toi d'abord. Toujours.",s:"Douzième Partie, §28",
+x:`<p>Va dans la même pièce, prends la même chaise, la même position. Assure-toi de te détendre, de lâcher prise, mentalement et physiquement.</p><p>Fais toujours cela : n'essaie jamais de faire un travail mental sous pression. Vérifie qu'aucun muscle n'est tendu, qu'aucun nerf ne l'est, que tu es entièrement à l'aise.</p><p>Puis réalise ton unité avec la puissance : que ta capacité de penser est ta capacité d'agir sur l'Esprit universel ; qu'il répondra à toute exigence ; que tu as exactement la même capacité potentielle que n'importe quel individu ait jamais eue ou aura jamais — car chacun n'est qu'une expression de l'Un, et la seule différence est une question de degré.</p>`,
+e:`<p><strong>« N'essaie jamais de faire un travail mental sous pression » est la phrase la plus utile du livre</strong>, et elle est glissée au milieu d'une consigne.</p><p>Il vient de te donner cinq semaines de visualisation exigeante ; il s'arrête pour rappeler que rien ne fonctionne si tu forces.</p><p>Le fond de la semaine : tu n'as pas moins de capacité que quiconque, seulement moins d'entraînement. C'est une semaine de retour au calme après six semaines d'effort d'imagerie.</p>`},
+
+{n:13,t:"La partie et le tout",c:"Tu es de même nature que l'ensemble.",s:"Treizième Partie, §26–27",
+x:`<p>Reconnais que tu fais partie du tout, et qu'une partie est nécessairement de même nature et de même qualité que le tout — la seule différence possible étant de degré.</p><p>Puis pose-toi la question du texte : dois-tu indiquer à l'Omniscient par quel canal matérialiser ta demande ? Le fini peut-il conseiller l'Infini ?</p><p>Haanel répond sans détour : c'est là la cause de l'échec. De chaque échec.</p>`,
+e:`<p>Traduction opérationnelle, solide même sans le vocabulaire : <strong>arrête de dicter le « comment ».</strong></p><p>Si tu veux gagner ta vie autrement, la demande est « un travail qui me convient », pas « ce poste précis, dans cette boîte précise, par cette personne précise ». En verrouillant le canal, tu élimines tous les autres.</p><p>C'est aussi une consigne anti-anxiété très concrète : l'essentiel de la rumination consiste à vouloir contrôler les moyens.</p>`},
+
+{n:14,t:"L'harmonie",c:"Rien d'autre que l'harmonie.",s:"Quatorzième Partie, §26–31",
+x:`<p>Concentre-toi sur l'Harmonie. Et quand je dis concentre-toi, j'entends tout ce que le mot implique : si profondément, si sérieusement, que tu ne sois conscient que de l'harmonie.</p><p>Rappelle-toi que nous apprenons en agissant. Lire ces leçons ne te mènera nulle part ; c'est dans l'application pratique que réside la valeur.</p><p class="warn">Du même chapitre : tu ne peux pas passer vingt ou trente ans à construire des conditions négatives par des pensées négatives, puis attendre qu'elles disparaissent toutes après quinze ou vingt minutes de pensée correcte.</p>`,
+e:`<p>Le paragraphe 26 est l'antidote de tout le marché du développement personnel — et il date de 1912.</p><p>Il ajoute : si tu entres dans la discipline nécessaire pour un changement radical, fais-le délibérément, après avoir bien réfléchi, et ensuite ne laisse rien interférer avec ta décision.</p><p><strong>C'est la première semaine où le mot « discipline » apparaît.</strong> Ce n'est pas un hasard : tu es exactement à mi-parcours.</p>`},
+
+{n:15,t:"L'intuition",c:"Savoir ne suffit pas. Tu le sais déjà.",s:"Quinzième Partie, §36",
+x:`<p>Prends ta position habituelle et concentre la pensée sur ceci : connaître le pouvoir créateur de la pensée ne signifie pas posséder l'art de penser.</p><p>Médite sur le fait que la connaissance ne s'applique pas d'elle-même. Que nos actions ne sont pas gouvernées par la connaissance, mais par la coutume, le précédent et l'habitude. Que la seule façon de nous amener à appliquer une connaissance est un effort conscient et délibéré. Que la connaissance inutilisée s'échappe de l'esprit.</p><p>Continue cette ligne de pensée jusqu'à obtenir assez d'intuition pour formuler un programme précis d'application à ton propre problème.</p>`,
+e:`<p><strong>C'est la semaine qui parle de ton problème avec ce livre.</strong></p><p>« Nos actions ne sont pas gouvernées par la connaissance mais par la coutume, le précédent et l'habitude » : voilà la phrase exacte qui décrit un bouquin posé chez soi et jamais mis en pratique.</p><p>Et la sortie qu'il propose n'est pas de la motivation, c'est <strong>un programme précis</strong>. C'est la seule semaine qui se termine par un livrable écrit : un plan, pour un problème à toi. Écris-le dans le carnet, pas dans ta tête.</p>`},
+
+{n:16,t:"Les choses sont des effets",c:"L'état d'abord. La chose ensuite.",s:"Seizième Partie, §35–37",
+x:`<p>Essaie de réaliser ce fait : l'harmonie et le bonheur sont des états de conscience et ne dépendent pas de la possession de choses. Les choses sont des effets, résultant du bon état mental.</p><p>Donc si tu désires une possession matérielle, ta préoccupation principale devrait être d'acquérir l'attitude mentale qui produit ce résultat. Quand tu y parviens, il devient relativement facile de tenir ton désir pour un fait déjà accompli.</p><p class="warn">Du même chapitre : l'imagination est un bon serviteur mais un mauvais maître. Si elle n'est pas contrôlée, elle t'entraîne vers des conclusions sans aucun fondement. Ne construis que des images que tu as soumises à l'analyse.</p>`,
+e:`<p>La deuxième partie de cette consigne sauve la première. Haanel n'est pas en train de te dire de rêver ; il te dit de <strong>soumettre chaque idée à une analyse et de n'accepter que ce qui tient debout</strong>.</p><p>C'est le contrepoids qui a été perdu en route quand ces idées sont devenues « la loi d'attraction » un siècle plus tard.</p><p>Le fond reste juste : viser l'état plutôt que l'objet. Beaucoup de choses qu'on veut sont voulues pour l'état qu'on croit qu'elles apporteront — et cet état est souvent accessible autrement, plus tôt.</p>`},
+
+{n:17,t:"Le repos",c:"Le pouvoir vient par le repos.",s:"Dix-septième Partie, §33–37",
+x:`<p>Concentre-toi aussi étroitement que possible, sans aucun effort conscient et sans aucune activité associée à ton objectif. Relâche complètement. Évite toute pensée d'anxiété quant aux résultats.</p><p>Rappelle-toi que le pouvoir vient par le repos. Laisse la pensée reposer sur ton objectif jusqu'à ce qu'elle s'identifie complètement à lui, jusqu'à ce que tu ne sois plus conscient de rien d'autre.</p><p class="aff">La règle de substitution :<br>Éliminer la peur → concentre-toi sur le courage.<br>Éliminer le manque → concentre-toi sur l'abondance.<br>Éliminer la maladie → concentre-toi sur la santé.<br>Toujours sur l'idéal comme sur un fait déjà existant.</p>`,
+e:`<p><strong>La règle de substitution est le seul outil de ce livre directement utilisable dans un mauvais moment</strong>, aujourd'hui, sans avoir à croire quoi que ce soit du reste.</p><p>Elle a un équivalent moderne solide : on ne supprime pas une pensée en la combattant — la combattre la renforce. On occupe la place.</p><p>« Le pouvoir vient par le repos » contredit tout ce qu'on t'a appris sur l'effort, et c'est la clé du livre : ce qui bloque la visualisation, c'est l'anxiété du résultat. Vouloir trop fort empêche.</p>`},
+
+{n:18,t:"Le pouvoir de créer",c:"L'air pour le corps. Autre chose pour le reste.",s:"Dix-huitième Partie, §30–33",
+x:`<p>Concentre-toi sur ton pouvoir de création. Laisse la pensée reposer sur ceci : l'homme physique vit, se meut et existe dans l'air, qu'il doit respirer pour vivre. Puis sur ceci : l'homme intérieur vit également dans une énergie similaire mais plus subtile.</p><p>Que dans le monde physique aucune vie ne prend forme avant qu'une graine soit semée, et qu'aucun fruit plus élevé que la souche parente ne peut être produit. Qu'il en va de même à l'intérieur.</p><p class="aff">La mécanique de l'attention :<br>L'incitation à l'attention, c'est l'intérêt. Plus l'intérêt est grand, plus l'attention est grande — et réciproquement. Commence par prêter attention ; bientôt tu auras suscité l'intérêt ; cet intérêt attirera plus d'attention.</p>`,
+e:`<p>Le paragraphe 32 est le vrai contenu de la semaine, et il est utilisable partout.</p><p>On croit qu'il faut être intéressé pour être attentif. <strong>Haanel dit l'inverse : commence par l'attention, même forcée, et l'intérêt arrive.</strong> C'est vrai, et c'est vérifiable — c'est le mécanisme de tout ce qu'on a fini par aimer.</p><p>Applique-le cette semaine à autre chose que l'exercice : à une personne, à ton travail, à quelque chose que tu trouves ennuyeux. C'est là que ça se voit.</p>`},
+
+{n:19,t:"Les apparences trompent",c:"Quelques minutes. Rien d'autre dans la tête.",s:"Dix-neuvième Partie, §27–29",
+x:`<p>Concentre-toi — et j'entends tout ce que le mot implique : sois si absorbé dans l'objet de ta pensée que tu ne sois conscient de rien d'autre. Quelques minutes chaque jour.</p><p>Tu prends le temps de manger pour que le corps soit nourri ; pourquoi ne pas prendre le temps d'assimiler ta nourriture mentale ?</p><p>Puis laisse la pensée reposer sur ce fait : les apparences sont trompeuses. La Terre n'est ni plate ni immobile. Le ciel n'est pas un dôme. Le soleil ne se déplace pas. Les étoiles ne sont pas de petits points lumineux. Et la matière, qu'on croyait fixe, s'est révélée en flux perpétuel.</p>`,
+e:`<p>La liste du paragraphe 28 est une leçon d'humilité perceptive, et elle vise quelque chose de très concret dans ta vie.</p><p>Ce qui te semble une évidence sur toi — « je suis comme ça », « ça a toujours été comme ça », « ça ne changera pas » — a exactement le statut du soleil qui se lève : une observation directe, immédiate, universellement partagée. Et fausse.</p><p>La comparaison avec les repas au paragraphe 27 est aussi la meilleure réponse au « je n'ai pas le temps ».</p>`},
+
+{n:20,t:"En Lui nous vivons",c:"Entre dans le Silence.",s:"Vingtième Partie, §29–31",
+x:`<p>Entre dans le Silence et concentre-toi sur l'idée que « en lui nous vivons, nous nous mouvons et nous existons » est littéralement exact : que tu ES parce qu'Il EST ; que s'Il est omniprésent, Il doit être en toi ; que la seule différence entre Son esprit et le tien est une question de degré.</p><p class="warn">Du même chapitre : ceux qui pensent forcer cette loi par la volonté — semer une graine d'un type et par la « Volonté » lui faire porter un autre fruit — sont finalement condamnés à l'échec. Ils s'opposent au pouvoir même qu'ils cherchent à utiliser.</p>`,
+e:`<p>C'est la semaine la plus religieuse du livre. Si ce langage ne te parle pas, l'avertissement des paragraphes 29–30 est utilisable tel quel, et il est important.</p><p><strong>La volonté brutale ne marche pas.</strong> Tu ne peux pas forcer un résultat par la crispation.</p><p>C'est exactement ce qui se passe quand on décide d'arrêter une habitude par pure volonté et que ça tient quatre jours. Haanel dirait : tu t'opposes au mécanisme au lieu de t'en servir.</p>`},
+
+{n:21,t:"La vérité",c:"Rien ne peut durablement t'entraver.",s:"Vingt et unième Partie, §27–28",
+x:`<p>Concentre-toi sur la Vérité. Essaie de réaliser qu'elle te rendra libre : que rien ne peut durablement entraver ta réussite lorsque tu apprends à appliquer des méthodes de pensée correctes.</p><p>Prends conscience que tu extériorises dans ton environnement tes potentiels intérieurs. Comprends que le Silence offre une occasion toujours disponible d'éveiller la plus haute conception de la Vérité, et que l'omnipotence elle-même est un silence absolu — tout le reste est changement, activité, limitation.</p>`,
+e:`<p>Le paragraphe 27 est la clé de cette semaine, et il vaut d'être connu : Haanel écrit que ce principe ne fait pas d'exceptions, ne montre aucun favoritisme, et qu'on ne peut le fléchir ni par la flatterie, ni par la supplication, ni par la sympathie.</p><p>C'est décisif pour comprendre l'écart avec ce qu'on a fait de la « loi d'attraction » un siècle plus tard : <strong>chez lui il n'y a personne à convaincre.</strong> Pas de bonnes ondes à envoyer, pas de faveur à obtenir, pas d'univers bienveillant à séduire.</p><p>Il décrit une loi impersonnelle, comme la gravité. Ce qui change tout : tu n'as rien à mériter. Tu as à appliquer.</p>`},
+
+{n:22,t:"La santé",c:"Plus proche que le souffle.",s:"Vingt-deuxième Partie, §26–27",
+x:`<p>Concentre-toi sur ces vers de Tennyson : « Parle-Lui, car Il écoute, et l'esprit peut rencontrer l'esprit — plus proche que le souffle, plus près que les mains et les pieds. »</p><p>Puis essaie de réaliser que lorsque tu Lui parles, tu es en contact avec l'omnipotence.</p>`,
+e:`<p><strong>La partie où Haanel doit être lu avec le plus de recul.</strong> Il affirme que cette réalisation détruira rapidement toute forme de maladie et de souffrance.</p><p>En 1912 on ignorait les antibiotiques et la moitié de ce qu'on sait aujourd'hui. Prise au pied de la lettre, cette affirmation est fausse, et elle peut être dangereuse.</p><p>Ce qui reste vrai et documenté : l'état mental influence réellement la perception de la douleur, la récupération, le sommeil et le suivi d'un traitement. C'est déjà beaucoup.</p><p>Fais cet exercice comme un exercice de calme. <strong>Ne remplace pas un médecin par une méditation.</strong></p>`},
+
+{n:23,t:"L'esprit avec un corps",c:"L'âme de l'argent, c'est le service.",s:"Vingt-troisième Partie, §21–22",
+x:`<p>Concentre-toi sur ceci : l'homme n'est pas un corps avec un esprit, mais un esprit avec un corps — et c'est pour cette raison que ses désirs sont incapables d'une satisfaction durable en dehors de ce qui est intérieur.</p><p>L'argent n'a donc de valeur que pour créer les conditions que tu désires, et ces conditions sont nécessairement harmonieuses. Des conditions harmonieuses exigent un approvisionnement suffisant : si tu constates un manque, réalise que l'âme de l'argent est le service — et que lorsque cette pensée prend forme, les canaux s'ouvrent.</p>`,
+e:`<p>C'est le chapitre sur l'argent, et sa position est plus fine qu'il n'y paraît. Il ne dit pas de le mépriser — il dirigeait lui-même plusieurs entreprises — ni d'en faire un but.</p><p>Il dit que l'argent est un moyen, et que la voie d'accès est <strong>le service</strong> : ce que tu apportes.</p><p>Traduction directe : la question « comment gagner plus » est mal posée. La question est « qu'est-ce que je rends utile, et à combien de gens ». C'est aussi, accessoirement, la meilleure stratégie économique qui soit.</p>`},
+
+{n:24,t:"Un monde remarquable",c:"La dernière. Regarde ce qui a changé.",s:"Vingt-quatrième Partie, §30–31",
+x:`<p>Essaie de réaliser que c'est vraiment un monde remarquable dans lequel nous vivons ; que tu es un être remarquable ; que beaucoup s'éveillent à la connaissance de la Vérité.</p><p>Et qu'à mesure qu'ils s'éveillent, ils découvrent que tout ce qu'ils avaient voulu ou rêvé n'était qu'un pâle concept de la réalité éblouissante.</p>`,
+e:`<p>Haanel conclut que si tu as pratiqué chaque exercice quelques minutes chaque jour, tu auras constaté que <strong>tu obtiens de la vie exactement ce que tu y mets d'abord</strong>.</p><p>Il ajoute une dernière remarque, la plus dure et la plus juste : un héritage de terres peut se léguer, un héritage de connaissance non. Un homme riche peut payer quelqu'un pour faire son travail ; personne ne peut penser à sa place ni acheter une culture de soi.</p><p>Tu viens de faire 168 jours. Le vrai bilan n'est pas dans ce chapitre : retourne dans ton carnet et relis ta première note.</p>`}
+];
+
+/* ══════ Lecture : le texte intégral, paragraphe par paragraphe ══════ */
+const LESSONS={1:{
+ titre:"Première Partie",
+ intro:"45 paragraphes. Haanel demande de lire et relire cette partie toute la semaine avant de passer à la suivante. Sous chaque paragraphe, ce qu'il dit en français d'aujourd'hui. Traduction faite depuis le texte anglais original de 1912, domaine public.",
+ p:[
+ [1,`Ce qui est abondant attire davantage : c'est vrai à tous les niveaux de l'existence. Et la perte appelle une perte plus grande, tout aussi sûrement.`,
+  `Il ouvre sur un constat, pas une promesse : les dynamiques s'auto-entretiennent, dans les deux sens. Ce qui monte tend à continuer de monter, ce qui s'effondre tend à continuer de s'effondrer. <strong>Tout le livre est la tentative de répondre à une seule question : comment on inverse le sens.</strong>`],
+ [2,`L'esprit crée. Nos conditions de vie, notre environnement et tout ce que nous vivons découlent de l'attitude mentale que nous entretenons le plus souvent.`,
+  `Le mot à retenir est <strong>habituelle</strong>. Pas ce que tu penses une fois en te motivant, ce que tu penses la plupart du temps sans t'en apercevoir. Ta météo mentale par défaut, pas tes bonnes résolutions.`],
+ [3,`Or cette attitude dépend de ce que nous pensons. Le secret de toute puissance, de toute réussite et de toute possession tient donc à notre façon de penser.`,
+  `Reformulation du 2. <em>Haanel envoyait une leçon par semaine, par la poste : il répète beaucoup, parce que son lecteur n'avait pas la page précédente sous les yeux. Quand un paragraphe te semble redire le précédent, c'est souvent exactement le cas — et tu peux passer.</em>`],
+ [4,`Pourquoi ? Parce qu'il faut être avant de pouvoir faire ; nous ne faisons que dans la mesure de ce que nous sommes ; et ce que nous sommes dépend de ce que nous pensons.`,
+  `Sa chaîne complète : <strong>penser → être → faire</strong>. La plupart des méthodes attaquent par le faire (change tes actions). Lui affirme que ça ne tient pas, parce que l'action redescend toujours au niveau de ce qu'on est. C'est discutable, mais c'est la thèse ; tout le reste en découle.`],
+ [5,`On ne peut exprimer une puissance qu'on ne possède pas. Le seul moyen d'en prendre possession est d'en devenir conscient — et on ne peut en devenir conscient qu'après avoir compris que toute puissance vient de l'intérieur.`,
+  `Le raisonnement paraît circulaire, et il l'est un peu. Ce qu'il vise : tu ne peux pas te servir d'une capacité que tu ne sais pas avoir. Le premier acte n'est pas d'acquérir, c'est de reconnaître.`],
+ [6,`Il existe un monde intérieur : un monde de pensée, de sentiment et de puissance ; de lumière, de vie et de beauté. Invisible, mais ses forces sont considérables.`,
+  `« Monde intérieur » revient une trentaine de fois dans cette partie. Ce n'est pas mystique : c'est simplement tout ce qui se passe dans ta tête, par opposition au « monde extérieur », tout ce qui se passe dehors. <strong>Retiens ces deux termes, ils structurent le livre entier.</strong>`],
+ [7,`Ce monde intérieur est gouverné par l'esprit. Le découvrir, c'est trouver la solution de chaque problème et la cause de chaque effet. Et puisqu'il dépend de nous, toutes les lois de la puissance et de la possession dépendent de nous aussi.`,
+  `Le point qui compte est le « puisque » : l'intérieur est la seule zone où tu as la main. C'est le fondement pratique de tout ce qui suit — et, accessoirement, la base du stoïcisme, dix-huit siècles avant lui.`],
+ [8,`Le monde extérieur reflète le monde intérieur. Ce qui apparaît au-dehors est ce qui a été trouvé au-dedans. Le monde intérieur contient une sagesse infinie, une puissance infinie, une réserve infinie de tout ce qui est nécessaire — le tout en attente de se déployer et de s'exprimer. Reconnaître ces potentiels, c'est leur permettre de prendre forme au-dehors.`,
+  `<strong>La formule centrale du livre</strong> — celle que Rhonda Byrne reprendra un siècle plus tard. Prise au sens fort (« ma situation est le reflet exact de mes pensées »), elle est fausse et culpabilisante : personne ne pense un licenciement ou un deuil. Prise au sens utile : ce que tu remarques, ce que tu tentes, ce que tu refuses et ce que tu supportes dépendent de ton état intérieur — et ça, sur des années, façonne réellement une vie.`],
+ [9,`L'harmonie intérieure se reflétera au-dehors : conditions harmonieuses, entourage agréable, le meilleur en toute chose. Elle est le fondement de la santé, et une condition nécessaire de toute grandeur, de toute puissance, de toute réussite.`,
+  `« Harmonie » est son mot fétiche et il ne le définit jamais franchement. Le sens le plus fidèle : <strong>l'absence de conflit intérieur.</strong> Ne pas être tiraillé, ne pas se combattre soi-même.`],
+ [10,`L'harmonie intérieure, c'est la capacité de contrôler ses pensées et de décider soi-même de l'effet qu'une expérience aura sur soi.`,
+  `Voilà la définition qui manquait au paragraphe précédent, et elle est bien plus précise. L'harmonie n'est pas « se sentir bien » : c'est décider soi-même de l'effet qu'une chose aura sur soi. <strong>C'est la définition exacte de ce que tu cherches quand tu dis vouloir mieux gérer tes émotions.</strong>`],
+ [11,`Elle produit l'optimisme et l'abondance. L'abondance intérieure produit l'abondance extérieure.`,
+  `Reformulation du 9.`],
+ [12,`Le monde extérieur reflète les circonstances et l'état de la conscience intérieure.`,
+  `Reformulation du 8. Deux paragraphes de rappel : tu peux les lire vite.`],
+ [13,`Si nous trouvons la sagesse au-dedans, nous aurons le discernement pour percevoir les possibilités qui y sommeillent, et la puissance de les rendre manifestes au-dehors.`,
+  `Premier temps de sa séquence : percevoir.`],
+ [14,`À mesure que nous devenons conscients de cette sagesse intérieure, nous en prenons mentalement possession ; et cette possession mentale nous donne la possession réelle de la puissance et de la sagesse nécessaires pour faire apparaître ce qu'exige notre développement le plus complet et le plus harmonieux.`,
+  `Sa séquence en trois temps : <strong>prendre conscience → prendre possession mentalement → posséder réellement.</strong> C'est le squelette exact de la visualisation qu'il t'enseignera à partir de la cinquième semaine. Note-le, c'est un des rares passages structurants.`],
+ [15,`Le monde intérieur est le monde pratique : c'est là que les hommes et les femmes de pouvoir produisent le courage, l'espoir, l'enthousiasme, la confiance et la foi qui leur donnent l'intelligence de voir la vision et l'habileté de la rendre réelle.`,
+  `Note le mot <strong>pratique</strong>. Il défend son terrain contre l'accusation d'être un rêveur : pour lui l'intérieur est l'atelier où se fabriquent le courage et la confiance, sans lesquels aucune action n'a lieu. Difficile de lui donner tort là-dessus.`],
+ [16,`La vie est un déploiement, pas une accumulation. Ce qui nous vient du dehors est ce que nous possédons déjà au-dedans.`,
+  `« Déploiement, non accumulation » : tu ne construis pas du neuf en empilant, tu déplies quelque chose qui est déjà là. C'est une image de <em>graine</em>, pas de maçonnerie. Elle revient dans tout le livre — retiens-la, elle explique pourquoi il ne te demande jamais d'ajouter quoi que ce soit.`],
+ [17,`Toute possession repose sur la conscience. Tout gain résulte d'une conscience qui rassemble ; toute perte, d'une conscience qui se disperse.`,
+  `Reformulation du paragraphe 1, mais cette fois avec la cause : ce qui monte ou descend, c'est un état d'esprit qui <strong>rassemble</strong> ou qui <strong>éparpille</strong>. Il pose ici, sans encore le nommer, ce qu'il appellera la concentration.`],
+ [18,`L'efficacité mentale dépend de l'harmonie ; la discorde produit la confusion. Qui veut acquérir de la puissance doit donc être en accord avec la loi naturelle.`,
+  `Traduction : on ne pense pas bien quand on est en conflit avec soi-même. Vérifiable par quiconque a déjà essayé de travailler juste après une dispute.`],
+ [19,`C'est par l'esprit objectif que nous sommes reliés au monde extérieur. Le cerveau en est l'organe, et le système nerveux cérébro-spinal nous met en communication consciente avec chaque partie du corps. Ce système répond à toute sensation de lumière, de chaleur, d'odeur, de son et de goût.`,
+  `<strong>Début du passage le plus daté du livre (19 à 23).</strong> Haanel s'appuie sur la physiologie de 1912 pour donner à sa théorie une caution scientifique. Le détail anatomique est dépassé ou faux. Mais l'idée qu'il illustre — nous avons deux régimes de fonctionnement, l'un délibéré, l'autre automatique — tient toujours, et correspond à peu près à ce qu'on appelle aujourd'hui pensée réfléchie et pensée automatique. <em>Lis ces cinq paragraphes pour l'idée, pas pour l'anatomie.</em>`],
+ [20,`Quand cet esprit pense juste, quand il comprend la vérité, quand les pensées qu'il envoie au corps par ce système sont constructives, les sensations sont agréables et harmonieuses.`,
+  `Première moitié de sa démonstration : la même porte laisse entrer le bon…`],
+ [21,`Nous bâtissons alors en nous force, vitalité et énergies constructives. Mais c'est par ce même esprit objectif que la détresse, la maladie, le manque, la limitation et toute forme de discorde entrent dans nos vies. C'est donc par lui, en pensant mal, que nous sommes reliés à toutes les forces destructrices.`,
+  `…et le mauvais. C'est pour cette raison qu'il appellera l'esprit conscient <strong>« le gardien à la porte »</strong> dans la deuxième partie : son rôle n'est pas de produire, c'est de filtrer. Retiens l'expression, elle revient souvent.`],
+ [22,`C'est par l'esprit subconscient que nous sommes reliés au monde intérieur. Le plexus solaire en est l'organe ; le système nerveux sympathique préside à toutes les sensations subjectives — la joie, la peur, l'amour, l'émotion, la respiration, l'imagination et tous les autres phénomènes subconscients. C'est par le subconscient que nous sommes reliés à l'Esprit Universel et mis en rapport avec les forces constructives infinies de l'univers.`,
+  `Le plexus solaire comme siège du subconscient est faux anatomiquement. Mais l'expérience qu'il décrit est réelle : la peur et la joie se ressentent d'abord dans le ventre. <strong>Il a pris une sensation vraie pour un mécanisme.</strong> C'est l'erreur type de son époque, et elle est presque sympathique.`],
+ [23,`Le grand secret de la vie tient dans la coordination de ces deux centres et la compréhension de leurs fonctions. Avec cette connaissance, nous pouvons faire coopérer consciemment l'esprit objectif et l'esprit subjectif, et ainsi accorder le fini et l'infini. Notre avenir est entièrement entre nos mains. Il n'est à la merci d'aucune puissance extérieure capricieuse ou incertaine.`,
+  `La dernière phrase est celle qui rend ce livre à la fois attirant et dangereux. « Entièrement sous notre contrôle » est faux — il y a la maladie, les autres, le hasard, l'époque où l'on naît. <strong>Mais l'énoncé inverse (« je ne contrôle rien ») est plus faux encore, et infiniment plus paralysant.</strong> Lis cette phrase comme un correctif, pas comme une mesure exacte.`],
+ [24,`Tous s'accordent : un seul Principe, une seule Conscience imprègne l'univers entier, occupe tout l'espace, et reste essentiellement identique en tout point où elle est présente. Elle est toute-puissante, toute sagesse, et toujours présente. Toutes les pensées et toutes les choses sont en elle. Elle est tout en tout.`,
+  `<strong>Ici commence la métaphysique, et elle occupe les paragraphes 24 à 42.</strong> « Tous s'accordent » est une formule rhétorique : non, tout le monde ne s'accorde pas là-dessus. Tu peux y adhérer, ou lire ces paragraphes comme le cadre dont il avait besoin pour justifier une méthode qui fonctionne indépendamment de lui. <em>Aucun exercice du livre ne te demande d'y croire.</em>`],
+ [25,`Il n'existe dans l'univers qu'une seule conscience capable de penser ; et quand elle pense, ses pensées deviennent pour elle des choses objectives. Étant omniprésente, elle est nécessairement présente en chaque individu ; chacun est donc une manifestation de cette Conscience omnipotente, omnisciente et omniprésente.`,
+  `Premier des quatre paragraphes sur l'esprit unique.`],
+ [26,`Puisqu'il n'y a qu'une seule conscience capable de penser dans l'univers, il s'ensuit nécessairement que ta conscience est identique à la Conscience Universelle. Autrement dit : tout esprit est un seul esprit. On ne peut pas échapper à cette conclusion.`,
+  `Note « cette conclusion est inévitable » : <em>c'est une affirmation, pas une démonstration.</em> Haanel écrit avec l'assurance d'un chef d'entreprise, pas d'un philosophe. C'est le principal reproche qu'on peut lui faire, et il vaut mieux le voir tout de suite que de se sentir bête de ne pas suivre.`],
+ [27,`La conscience qui se concentre dans tes cellules cérébrales est la même que celle qui se concentre dans celles de tout autre individu. Chacun n'est que l'individualisation de l'Universel, de l'Esprit Cosmique.`,
+  `Reformulation du 26.`],
+ [28,`L'Esprit Universel est énergie statique, ou potentielle. Il est, simplement. Il ne peut se manifester que par l'individu, et l'individu ne peut se manifester que par lui. Ils ne font qu'un.`,
+  `Ce qu'il faut retenir des quatre paragraphes 25 à 28, une fois la métaphysique mise de côté : <strong>tu n'as pas moins de potentiel que quiconque, seulement moins d'entraînement.</strong> Il y reviendra frontalement en semaine 12.`],
+ [29,`La capacité de l'individu à penser est sa capacité d'agir sur l'Universel et de le faire se manifester. La conscience humaine ne consiste qu'en cette capacité de penser. On considère que l'esprit est en lui-même une forme subtile d'énergie statique, d'où naît l'activité qu'on appelle pensée, phase dynamique de l'esprit. L'esprit est énergie statique, la pensée énergie dynamique : deux phases d'une même chose. La pensée est donc la force vibratoire produite par la conversion de l'esprit statique en esprit dynamique.`,
+  `Vocabulaire emprunté à la physique de son époque — statique, dynamique, vibration — qui était alors le langage du prestige, comme « quantique » aujourd'hui. Idée simple derrière : <strong>l'esprit est un potentiel, la pensée est ce potentiel en mouvement.</strong>`],
+ [30,`Puisque la somme de tous les attributs est contenue dans l'Esprit Universel — omnipotent, omniscient, omniprésent — ces attributs sont présents à tout moment, sous forme potentielle, en chaque individu. Ainsi, quand l'individu pense, sa pensée est contrainte par nature de s'incarner dans un fait ou une condition qui correspond à son origine.`,
+  `Préparation du paragraphe suivant, qui est le vrai.`],
+ [31,`Toute pensée est donc une cause, et toute condition un effet. C'est pourquoi il est absolument essentiel de contrôler tes pensées, afin de ne produire que des conditions désirables.`,
+  `<strong>Si tu ne devais retenir qu'un seul paragraphe de cette partie, c'est celui-ci.</strong> Pensée = cause, condition = effet. Tout le reste du livre est une méthode pour agir sur les causes au lieu de se débattre avec les effets.`],
+ [32,`Toute puissance vient de l'intérieur et se trouve absolument sous ton contrôle. Elle s'obtient par une connaissance exacte et par l'exercice volontaire de principes exacts.`,
+  `« Exact », deux fois dans une phrase. Il insiste : il ne propose pas une inspiration, il propose une procédure. <strong>C'est ce qui distingue ce livre de la quasi-totalité de sa descendance.</strong>`],
+ [33,`Il devrait être clair que lorsque tu comprends parfaitement cette loi et que tu maîtrises tes processus de pensée, tu peux l'appliquer à n'importe quelle situation. Autrement dit, tu seras entré en coopération consciente avec la loi omnipotente qui fonde toutes choses.`,
+  `Reformulation du 32.`],
+ [34,`L'Esprit Universel est le principe de vie de chaque atome existant. Chaque atome cherche continuellement à manifester davantage de vie ; tous sont intelligents ; tous cherchent à accomplir ce pour quoi ils ont été créés.`,
+  `De la biologie fantaisiste. Passe vite : <em>ce paragraphe ne conditionne aucun exercice.</em>`],
+ [35,`La majorité des humains vit dans le monde extérieur ; peu ont trouvé le monde intérieur. Et pourtant, c'est le monde intérieur qui fait le monde extérieur : il est donc créatif, et tout ce que tu trouves dans ton monde extérieur, c'est toi qui l'as créé au-dedans.`,
+  `Reformulation du 8.`],
+ [36,`Ce système t'amènera à la réalisation d'une puissance qui sera tienne dès que tu auras compris ce rapport entre le dehors et le dedans. Le monde intérieur est la cause, le monde extérieur l'effet. Pour changer l'effet, il faut changer la cause.`,
+  `<strong>La phrase la plus actionnable du chapitre :</strong> pour changer l'effet, change la cause. Elle sert de charnière avec le paragraphe suivant, qui est le meilleur des 45.`],
+ [37,`Tu verras aussitôt que c'est une idée radicalement nouvelle. La plupart des gens essaient de changer les effets en travaillant sur les effets. Ils ne voient pas qu'ils échangent simplement une forme de détresse contre une autre. Pour supprimer la discorde, il faut supprimer la cause — et cette cause ne se trouve que dans le monde intérieur.`,
+  `<strong>Le passage le plus utile de la Première Partie, et le plus vérifiable dans une vie.</strong> Changer de travail, de ville, de partenaire en gardant exactement le même fonctionnement intérieur : c'est ce qu'il appelle échanger une détresse contre une autre. On a tous vu ça, chez soi ou chez quelqu'un de proche.`],
+ [38,`Toute croissance vient de l'intérieur. C'est évident dans toute la nature : chaque plante, chaque animal, chaque être humain en témoigne. L'erreur des siècles est d'avoir cherché la force et la puissance au-dehors.`,
+  `Retour à l'image de la graine du paragraphe 16.`],
+ [39,`Le monde intérieur est la source universelle d'approvisionnement, le monde extérieur en est l'embouchure. Notre capacité à recevoir dépend de notre reconnaissance de cette source, de cette énergie infinie dont chaque individu est un débouché — et par laquelle chacun ne fait qu'un avec tous les autres.`,
+  `Image de la rivière : la source est dedans, l'embouchure est dehors. Il en tirera une conséquence morale dans les parties 4 et 5 : <strong>puisque nous partageons la même source, nuire à un autre revient à se nuire.</strong> C'est son argument contre le succès obtenu aux dépens des autres, et il y tient beaucoup.`],
+ [40,`Reconnaître est un processus mental. L'action mentale est donc l'interaction de l'individu sur l'Esprit Universel ; et comme cet Esprit est l'intelligence qui imprègne tout l'espace et anime tout ce qui vit, cette action et cette réaction constituent la loi de causalité. Mais le principe de causalité ne réside pas dans l'individu : il réside dans l'Esprit Universel. Ce n'est pas une faculté objective, c'est un processus subjectif, et ses résultats se voient dans une variété infinie de conditions et d'expériences.`,
+  `Paragraphe difficile, et sa charge utile tient en une phrase : <strong>la cause n'est pas toi.</strong> Tu n'es pas le moteur, tu es l'interrupteur. Conséquence très concrète, qu'il exploitera en semaine 13 : tu n'as pas à fournir la méthode, seulement la direction.`],
+ [41,`Pour qu'il y ait vie, il faut qu'il y ait esprit : rien ne peut exister sans lui. Tout ce qui existe est une manifestation de cette substance de base unique, à partir de laquelle et par laquelle tout a été créé et est continuellement recréé.`,
+  `Mise en place de l'image suivante.`],
+ [42,`Nous vivons dans un océan insondable de substance mentale plastique. Cette substance est toujours vivante et active, sensible au plus haut degré. Elle prend forme selon la demande mentale. La pensée forme le moule, la matrice à partir de laquelle la substance s'exprime.`,
+  `<strong>Son image maîtresse : le moule.</strong> Et elle explique pourquoi tous les exercices de visualisation exigeront des détails précis. Un moule flou donne une pièce floue. Que tu adhères ou non à la métaphysique, la conséquence pratique est bonne : <em>une intention vague ne produit rien.</em>`],
+ [43,`Rappelle-toi que la valeur réside dans l'application seule, et qu'une compréhension pratique de cette loi remplacera la pauvreté par l'abondance, l'ignorance par la sagesse, la discorde par l'harmonie et la tyrannie par la liberté. Du point de vue matériel et social, il n'y a certainement pas de plus grand bienfait.`,
+  `Dernier avertissement avant l'exercice : ce qui précède ne vaut rien tant que tu ne l'appliques pas. Il répétera cette phrase à la fin de presque chaque partie, et c'est probablement la raison pour laquelle tu tiens ce livre depuis longtemps sans avoir commencé.`],
+ [44,`Passe maintenant à l'application. Choisis une pièce où tu peux être seul et non dérangé. Assieds-toi droit, confortablement, mais ne t'avachis pas. Laisse tes pensées aller où elles veulent, mais reste parfaitement immobile pendant quinze minutes à une demi-heure. Continue ainsi trois ou quatre jours, ou une semaine, jusqu'à obtenir le contrôle complet de ton être physique.`,
+  `<strong>L'exercice de la semaine.</strong> Il tient en un paragraphe sur quarante-cinq, et c'est le seul qui compte vraiment.`],
+ [45,`Beaucoup trouveront cela extrêmement difficile ; d'autres y parviendront sans peine. Mais il est absolument essentiel d'obtenir le contrôle complet du corps avant d'être prêt à progresser. La semaine prochaine, tu recevras les instructions pour l'étape suivante ; d'ici là, tu dois avoir maîtrisé celle-ci.`,
+  `Il annonce lui-même le verrouillage. <strong>L'app ne fait qu'appliquer sa consigne.</strong>`]
+]}};
+
+/* ══════ Persistance : window.storage si dispo, sinon localStorage ══════ */
+const S={
+ async get(k){try{if(window.storage){const r=await window.storage.get(k,false);return r?JSON.parse(r.value):null}return JSON.parse(localStorage.getItem(k))}catch(e){return null}},
+ async set(k,v){try{if(window.storage){await window.storage.set(k,JSON.stringify(v),false)}else localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+};
+/* ══════ 日本語 — 1912年英語原典より翻訳 ══════ */
+const JA={
+ui:{
+ eyebrow:"チャールズ・ハアネル · 1912",h1:'ザ・マスター<br><em>キー</em>',
+ navKey:"鍵",navJournal:"手帳",navSoon:"続き",soonTag:"近日",
+ jEyebrow:"気づいたこと",jH1:'<em>手帳</em>',
+ sEyebrow:"制作中",sH1:'この<em>続き</em>',
+ soonBody:"<p>安らぎの場、朝の習慣、習慣を断つための練習、そしてグルメのタブは、このあとに作ります。</p><p>一度にひとつずつ、順番に。それがこの方式です。</p>",
+ start0:"24週間、168回のセッション。1日1回。最初の1回は、いつ始めてもかまいません。",
+ day:(t,c)=>`168日のうち${t}日目 · 24週のうち第${c}週`,
+ wk:c=>`第${c}週 · 実施中`, src:"『ザ・マスター・キー・システム』1912",
+ doneToday:"今日のセッションは完了", again:"もう一度おこなう",
+ begin:(d)=>`セッションを始める（7回中${d}回目）`,
+ reread:(lp)=>`レッスンを読み返す · 今週${lp}回目`,
+ resume:(p,P)=>`続きから読む · ${P}中${p}`,
+ readIt:P=>`レッスンを読む · 解説つき${P}段落`,
+ whatMeans:"これはどういう意味か", whatSays:"ここで言っていること",
+ doneHead:"完了", lockHead:"未開放", sess:n=>`あと${n}回`,
+ lockNote:"各週は、前の週のセッションを7回終えると開きます。これはハアネル自身の指示です——いまの段階を習得するまで先へ進まないこと。",
+ jEmpty:"セッションのあと、気づいたことを一行だけ書き残せます。義務ではありません。書いたものはこの端末の中だけに残ります。",
+ quit:"← 出る", next:"次へ", finish:"終える", partDone:"この部を読み終えました",
+ rereadStart:"最初から読み返す",
+ doneH:t=>`${t}を最後まで読みました。`,
+ doneP1:'ハアネルは次へ進めとは言いません。<strong style="color:var(--paper);font-weight:400">同じ部を読み返す</strong>ことを求めます。七日のあいだ、意味が身につくまで。',
+ doneP2:"週に二、三回の読み返しで足ります。15分のセッションのほうは、毎日です。",
+ loops:(l,p)=>`${l<=1?'1回目':l+'回目'}の通読 · 第${p}週`,
+ exoTag:"今週の練習", sessDone:"セッション終了。",
+ sessAsk:"何に気づきましたか？", save:"手帳に残す", skip:"書かずに閉じる",
+ startBtn:"開始", stopBtn:"中止", quitSess:"セッションを終える",
+ langLabel:"FR", frOnly:"", listenLbl:"指示を聞く", counter:(n,i,N)=>`§${n} · ${N}中${i}`
+},
+W:[
+{t:"体をコントロールする",c:"動かないこと。求められているのはそれだけ。",s:"第一部 §44–45",
+x:`<p>ひとりになれて、邪魔の入らない部屋を選びます。背筋を伸ばし、楽に座ってください。ただし、だらしなくもたれないこと。</p><p>思考はどこへ向かってもかまいません。ただ、十五分から三十分のあいだ、体を完全に静止させます。</p><p>これを三、四日、あるいは一週間続けてください。自分の体を完全にコントロールできるようになるまで。</p>`,
+e:`<p><strong>これは瞑想ではありません。</strong>ハアネルは今週、思考について何も要求していません。思考はどこへ行っても自由です。</p><p>指示は身体的なものひとつだけ——動かない。ここから始めるのは、これが唯一検証できることだからです。動いたか、動かなかったか。「たぶんだいたいできた」はありません。</p><p>彼の論理はこうです。体が自分に従わないうちは、心が従うことは決してない。だから彼は、この土台ができるまで先へ進ませません。</p><p>彼自身が警告しています。<strong>多くの人はこれを極端に難しいと感じるだろう</strong>と。うまくいかなくても失敗ではなく、本の想定内です。</p>`},
+{t:"思考を抑える",c:"思考を追いかけない。戻る。",s:"第二部 §29–31",
+x:`<p>できれば同じ部屋、同じ椅子、同じ姿勢で。無理なら、いまある条件で最善を尽くしてください。</p><p>先週と同じように完全に静止します。ただし今回は、すべての思考を抑えます。習得できるまで続けてください。</p><p>数瞬しか続かないはずです。それでも価値があります——自分の心に絶えず入り込もうとする思考の量を、実際に見せてくれるからです。</p>`,
+e:`<p><strong>「すべての思考を抑える」とは、二十分間あたまを空にすることではありません。</strong>誰にもできませんし、ハアネル自身が次の段落でそう言っています。</p><p>ここでの「抑える」は、養わないという意味です。思考が来る。追いかけない。ふくらませない。応じない。通り過ぎる。</p><p><strong>期待される結果は静寂ではなく、ひとつの気づきです。</strong>ようやく交通量が見える——自分が選んでもいない思考が、どれだけ流れているか。</p><p>彼によれば、これが与えるのは、心配・不安・恐れに対する主導権です。戦うことによってではなく、追いかけるのをやめることによって。</p>`},
+{t:"ゆるめる",c:"筋肉ひとつずつ。神経ひとつずつ。",s:"第三部 §29–33",
+x:`<p>もう一歩進みます。静止し、思考を抑えるだけでなく、今週はゆるめます。手放し、筋肉を自然な状態に戻してください。</p><p>これによって神経からすべての圧力が取り除かれ、しばしば肉体的な消耗を生む緊張が消えます。</p><p>できるかぎり徹底的に行ってください。すべての筋肉と神経をゆるめると心に決めます。自分自身と世界に対して、静かで、休まり、平和だと感じられるまで。</p>`,
+e:`<p><strong>方法に注目してください。</strong>彼は何も取り除きません。第三週＝第一週＋第二週＋ゆるめること。一週間にひとつずつ、それ以上は決して積みません。</p><p>緊張についての彼の主張は、通念の逆に読む価値があります。彼にとって身体の緊張が心配・不安・恐れを<strong>生み出す</strong>のであって、その逆ではありません。こわばった体が、ざわついた心をつくる。</p><p>ここで初めて、耐えるだけでなく<em>心地よくある</em>ことが求められます。「自分自身と世界に対して平和である」は、飾りではなく指示です。</p>`},
+{t:"心を手放す",c:"手放すのは感情ではなく決断。",s:"第四部 §9–12・§29–32",
+x:`<p>いつもの姿勢をとったら、完全にゆるめて緊張を取り除きます。</p><p>そのうえで、あらゆる不利な状態を心から手放してください——憎しみ、怒り、心配、嫉妬、羨望、悲しみ、面倒、あらゆる形の落胆を。</p><p>「手放せない」と言うかもしれません。手放せます。心に決めること、意図すること、粘ることによって。最初からうまくいくことはありません。</p><p class="aff">今週のアファメーション——朝、晩、そして思い出すたびに：<br>「わたしは、そうあろうと決めたものになれる。」</p>`,
+e:`<p><strong>むずかしい点。</strong>手放せないのは、知性ではなく感情に支配されているからだ、とハアネルは言います。手厳しく、議論の余地もあります——現代の心理学なら、怒りをやめようと決めることはできない、と言うでしょう。ただ、彼が実際に求めていることはもっと繊細です。<em>維持しない</em>こと。怒りは来る。だが、そのあとの二十分を明け渡さない。</p><p><strong>アファメーションについての警告は、この本でもっとも重要な一節であり、誰もが読み飛ばす箇所です。</strong>始めて終えなければ、決意して守らなければ、あなたは失敗する習慣を身につけている、と彼は言います。</p><p>だから、守るつもりがないなら始めないこと。真剣な一週間のほうが、始めて放り出した一か月より価値があります。</p>`},
+{t:"場所",c:"全部見る。木も、人も、すべて。",s:"第五部 §30",
+x:`<p>自分の部屋へ行き、同じ席、同じ姿勢で。</p><p>心地よい記憶のある場所を、心のなかで選びます。その完全な映像をつくってください——建物、地面、木々、友人たち、その場のすべてを欠けなく。</p><p>最初は、その映像以外のあらゆることを考えてしまうでしょう。落胆しないこと。粘りが勝ちます——ただし粘るとは、例外なく毎日この練習をするということです。</p>`,
+e:`<p><strong>方式の転換点です。</strong>最初の四週間は片づけでした——静止させ、黙らせ、ゆるめ、追い出す。ここから作り始めます。</p><p>なぜ欲しいものではなく、実在する心地よい場所なのか。心地よい記憶には、発明しなくても細部と感情がすでに含まれているからです。脳が知っている素材で音階練習をするわけです。</p><p><strong>「例外なく毎日」は原文にあります。</strong>わたしの付け足しではありません。彼がこれほど素っ気なく言うのは、この週だけです。</p>`},
+{t:"注意",c:"細部をすべて。そして目を閉じる。",s:"第六部 §24–25",
+x:`<p>写真を一枚、同じ部屋の同じ席、同じ姿勢のところへ持ってきます。</p><p>少なくとも十分間、丁寧に眺めてください——目の表情、顔立ちの形、服、髪の整え方。写っているものを細部まですべて記録します。</p><p>それから写真を覆い、目を閉じて、心のなかで見ようとします。細部までひとつ残らず見えたなら、おめでとうございます。見えなければ、見えるようになるまで繰り返してください。</p>`,
+e:`<p><strong>彼の比喩は的確です。</strong>注意は虫めがねです。レンズを動かしているあいだ、陽の光は何もしません。一点に固定すれば、燃える。力は強さからではなく、動かさないことから来ます。</p><p>すぐ試せる挑戦も添えられています。対象をひとつ選び、十分間集中してみなさい。できません。心は十回以上さまよいます。それは恥ではなく、出発点です。</p><p>なぜ物ではなく写真なのか。顔には、知っているつもりで再現できない細部が大量にあるからです。自分がほんとうは何を見ているかを測る、もっとも容赦のない試験です。</p><p>彼はこの週を<strong>「土を耕す」</strong>と呼びます。</p>`},
+{t:"友人",c:"顔を見る。笑わせる。",s:"第七部 §31",
+x:`<p>友人を思い浮かべます。最後に会ったときそのままに——部屋、家具。交わした会話を思い出してください。</p><p>次に顔を見ます。はっきりと。そして、おたがいに関心のある話題で話しかけてください。表情が変わるのを見て、笑うのを見ます。</p><p>できましたか。ならば興味を引いてみてください。冒険の話をして、目が輝くのを見ます。ここまでできたなら、あなたの想像力は良好で、みごとに進歩しています。</p>`,
+e:`<p>第六週は静止画。第七週は<strong>動く</strong>映像で、音と感情がつきます。再現ではなく、動かすことを求められています。</p><p>成功の基準が的確で巧妙です——<em>笑うのを見る</em>。心のなかの映像で表情を変えられるなら、それはあなたが映像を操っているということ。もう受け身ではありません。</p><p>最近会った人を選んでください。古すぎる顔だと、映像を操縦するのではなく記憶を再構成することになります。</p>`},
+{t:"戦艦",c:"原因の連鎖をさかのぼる。自分まで。",s:"第八部 §30–33",
+x:`<p>同じ姿勢をとり、戦艦を思い描きます。水面に浮かぶ灰色の巨体。物音ひとつしない。船体の大部分は水面下にあります。二十階建てのビルほどの重さ。数百人がいつでも動ける態勢でいる。</p><p>そこからさかのぼります。鋼板を鋳造所までたどり、それを作る何千人もの労働者を見てください。さらに鉱山から出てくる鉱石まで、貨車への積み込み、溶解、処理まで。さらに、船を設計した建築家と技師まで。そして、なぜ彼らが設計したのかまで。</p><p>もう船が存在しないほど遠くまで来ています。それは設計者のあたまのなかの一個の思考にすぎません。では、その命令はどこから来たのか。命令の背後には誰がいるのか。自分にたどり着くまでさかのぼってください。</p>`,
+e:`<p><strong>本書で唯一、視覚化ではなく分析の練習です。</strong>世界でもっとも巨大な物体が一個の思考に溶けるまで、因果の鎖をさかのぼらせます。</p><p>これは彼の中心的な論証を、議論ではなく練習として行わせるものです。彼はこう結びます——思考が表面の下を見るように訓練されたとき、取るに足らないと思っていたものが本質になる、と。</p><p>対象は何でもかまいません。椅子でも、スマートフォンでも、家の前の道路でも。二十四のうち、もっとも応用の利く練習です。</p>`},
+{t:"花",c:"種から香りまで。",s:"第九部 §32–34",
+x:`<p>植物を思い描きます。いちばん好きな花をひとつ。見えないものを見えるものにしてください——小さな種をまき、水をやり、世話をし、朝日の当たる場所に置きます。</p><p>種が割れるのを見ます。根が土に入り、あらゆる方向へ伸びるのを見てください。それは分裂を繰り返す生きた細胞で、まもなく数百万になり、そのひとつひとつが知性を持ち、何を欲しがり、どう手に入れるかを知っています。</p><p>茎が立ち上がり、地表を破り、枝に分かれるのを見ます。葉が形になり、細い茎の先に蕾がつくのを見てください。蕾がほどけ、あなたの花が現れます。</p><p>そして強く集中すれば、香りに気づくはずです。</p>`,
+e:`<p>再現ではなく<strong>創る</strong>、最初の練習です。</p><p>最後に彼が狙うものに注目してください——香り。においは、意図して呼び起こすのがもっとも難しい感覚です。それが彼の成功基準であり、飾りではありません。</p><p>彼は明言します。花に集中しようと、健康に集中しようと、理想や複雑な問題に集中しようと、過程は同じだ、と。花が選ばれたのは、あなたが感情的な利害を持たない中立の土俵だからです。</p>`},
+{t:"図形",c:"線、四角、円、円錐。",s:"第十部 §24–25",
+x:`<p>いつも座っている場所から見える、壁の何もない一角を選びます。</p><p>心のなかで、長さ十五センチほどの黒い水平線を引いてください。壁に描かれているのと同じくらいはっきり見えるまで。両端に垂直線を二本。それらをつなぐ四本目を引けば、四角ができます。完全に見えるようにしてください。</p><p>できたら、四角のなかに円を描きます。円の中心に点を置きます。その点を自分のほうへ二十五センチほど引き出してください——四角い底面の円錐ができます。</p><p>ここまですべて黒でした。白に変え、赤に変え、黄に変えてください。</p>`,
+e:`<p>感情も、記憶も、香りもありません。純粋な幾何です。これは意図的です。快さを帯びた花のあとで冷たい素材に移し、快の燃料なしでも能力が保つかを確かめています。</p><p>指示のなかに、確認の試験がふたつ隠れています。<strong>点を自分のほうへ引く</strong>こと（三次元に入ります）と、<strong>色を変える</strong>こと。もう映像を眺めているのではなく、操作しています。</p><p>彼はこう結びます——これができるなら、まもなくどんな問題にも集中できるようになる、と。</p>`},
+{t:"理由のある信",c:"限界は置かれていない。あなた以外には。",s:"第十一部 §35",
+x:`<p>この一節に集中します。「祈り求めるものは何であれ、すでに受けたと信じなさい。そうすれば、そのとおりになる。」</p><p>いかなる限定も置かれていないことに注意してください。「何であれ」は非常に明確です。唯一の限界は、わたしたちが考える力、その場にふさわしくある力、事態に応える力です。</p><p>そして、信は影ではなく実体であることを思い出してください——「望んでいる事がらの実体、見えないものの証拠」。</p>`,
+e:`<p>読み方の落とし穴に注意。第十一部の全体は帰納的推論に費やされています。ハアネルはそこで、盲信ではなく方法的な観察を擁護しています。そのうえで、聖句を黙想させるのです。</p><p>彼の体系のなかでは矛盾しません。彼にとって信とは、宗教的な同意ではなく、観察可能な結果を生む心の状態だからです。</p><p>聖書の語彙が引っかかるなら、機能としての指示はこうです。あることをすでに得られたものとして扱い、それが今週の自分のふるまいを何に変えるかを観察する。決定的な語は<strong>実体</strong>です——願いではなく、重さのあるもの。</p>`},
+{t:"ひとつであること",c:"まずゆるめる。かならず。",s:"第十二部 §28",
+x:`<p>同じ部屋へ行き、同じ椅子、同じ姿勢をとります。心も体も、必ずゆるめて手放してください。</p><p>これはいつも行います。<strong>圧力のもとで心の作業をしようとしないこと。</strong>こわばった筋肉も神経もなく、完全にくつろいでいることを確かめます。</p><p>そのうえで、力とひとつであることを実感してください。考える力とは、普遍の心にはたらきかける力であること。それはどんな要求にも応じること。あなたには、これまでのどんな人間とも、これからのどんな人間とも、まったく同じ潜在能力があること。誰もが同じ一つのものの表れであり、違いは程度だけであること。</p>`,
+e:`<p>「圧力のもとで心の作業をしようとするな」は本書でもっとも実用的な一文であり、指示の途中にさりげなく置かれています。</p><p>彼は五週間、負荷の高い視覚化を課してきたところです。そこで手を止めて、力めば何も働かないと念を押します。</p><p>今週の本質。あなたの能力は誰よりも低いのではなく、訓練が少ないだけ。六週間の映像づくりのあとの、静けさに戻る週です。</p>`},
+{t:"部分と全体",c:"あなたは全体と同じ性質でできている。",s:"第十三部 §26–27",
+x:`<p>自分が全体の一部であり、部分は必然的に全体と同じ性質・同じ質であることを認めてください——ありうる違いは程度だけです。</p><p>そのうえで、本文の問いを自分に向けます。全知なるものに対して、どの経路で願いを実現せよと指示する必要があるのか。有限は無限に助言できるのか。</p><p>ハアネルの答えは率直です。そこにこそ失敗の原因がある。あらゆる失敗の原因が。</p>`,
+e:`<p>語彙を外しても通用する、実務的な訳。<strong>「どうやって」を指定するのをやめる。</strong></p><p>別の働き方をしたいなら、求めるのは「自分に合う仕事」であって、「あの会社のあの職、あの人を通して」ではありません。経路を固定した時点で、ほかのすべてを消しています。</p><p>これは具体的な不安対策の指示でもあります。反芻の大半は、手段を制御しようとすることでできています。</p>`},
+{t:"調和",c:"調和のほかは何も。",s:"第十四部 §26–31",
+x:`<p>調和に集中します。集中と言うとき、その語が含むすべてを指します——深く、真剣に、調和のほかには何も意識しなくなるまで。</p><p>わたしたちは行うことで学ぶのだと思い出してください。これらのレッスンを読むだけではどこにも行けません。価値は実際の適用のなかにあります。</p><p>同じ章より。二十年、三十年かけて否定的な思考で否定的な状態を築いておいて、正しい思考を十五分か二十分行っただけでそれが全部消えると期待することはできません。</p>`,
+e:`<p>第26段落は、自己啓発市場そのものへの解毒剤です——しかも1912年の。</p><p>彼はこう付け加えます。根本的な変化に必要な規律に入るなら、よく考えたうえで意図的に行い、そのあとは自分の決定を何にも妨げさせないこと。</p><p>「規律」という語が現れる最初の週です。偶然ではありません。ちょうど折り返し地点にいます。</p>`},
+{t:"洞察",c:"知っているだけでは足りない。それはもう知っている。",s:"第十五部 §36",
+x:`<p>いつもの姿勢をとり、次のことに思考を集めます。思考の創造力を知っていることは、考える技術を持っていることではない。</p><p>知識はひとりでに適用されはしないこと。わたしたちの行動を支配しているのは知識ではなく、慣習・前例・習慣であること。知識を適用させる唯一の方法は、意識的で断固とした努力であること。使われない知識は心から抜け落ちること。</p><p>この線の思考を、自分自身の問題に適用する具体的な計画を立てられるだけの洞察が得られるまで続けてください。</p>`,
+e:`<p>あなたとこの本との関係そのものを語っている週です。</p><p>「わたしたちの行動を支配しているのは知識ではなく、慣習・前例・習慣である」——家に置いたまま実践されない本を、これ以上正確に描写する文はありません。</p><p>そして彼が示す出口は、やる気ではなく<strong>具体的な計画</strong>です。二十四週で唯一、書かれた成果物で終わる週です。あなた自身の問題に対する計画。あたまのなかではなく、手帳に書いてください。</p>`},
+{t:"ものごとは結果である",c:"まず状態。ものはそのあと。",s:"第十六部 §35–37",
+x:`<p>次の事実を実感しようとしてください。調和と幸福は意識の状態であって、ものを所有することには依存しない。ものは結果であり、正しい心の状態から生じる。</p><p>したがって物質的な所有を望むなら、まず気にすべきはその結果を生む心の姿勢を得ることです。それができれば、望みをすでに成った事実として扱うのは比較的たやすくなります。</p><p>同じ章より。想像力はよい召使いだが、悪い主人である。制御されなければ、根拠のない結論へ引きずっていく。<strong>分析にかけた映像だけを組み立てること。</strong></p>`,
+e:`<p>この指示の後半が前半を救っています。ハアネルは夢を見ろと言っているのではありません。あらゆる着想を分析にかけ、持ちこたえたものだけを受け入れよと言っています。</p><p>一世紀後にこれらの考えが「引き寄せの法則」になったとき、途中で失われたのがこの重しです。</p><p>核は正しいままです。ものではなく状態を狙うこと。人が欲しがるものの多くは、それがもたらすと思っている状態のために欲しがられています——そしてその状態は、しばしば別の道で、もっと早く手に入ります。</p>`},
+{t:"休息",c:"力は休息を通して来る。",s:"第十七部 §33–37",
+x:`<p>できるかぎり深く集中します。ただし、意識的な努力も、目的にまつわる活動もなしに。完全にゆるめてください。結果についての不安な思いを避けます。</p><p><strong>力は休息を通して来る</strong>ことを思い出してください。思考を対象の上に置き、完全にそれと一体になるまで、ほかに何も意識しなくなるまで。</p><p class="aff">置き換えの規則：<br>恐れを消すなら → 勇気に集中する。<br>欠乏を消すなら → 豊かさに集中する。<br>病を消すなら → 健康に集中する。<br>つねに、理想をすでにある事実として。</p>`,
+e:`<p>置き換えの規則は、本書で唯一、ほかの何も信じなくても、今日つらい瞬間にそのまま使える道具です。</p><p>現代にも確かな対応物があります。思考は戦っても消えません——戦えば強まります。場所を占めるのです。</p><p>「力は休息を通して来る」は、努力について教わってきたことすべてに反します。そしてこれが本書の鍵です。視覚化を妨げるのは結果への不安。強く望みすぎることが、妨げになります。</p>`},
+{t:"創る力",c:"体には空気。ほかのものには別のもの。",s:"第十八部 §30–33",
+x:`<p>自分の創る力に集中します。思考を次のことの上に置いてください。肉体としての人は空気のなかに生き、動き、存在し、生きるためにそれを呼吸しなければならない。</p><p>次にこのことの上に。内なる人もまた、似ているがより微細なエネルギーのなかに生きている。</p><p>物質の世界では、種がまかれるまでいかなる生命も形をとらず、親株より高い実は生じないこと。内側でも同じであること。</p><p class="aff">注意のしくみ：<br>注意をうながすものは関心です。関心が大きいほど注意は大きく、その逆もまた同じ。まず注意を向けることから始めてください。やがて関心が生まれ、その関心がさらに注意を引き寄せます。</p>`,
+e:`<p>第32段落こそが今週の実質で、しかもどこにでも使えます。</p><p>関心があるから注意が向く、と思われています。<strong>ハアネルは逆を言います。まず注意を向けよ、たとえ無理にでも。関心はあとから来る。</strong>これは本当で、検証できます——好きになったものすべてが、この仕組みでそうなりました。</p><p>今週はこれを練習以外にも当ててみてください。ある人に、仕事に、退屈だと思っているものに。効果が見えるのはそこです。</p>`},
+{t:"見かけは欺く",c:"数分間。あたまにほかのものを入れない。",s:"第十九部 §27–29",
+x:`<p>集中します——語が含むすべての意味で。思考の対象に没入し、ほかの何も意識しなくなるまで。毎日、数分間。</p><p>体を養うために食べる時間はとるのに、心の食物を消化する時間はなぜとらないのでしょうか。</p><p>そのうえで、次の事実に思考を置いてください。見かけは欺く。地球は平らでも静止してもいない。空はドームではない。太陽は動かない。星は小さな光の点ではない。そして固定していると思われていた物質は、絶え間ない流動のなかにあることがわかった。</p>`,
+e:`<p>第28段落の一覧は知覚の謙虚さについての教えであり、あなたの生活のきわめて具体的な何かを狙っています。</p><p>自分について自明に思えること——「わたしはこういう人間だ」「昔からこうだった」「これは変わらない」——は、太陽が昇るという観察とまったく同じ地位にあります。直接的で、即座で、誰もが共有していて、そして誤り。</p><p>第27段落の食事とのたとえは、「時間がない」への最良の返答でもあります。</p>`},
+{t:"その中に生きる",c:"沈黙に入る。",s:"第二十部 §29–31",
+x:`<p>沈黙に入り、「わたしたちはその中に生き、動き、存在する」が文字どおり正確であるという考えに集中します。あなたが<em>ある</em>のは、それが<em>ある</em>から。それが遍在するなら、それはあなたの中にもあるはず。その霊とあなたの霊の違いは、程度の問題にすぎない。</p><p>同じ章より。意志によってこの法則をねじ曲げようとする者——ある種の種をまき、「意志」によって別の実を結ばせようとする者——は、最後には必ず失敗します。彼らは、使おうとしているその力そのものに逆らっているからです。</p>`,
+e:`<p>本書でもっとも宗教的な週です。この言葉づかいが合わないなら、第29–30段落の警告だけをそのまま使えます。そしてそれは重要です。</p><p><strong>力ずくの意志は働きません。</strong>こわばりによって結果を強いることはできない。</p><p>純粋な意志で習慣をやめると決めて、四日でもたなくなるときに起きているのは、まさにこれです。ハアネルならこう言うでしょう——仕組みを使うかわりに、仕組みに逆らっている、と。</p>`},
+{t:"真理",c:"あなたを永続的に妨げられるものはない。",s:"第二十一部 §27–28",
+x:`<p>真理に集中します。それがあなたを自由にすることを実感しようとしてください。正しい思考の方法を適用できるようになったとき、あなたの成功を永続的に妨げられるものは何もありません。</p><p>あなたは自分の内なる潜在力を、環境のなかに外へ出しているのだと意識してください。沈黙は、真理についてのもっとも高い理解を目覚めさせる機会をつねに差し出していること。そして全能そのものは絶対的な沈黙であり、それ以外はすべて変化・活動・限界であることを理解してください。</p>`,
+e:`<p>第27段落が今週の鍵であり、知っておく価値があります。ハアネルはこう書きます。この原理は例外を作らず、えこひいきをせず、お世辞にも、嘆願にも、同情にも曲がらない。</p><p>これは、一世紀後に「引き寄せの法則」と呼ばれるようになったものとの差を理解するうえで決定的です。彼のところには、説得すべき相手がいません。送るべきよい波動も、得るべき恩恵も、口説くべき慈愛の宇宙もありません。</p><p>彼が描いているのは、重力のような非人称の法則です。それがすべてを変えます。<strong>値するようになる必要はない。適用するだけです。</strong></p>`},
+{t:"健康",c:"息よりも近く。",s:"第二十二部 §26–27",
+x:`<p>テニスンのこの詩句に集中します。「かれに語りかけよ、かれは聞く。霊は霊と出会える。息よりも近く、手や足よりもなお近い。」</p><p>そして、あなたが「かれに語りかける」とき、あなたは全能に触れているのだと実感しようとしてください。</p>`,
+e:`<p>ハアネルをもっとも距離をとって読むべき部です。彼は、この実感があらゆる病と苦しみを速やかに滅ぼすと主張します。</p><p>1912年には抗生物質も、今日わかっていることの半分も知られていませんでした。<strong>文字どおりに受け取れば、この主張は誤りであり、危険にもなりえます。</strong></p><p>確かで、裏づけのある部分。心の状態は、痛みの感じ方、回復、睡眠、治療の継続に実際に影響します。それだけでも十分に大きい。</p><p class="warn">この練習は、静けさの練習として行ってください。医師を瞑想で置き換えないこと。</p>`},
+{t:"体を持つ霊",c:"お金の魂は、役に立つこと。",s:"第二十三部 §21–22",
+x:`<p>次のことに集中します。人は霊を持つ体ではなく、体を持つ霊である。だからこそ、その願いは内なるもの以外では持続的に満たされない。</p><p>したがってお金は、あなたが望む状態をつくるためにのみ価値を持ち、その状態は必然的に調和したものです。調和した状態には十分な供給が要ります。もし欠乏を感じるなら、お金の魂は<strong>役に立つこと</strong>だと実感してください。その思いが形をとるとき、経路が開きます。</p>`,
+e:`<p>お金についての章であり、その立場は見た目より繊細です。彼はお金を軽んじよとは言いません——彼自身いくつもの会社を経営していました——目的にせよとも言いません。</p><p>お金は手段であり、その入口は<strong>役に立つこと</strong>、つまりあなたが差し出すものだ、と言っています。</p><p>そのまま訳せばこうです。「どうやってもっと稼ぐか」は問いの立て方が間違っている。問いは「わたしは何を、何人にとって役立つものにしているか」。ついでに言えば、これは経済戦略としても最良のものです。</p>`},
+{t:"みごとな世界",c:"最後の週。何が変わったか見る。",s:"第二十四部 §30–31",
+x:`<p>わたしたちが生きているのがほんとうにみごとな世界であること、あなたがみごとな存在であること、多くの人が真理の知識に目覚めつつあることを実感しようとしてください。</p><p>そして目覚めるにつれて彼らは気づきます。自分が望み、夢見てきたものはすべて、まばゆい現実のかすかな概念にすぎなかったのだと。</p>`,
+e:`<p>ハアネルはこう結びます。もし毎日数分ずつ各練習を行ってきたなら、人生から取り出せるものは、まず自分が入れたものそのものだと確かめたはずだ、と。</p><p>最後にもうひとつ、もっとも厳しく、もっとも正しい指摘を加えます。土地の相続は遺せるが、知識の相続は遺せない。富める者は自分の仕事を人に任せて金を払える。だが、誰もあなたの代わりに考えることはできず、自分の教養を買うこともできない。</p><p><strong>あなたは168日をやり終えました。</strong>本当の総括はこの章にはありません。手帳に戻って、最初の一行を読み返してください。</p>`}
+]};
+
+/* ══════ Interface — français ══════ */
+const FRUI={
+ eyebrow:"Charles Haanel · 1912",h1:'La Clé<br><em>maîtresse</em>',
+ navKey:"La Clé",navJournal:"Carnet",navSoon:"Suite",soonTag:"bientôt",
+ jEyebrow:"Ce que tu as observé",jH1:'Le <em>carnet</em>',
+ sEyebrow:"En construction",sH1:'La <em>suite</em>',
+ soonBody:"<p>Le refuge, le rituel du matin, les exercices pour couper une habitude et l'onglet Gourmet arrivent ensuite.</p><p>On construit un module à la fois, dans l'ordre. C'est le principe.</p>",
+ start0:"24 semaines, 168 séances. Une par jour. La première commence quand tu veux.",
+ day:(t,c)=>`Jour ${t} sur 168 · semaine ${c} sur 24`,
+ wk:c=>`Semaine ${c} · en cours`, src:"La Clé de la Maîtrise, 1912",
+ doneToday:"Séance faite aujourd'hui", again:"Refaire une séance",
+ begin:d=>`Commencer la séance ${d} sur 7`,
+ reread:lp=>`Relire la leçon · ${lp} lecture${lp>1?'s':''} cette semaine`,
+ resume:(p,P)=>`Reprendre la lecture · ${p} sur ${P}`,
+ readIt:P=>`Lire la leçon · ${P} paragraphes commentés`,
+ whatMeans:"Ce que ça veut dire", whatSays:"Ce que ça dit",
+ doneHead:"Terminées", lockHead:"Verrouillées", sess:n=>`${n} séances`,
+ lockNote:"Chaque semaine s'ouvre après 7 séances de la précédente. C'est la consigne de Haanel lui-même : ne pas avancer avant d'avoir maîtrisé l'étape en cours.",
+ jEmpty:"Après chaque séance tu peux noter une ligne sur ce que tu as remarqué. Rien n'est obligatoire. Ce que tu écris reste sur ton téléphone.",
+ quit:"← Quitter", next:"Suivant", finish:"Terminer", partDone:"Partie terminée",
+ rereadStart:"Relire depuis le début",
+ doneH:t=>`Tu as lu la ${t} en entier.`,
+ doneP1:'Haanel ne demande pas de passer à la suite. Il demande de <strong style="color:var(--paper);font-weight:400">relire cette même partie</strong> pendant les sept jours, jusqu\'à en avoir assimilé le sens.',
+ doneP2:"Deux ou trois relectures dans la semaine suffisent. La séance de 15 minutes, elle, reste quotidienne.",
+ loops:(l,p)=>`${l<=1?'1ʳᵉ lecture faite':l+'ᵉ lecture faite'} · semaine ${p}`,
+ exoTag:"L'exercice de la semaine", sessDone:"Séance terminée.",
+ sessAsk:"Une ligne, si tu veux. Qu'est-ce que tu as remarqué ?", save:"Enregistrer", skip:"Passer",
+ startBtn:"Commencer", stopBtn:"Mettre en pause", quitSess:"Quitter la séance",
+ langLabel:"日本語", frOnly:"", listenLbl:"Écouter la consigne", counter:(n,i,N)=>`§${n} · ${i} sur ${N}`
+};
+
+JA.L={1:{
+ titre:"第一部",
+ intro:"45段落。ハアネルは、次へ進む前にこの部を一週間かけて何度も読み返すよう求めます。各段落の下に、それが何を言っているのかを添えました。1912年の英語原典からの翻訳です。",
+ p:[
+[1,`豊かなものはさらに引き寄せる——これは存在のあらゆる次元で真実です。そして失うことがより大きな喪失を招くこともまた、同じように確かです。`,
+`約束ではなく、観察から始まります。動きは両方向に自らを強めていく。上がるものは上がりつづけ、崩れるものは崩れつづける。<strong>本書全体が、たったひとつの問いへの答えです——どうすれば向きを変えられるのか。</strong>`],
+[2,`心は創造します。生活の条件、環境、人生で経験することのすべては、わたしたちがふだん保っている心の姿勢の結果です。`,
+`鍵になる語は<strong>ふだん</strong>です。奮い立って一度考えたことではなく、気づかないまま大半の時間に考えていること。決意ではなく、あなたの心の平常の天気です。`],
+[3,`その姿勢は、何を考えるかによって決まります。だからあらゆる力、あらゆる達成、あらゆる所有の秘密は、考え方のなかにあります。`,
+`第2段落の言い換えです。ハアネルは週に一度、郵便でレッスンを送っていました。読者は前のページを手元に持っていないので、彼はよく繰り返します。前の段落の繰り返しに見えるときは、たいていそのとおりです——読み飛ばして構いません。`],
+[4,`なぜか。為すには、まず在らねばならないからです。わたしたちは自分が在るぶんだけしか為せず、何で在るかは何を考えるかによって決まります。`,
+`彼の連鎖の全体——<strong>考える → 在る → 為す</strong>。多くの方法は「為す」から入ります（行動を変えよ）。彼はそれでは保たないと言います。行動はいつも、自分が何で在るかの水準まで戻ってくるから。異論はありうる主張ですが、これが彼の論題で、残りはすべてここから出ます。`],
+[5,`持っていない力を表すことはできません。それを手にする唯一の道は、その力を意識することです。そして意識できるのは、あらゆる力は内から来ると理解したあとだけです。`,
+`循環論法に見えますし、少しそのとおりです。彼が狙っているのはこうです。<strong>持っていると知らない能力は使えない。</strong>最初の行為は獲得ではなく、認めることです。`],
+[6,`内なる世界があります。思考と感情と力の世界。光と生命と美の世界。目には見えませんが、その力は大きい。`,
+`「内なる世界」はこの部だけで三十回ほど出てきます。神秘的な話ではありません。あたまのなかで起きていることすべて、という意味です。対する「外の世界」は、外で起きていることすべて。<strong>この二語を覚えてください。本全体の骨組みです。</strong>`],
+[7,`内なる世界は心が支配します。それを見いだすことは、あらゆる問題の解と、あらゆる結果の原因を見いだすことです。そしてそれはわたしたちに委ねられているのですから、力と所有のすべての法もまた、わたしたちに委ねられています。`,
+`効いているのは<strong>「委ねられているのですから」</strong>です。内側は、あなたに手のある唯一の領域。ここから先すべての実践的な土台であり、ついでに言えば、彼の十八世紀前のストア派の土台でもあります。`],
+[8,`外の世界は内なる世界を映します。外に現れるものは、内に見いだされたものです。内なる世界には無限の知恵、無限の力、必要なあらゆるものの無限の蓄えがあり、いずれも展開し表現されるのを待っています。この潜在を認めることが、それを外で形にすることです。`,
+`本書の中心となる定式であり、一世紀後にロンダ・バーンが引き継ぐものです。<strong>強い意味で取れば（「わたしの状況は思考の正確な反映だ」）、これは誤りで、しかも人を責めます。</strong>解雇や死別を望んで考える人はいません。使える意味で取ればこうです。何に気づき、何を試み、何を断り、何に耐えるかは、内側の状態によって変わる。そしてそれは年単位で、実際に人生をかたちづくります。`],
+[9,`内なる調和は外に映ります——調和した状況、心地よい環境、あらゆるものの最善が。それは健康の土台であり、あらゆる偉大さ、あらゆる力、あらゆる達成に欠かせない条件です。`,
+`「調和」は彼の愛用語で、はっきり定義されることがありません。もっとも忠実な意味は<strong>内的な葛藤がないこと</strong>。引き裂かれていない、自分と戦っていない、ということです。`],
+[10,`内なる調和とは、自分の思考を統御し、ある経験が自分に及ぼす効果を自分で決める力のことです。`,
+`前の段落に欠けていた定義がここにあり、はるかに正確です。調和とは「気分がよいこと」ではありません。<strong>あることが自分に及ぼす効果を、自分で決めること。</strong>感情ともっとうまく付き合いたいと言うとき、あなたが探しているものの正確な定義です。`],
+[11,`それは楽観と豊かさを生みます。内なる豊かさが、外の豊かさを生みます。`,`第9段落の言い換えです。`],
+[12,`外の世界は、内なる意識の状況と状態を映します。`,`第8段落の言い換えです。復習が二段落続きます——速く読んで構いません。`],
+[13,`内に知恵を見いだせば、そこに眠る可能性を見わける眼と、それを外に現す力が得られます。`,`彼の順序の第一段階——<strong>見わけること</strong>。`],
+[14,`この内なる知恵を意識するにつれ、わたしたちはそれを心のなかで所有します。そしてその心の所有が、もっとも十全で調和のとれた発展に必要なものを現すための力と知恵を、実際に所有させます。`,
+`彼の三段階——<strong>意識する → 心で所有する → 実際に所有する</strong>。第五週から教える視覚化の骨格そのものです。書きとめてください。構造を示す数少ない箇所です。`],
+[15,`内なる世界は実践的な世界です。力ある人々が勇気・希望・熱意・自信・信を生み出すのはそこであり、それらが、構想を見る知性と、それを現実にする技量を与えます。`,
+`<strong>実践的</strong>という語に注目してください。彼は夢想家という非難に対して自分の陣地を守っています。彼にとって内側とは、行動に不可欠な勇気と自信をつくる工房です。この点で彼を間違いだと言うのは難しい。`],
+[16,`人生は展開であって、蓄積ではありません。外から来るものは、すでに内に持っているものです。`,
+`<strong>「積むのではなく、ひらく」。</strong>新しいものを積み上げるのではなく、すでにそこにあるものを広げる。建築ではなく種のたとえです。本書を通じて繰り返されます——覚えておくと、なぜ彼が何かを足せと決して言わないのかがわかります。`],
+[17,`あらゆる所有は意識に基づいています。あらゆる獲得は集める意識の結果であり、あらゆる喪失は散らす意識の結果です。`,
+`第1段落の言い換えですが、今度は原因つきです。上がるか下がるかを決めるのは、集める心か、散らす心か。彼がのちに<strong>集中</strong>と呼ぶものを、まだ名づけずにここで置いています。`],
+[18,`心のはたらきは調和に依ります。不調和は混乱を生みます。ですから力を得ようとする者は、自然の法と一致していなければなりません。`,
+`訳せばこうです。<strong>自分と争っているとき、人はうまく考えられない。</strong>口論の直後に仕事をしようとしたことがある人なら、誰でも確かめられます。`],
+[19,`外の世界と結ばれているのは客観的な心を通してです。脳がその器官であり、脳脊髄神経系が体のあらゆる部分と意識的な連絡をとらせます。この系統は、光・熱・におい・音・味のあらゆる感覚に応じます。`,
+`ここから本書でもっとも古びた箇所が始まります（19〜23）。ハアネルは1912年の生理学に寄りかかって、自説に科学の裏づけを与えようとします。<strong>解剖学の細部は古いか、端的に誤りです。</strong>ただし彼が示そうとしている考え——わたしたちには意図的な回路と自動的な回路のふたつがある——は今も通用し、現在いう熟慮的思考と自動的思考におおむね対応します。<strong>この五段落は、解剖ではなく考えのために読んでください。</strong>`],
+[20,`この心が正しく考えるとき、真実を理解するとき、この系統を通して体へ送る思考が建設的であるとき、感覚は快く、調和しています。`,
+`彼の論証の前半——同じ扉が、よいものを通し……`],
+[21,`そのときわたしたちは、力と活力と建設的なエネルギーを内に築きます。しかし同じ客観的な心を通して、苦悩・病・欠乏・限界・あらゆる不調和が人生に入ってきます。ですから誤って考えることによって、わたしたちはあらゆる破壊的な力とも結ばれるのです。`,
+`……そして悪いものも通す。だから彼は第二部で、意識的な心を<strong>「門の番人」</strong>と呼びます。その役目は生み出すことではなく、選り分けることです。この呼び名は覚えておいてください、何度も出てきます。`],
+[22,`内なる世界と結ばれているのは潜在意識を通してです。太陽神経叢がその器官であり、交感神経系があらゆる主観的な感覚——喜び、恐れ、愛、情動、呼吸、想像、その他すべての潜在意識の現象——をつかさどります。潜在意識を通して、わたしたちは普遍の心と結ばれ、宇宙の無限に建設的な力と関係づけられます。`,
+`<strong>太陽神経叢が潜在意識の座である、というのは解剖学的に誤りです。</strong>ただし彼が描いている経験は本物です。恐れも喜びも、まず腹で感じられる。彼は本当の感覚を、仕組みだと取り違えました。彼の時代に典型的な誤りで、どこか憎めないものでもあります。`],
+[23,`人生の大きな秘密は、このふたつの中心を協調させ、その働きを理解することにあります。この知識があれば、客観的な心と主観的な心を意識的に協力させ、有限と無限を調和させられます。わたしたちの未来は完全にわたしたちの手のなかにあります。気まぐれで不確かな外の力に委ねられてはいません。`,
+`最後の一文が、この本を魅力的にも危険にもしています。<strong>「完全にわたしたちの手のなかに」は誤りです</strong>——病があり、他人があり、偶然があり、生まれた時代があります。けれども逆の言明（「わたしは何も左右できない」）はもっと誤りで、はるかに人を動けなくします。<strong>この一文は、正確な計測ではなく、傾きを直すおもりとして読んでください。</strong>`],
+[24,`誰もが一致しています。ひとつの原理、ひとつの意識が宇宙全体に行きわたり、あらゆる空間を占め、存在するどの点においても本質的に同一である、と。それは全能であり、全知であり、つねに在ります。あらゆる思考とあらゆるものがそのなかにあります。それはすべてのなかのすべてです。`,
+`ここから形而上学が始まり、24〜42段落を占めます。<strong>「誰もが一致しています」は修辞です。</strong>いいえ、誰もが一致してはいません。同意してもよいですし、彼が自分の方法を正当化するために必要とした枠組みとして読んでもかまいません。<strong>本書のどの練習も、これを信じることを求めていません。</strong>`],
+[25,`宇宙には考えることのできる意識がひとつしかありません。そしてそれが考えるとき、その思考はそれにとって客観的なものになります。遍在するのですから、それは必然的に各人のうちにもあります。ですから誰もが、この全能・全知・遍在する意識の現れです。`,
+`ひとつの心をめぐる四段落の第一。`],
+[26,`宇宙に考えられる意識がひとつしかないのなら、あなたの意識は普遍の意識と同一である、という結論が必然的に導かれます。言いかえれば、すべての心はひとつの心です。この結論を逃れることはできません。`,
+`<strong>「この結論を逃れることはできない」</strong>——これは主張であって、論証ではありません。ハアネルは哲学者ではなく経営者の確信をもって書きます。彼にできる最大の批判はここで、ついていけない自分が愚かだと感じる前に、早めに見ておくほうがよい点です。`],
+[27,`あなたの脳細胞に集まっている意識は、ほかの誰の脳細胞に集まっている意識とも同じものです。誰もが、普遍なるもの、宇宙的な心の個別化にすぎません。`,`第26段落の言い換えです。`],
+[28,`普遍の心は静的な、あるいは潜在的なエネルギーです。それはただ在ります。それは個を通してしか現れず、個もまたそれを通してしか現れません。ふたつはひとつです。`,
+`形而上学を脇に置いたとき、25〜28段落から持ち帰るべきものはこれです。<strong>あなたの潜在能力は誰より低いのではなく、訓練が少ないだけ。</strong>第十二週で彼はこれを正面から取り上げます。`],
+[29,`個が考える力とは、普遍なるものにはたらきかけ、それを現れさせる力です。人間の意識はこの考える力だけから成っています。心そのものは静的エネルギーの微細な形と見なされ、そこから思考と呼ばれる活動が生じます。思考は心の動的な相です。心は静的エネルギー、思考は動的エネルギー——同じものの二つの相です。ですから思考とは、静的な心が動的な心へ変わることで生じる振動の力です。`,
+`当時の物理学から借りた語彙——静的、動的、振動。今日の「量子」と同じで、当時の権威の言葉づかいでした。<strong>裏にある考えは単純です。心は潜在であり、思考はその潜在が動いている状態。</strong>`],
+[30,`あらゆる属性の総和が普遍の心に含まれている以上——全能・全知・遍在——それらの属性は、潜在的な形で、つねに各人のうちにあります。ですから個が考えるとき、その思考はその出どころに対応する事実や状態として形をとらざるをえません。`,
+`次の段落の準備です。本命はそちら。`],
+[31,`ですからあらゆる思考は原因であり、あらゆる状態は結果です。だからこそ、望ましい状態だけを生むために、思考を統御することが絶対に欠かせません。`,
+`この部からひとつだけ持ち帰るなら、この段落です。<strong>思考＝原因、状態＝結果。</strong>本書の残り全部が、結果ともみ合うかわりに原因にはたらきかけるための方法です。`],
+[32,`あらゆる力は内から来て、完全にあなたの統御下にあります。それは正確な知識と、正確な原理の意図的な行使によって得られます。`,
+`一文に<strong>「正確」</strong>が二度。彼は念を押しています。差し出しているのは感激ではなく、手順である、と。この本を、その後継のほぼすべてから分けているのがこの点です。`],
+[33,`この法則を完全に理解し、思考の過程を自在にできるようになれば、それをどんな状況にも当てはめられることは明らかでしょう。言いかえれば、あなたはあらゆるものの土台にある全能の法則と、意識的に協力しはじめたことになります。`,`第32段落の言い換えです。`],
+[34,`普遍の心は、存在するあらゆる原子の生命の原理です。どの原子もたえずより多くの生命を現そうとしており、どれもが知性を持ち、自分が造られた目的を果たそうとしています。`,
+`空想的な生物学です。<strong>速く通り過ぎてください。</strong>この段落はどの練習の前提にもなっていません。`],
+[35,`人の大半は外の世界に住み、内なる世界を見いだした者はわずかです。けれども外の世界をつくっているのは内なる世界です。だからそれは創造的であり、外の世界に見いだすもののすべてを、あなたが内でつくったのです。`,`第8段落の言い換えです。`],
+[36,`この方式は、外と内のこの関係を理解した瞬間にあなたのものとなる力へ、あなたを導きます。内なる世界が原因、外の世界が結果です。結果を変えるには、原因を変えなければなりません。`,
+`この章でもっとも実行に移せる一文——<strong>結果を変えるには、原因を変える。</strong>45段落中で最良の次の段落へつなぐ蝶番です。`],
+[37,`これがまったく新しい考えであることに、すぐ気づくでしょう。ほとんどの人は、結果にはたらきかけて結果を変えようとします。ある苦悩を別の苦悩と取り替えているだけだと見えていないのです。不調和を除くには原因を除かねばならず、その原因は内なる世界にしかありません。`,
+`第一部でもっとも役に立ち、人生でもっとも確かめやすい箇所です。<strong>内側の働き方をそのままに、仕事を変え、街を変え、相手を変える。</strong>それが彼のいう「ある苦悩を別の苦悩と取り替える」ことです。自分にも、近しい誰かにも、見た覚えがあるはずです。`],
+[38,`あらゆる成長は内から来ます。自然のすべてがそれを示しています。どの植物も、どの動物も、どの人間もその証拠です。何世紀もの誤りは、力と強さを外に求めたことでした。`,`第16段落の種のたとえに戻ります。`],
+[39,`内なる世界は供給の普遍の源であり、外の世界はその河口です。受け取る力は、この源を——各人がその出口であり、それを通して誰もが互いにひとつである、この無限のエネルギーを——認めることにかかっています。`,
+`川のたとえです。源は内、河口は外。彼は第四部・第五部でここから倫理的な帰結を引き出します。<strong>同じ源を分かちあっているのだから、他人を害することは自分を害することだ</strong>と。他人を犠牲にした成功への彼の反論であり、彼はこれをとても大切にしています。`],
+[40,`認めることは心のはたらきです。ですから心の行為とは、個が普遍の心にはたらきかける相互作用です。そしてこの心はあらゆる空間に行きわたり、生きるものすべてを動かす知性ですから、この作用と反作用が因果の法則をなします。しかし因果の原理は個のうちにはありません。それは普遍の心のうちにあります。客観的な能力ではなく主観的な過程であり、その結果は無限に多様な状態と経験のなかに見られます。`,
+`難しい段落ですが、実の部分は一文に収まります。<strong>原因はあなたではない。あなたはエンジンではなく、スイッチです。</strong>非常に具体的な帰結があり、第十三週で彼はそれを使います——あなたが用意するのは方法ではなく、向きだけです。`],
+[41,`生命があるためには心がなければなりません。心なしには何も存在できません。存在するすべては、この唯一の基となる実体の現れであり、そこからそれを通して、すべてが造られ、たえず造りなおされています。`,`次のたとえの用意です。`],
+[42,`わたしたちは、計り知れない可塑的な心の実体の海のなかに生きています。この実体はつねに生きて活動し、この上なく鋭敏です。それは心の求めに応じて形をとります。思考が鋳型を、実体が自らを表すための母型をつくります。`,
+`彼の中心的なたとえ——<strong>鋳型</strong>。そしてこれが、なぜ視覚化の練習がすべて精密な細部を要求するのかを説明します。ぼやけた鋳型はぼやけた鋳物を生む。形而上学に同意するかどうかにかかわらず、実践上の帰結は正しい。<strong>あいまいな意図は何も生みません。</strong>`],
+[43,`価値は適用のなかにしかないこと、そしてこの法則を実践的に理解すれば、貧しさは豊かさに、無知は知恵に、不調和は調和に、圧制は自由に置き換わることを覚えておいてください。物質的にも社会的にも、これよりも大きな恵みはたしかにありません。`,
+`練習の前の最後の警告です。<strong>ここまでのすべては、適用しないかぎり何の値打ちもありません。</strong>彼はほとんどの部の終わりでこの一文を繰り返します。おそらくそれが、あなたが長いあいだこの本を手にしながら始められなかった理由でもあります。`],
+[44,`ではいよいよ適用に移りましょう。ひとりになれて、邪魔の入らない部屋を選びます。背筋を伸ばし、楽に座ってください。ただし、だらしなくもたれないこと。思考はどこへ向かってもかまいませんが、十五分から三十分のあいだ、体を完全に静止させます。これを三、四日、あるいは一週間続けてください。自分の肉体を完全に統御できるようになるまで。`,
+`<strong>今週の練習です。</strong>四十五段落のうちの一段落におさまり、そして本当に大事なのはこれだけです。`],
+[45,`多くの人はこれを極端に難しいと感じるでしょう。たやすくできる人もいます。けれども先へ進む用意ができる前に、体を完全に統御することが絶対に欠かせません。来週、次の段階の指示を受け取ります。それまでに、この段階を習得していなければなりません。`,
+`彼自身が先へ進めない仕組みを告げています。<strong>アプリは彼の指示をそのまま実行しているだけです。</strong>`]
+]}};
+
+let ST={done:{},journal:[],dur:15,lang:'fr',autoVoice:true};
+let LG='fr', Wv=W, U=FRUI, Lv=LESSONS;
+/* ══════ Voix : enregistrement personnel (IndexedDB) + synthèse ══════ */
+const VT={
+ fr:{rec:"S'enregistrer",recing:"Enregistrement… appuyer pour arrêter",mine:"Ma voix",
+     again:"Réenregistrer",tts:"Voix de l'app",listen:"Écouter la consigne",stop:"Arrêter",
+     auto:"Lecture auto de ma voix",noMic:"Micro indisponible sur cet appareil.",
+     first:"Première lecture : enregistre-toi paragraphe par paragraphe. Dès la deuxième, tu pourras t'écouter.",
+     kept:"Enregistré sur ce téléphone uniquement."},
+ ja:{rec:"録音する",recing:"録音中… タップで停止",mine:"自分の声",
+     again:"録り直す",tts:"アプリの声",listen:"指示を聞く",stop:"停止",
+     auto:"自分の声を自動再生",noMic:"この端末ではマイクを利用できません。",
+     first:"最初の通読では、段落ごとに自分の声を録音します。二度目からは、自分の声で聴けます。",
+     kept:"録音はこの端末の中だけに保存されます。"}
+};
+const V=()=>VT[LG]||VT.fr;
+
+const DB={d:null,ok:false,
+ async open(){try{
+   this.d=await new Promise((res,rej)=>{const r=indexedDB.open('lacle-voice',1);
+     r.onupgradeneeded=e=>{if(!e.target.result.objectStoreNames.contains('v'))e.target.result.createObjectStore('v')};
+     r.onsuccess=e=>res(e.target.result);r.onerror=()=>rej(r.error)});
+   this.ok=true}catch(e){this.ok=false}},
+ tx(m){return this.d.transaction('v',m).objectStore('v')},
+ put(k,b){return new Promise((res,rej)=>{const q=this.tx('readwrite').put(b,k);q.onsuccess=()=>res(1);q.onerror=()=>rej()})},
+ get(k){return new Promise(res=>{if(!this.ok)return res(null);const q=this.tx('readonly').get(k);q.onsuccess=()=>res(q.result||null);q.onerror=()=>res(null)})},
+ del(k){return new Promise(res=>{const q=this.tx('readwrite').delete(k);q.onsuccess=()=>res(1);q.onerror=()=>res(0)})},
+ keys(){return new Promise(res=>{if(!this.ok)return res([]);const q=this.tx('readonly').getAllKeys();q.onsuccess=()=>res(q.result||[]);q.onerror=()=>res([])})}
+};
+
+/* ---- synthèse vocale ---- */
+let SPK=false;
+function strip(h){const d=document.createElement('div');d.innerHTML=h;
+ return d.textContent.replace(/\s+/g,' ').trim()}
+function say(t){
+ if(!('speechSynthesis' in window))return;
+ speechSynthesis.cancel();
+ const u=new SpeechSynthesisUtterance(t);
+ u.lang=(LG==='ja')?'ja-JP':'fr-FR'; u.rate=(LG==='ja')?0.95:0.92; u.pitch=1;
+ u.onend=()=>{SPK=false;paintVoiceBtns()}; u.onerror=()=>{SPK=false;paintVoiceBtns()};
+ SPK=true; speechSynthesis.speak(u); paintVoiceBtns();
+}
+function hush(){if('speechSynthesis' in window)speechSynthesis.cancel();SPK=false;paintVoiceBtns()}
+function paintVoiceBtns(){document.querySelectorAll('.ttsbtn').forEach(b=>{
+  b.textContent=(SPK?'■ '+V().stop:'▸ '+(b.dataset.lbl||V().tts))})}
+function sayCue(n){ if(SPK){hush();return}
+  const w=Wv.find(x=>x.n===n); say(w.t+'. '+strip(w.x)); }
+
+/* ---- enregistrement ---- */
+let REC={mr:null,ch:[],key:null,stream:null};
+async function recToggle(key,btnId){
+ const b=document.getElementById(btnId);
+ if(REC.mr&&REC.mr.state==='recording'){REC.mr.stop();return}
+ if(!navigator.mediaDevices||!window.MediaRecorder||!DB.ok){alert(V().noMic);return}
+ try{
+  REC.stream=await navigator.mediaDevices.getUserMedia({audio:true});
+ }catch(e){alert(V().noMic);return}
+ REC.ch=[];REC.key=key;
+ REC.mr=new MediaRecorder(REC.stream);
+ REC.mr.ondataavailable=e=>{if(e.data.size)REC.ch.push(e.data)};
+ REC.mr.onstop=async()=>{
+   const blob=new Blob(REC.ch,{type:REC.mr.mimeType||'audio/mp4'});
+   try{await DB.put(REC.key,blob)}catch(e){}
+   REC.stream.getTracks().forEach(t=>t.stop());
+   REC.mr=null; if(typeof paint==='function'&&document.getElementById('pane-read').classList.contains('act'))paint();
+ };
+ REC.mr.start();
+ if(b){b.textContent='■ '+V().recing;b.classList.add('recing')}
+}
+let AU=null;
+async function playMine(key,btnId){
+ if(AU&&!AU.paused){AU.pause();AU=null;const b=document.getElementById(btnId);if(b)b.textContent='▸ '+V().mine;return}
+ const blob=await DB.get(key); if(!blob)return;
+ AU=new Audio(URL.createObjectURL(blob));
+ const b=document.getElementById(btnId);
+ if(b)b.textContent='■ '+V().stop;
+ AU.onended=()=>{if(b)b.textContent='▸ '+V().mine};
+ AU.play().catch(()=>{});
+}
+async function delMine(key){ if(!DB.ok)return; await DB.del(key); paint(); }
+async function toggleAuto(){ ST.autoVoice=!ST.autoVoice; await S.set('mk',ST); paint(); }
+
+function applyLang(){
+ LG=ST.lang||'fr';
+ U = (LG==='ja') ? JA.ui : FRUI;
+ Wv = (LG==='ja') ? W.map((w,i)=>Object.assign({},w,JA.W[i])) : W;
+ Lv = (LG==='ja') ? JA.L : LESSONS;
+ document.body.classList.toggle('ja', LG==='ja');
+ document.documentElement.lang = LG;
+ const q=(x)=>document.querySelector(x);
+ q('#pane-key .eyebrow').textContent=U.eyebrow;
+ q('#pane-key h1').innerHTML=U.h1;
+ q('#pane-journal .eyebrow').textContent=U.jEyebrow;
+ q('#pane-journal h1').innerHTML=U.jH1;
+ q('#pane-soon .eyebrow').textContent=U.sEyebrow;
+ q('#pane-soon h1').innerHTML=U.sH1;
+ q('#pane-soon .consigne').innerHTML=U.soonBody;
+ const nl=document.querySelectorAll('nav .nl');
+ nl[0].textContent=U.navKey; nl[1].textContent=U.navJournal; nl[2].textContent=U.navSoon;
+ q('.nsoon').textContent=U.soonTag;
+ q('.backbtn').textContent=U.quit;
+ q('#quit').textContent=U.quitSess;
+ document.getElementById('langbtn').textContent=U.langLabel;
+}
+async function switchLang(){ ST.lang = (ST.lang==='ja')?'fr':'ja'; await S.set('mk',ST); applyLang(); render(); scrollTo(0,0); }
+
+const today=()=>new Date().toISOString().slice(0,10);
+const cnt=n=>(ST.done[n]||[]).length;
+const didToday=n=>(ST.done[n]||[]).includes(today());
+const cur=()=>{for(const w of Wv){if(cnt(w.n)<7)return w.n}return 24};
+const total=()=>Wv.reduce((a,w)=>a+cnt(w.n),0);
+
+/* ══════ Rendu ══════ */
+function render(){
+ const c=cur();
+ document.getElementById('dial').innerHTML=Wv.map(w=>{const d=cnt(w.n);
+   return `<div class="dweek">${[0,1,2,3,4,5,6].map(i=>`<div class="dot ${i<d?'on':''} ${w.n===c&&i===d?'cur':''}"></div>`).join('')}</div>`}).join('');
+ const t=total();
+ document.getElementById('dialcap').textContent = t===0
+   ? U.start0 : U.day(t,c);
+
+ const w=Wv.find(x=>x.n===c), d=cnt(c), dt=didToday(c);
+ let html=`<div class="card">
+   <p class="wknum">${U.wk(c)}</p>
+   <h2 class="wktitle">${w.t}</h2>
+   <div class="consigne">${w.x}</div>
+   <p class="src">${w.s} · ${U.src}</p>
+   <div class="days">${[0,1,2,3,4,5,6].map(i=>`<div class="day ${i<d?'done':''} ${i===d&&!dt?'today':''}">${i<d?'✓':i+1}</div>`).join('')}</div>
+   ${dt?`<button class="btn" disabled>${U.doneToday}</button><button class="btn ghost" onclick="open_(${c})">${U.again}</button>`
+       :`<button class="btn" onclick="open_(${c})">${U.begin(d+1)}</button>`}
+   ${Lv[c]?(()=>{const P=Lv[c].p.length,pos=(ST.pos||{})[c]||0,lp=(ST.loops||{})[c]||0;
+     const lbl = (lp>0 ? U.reread(lp) : pos>0 ? U.resume(pos,P) : U.readIt(P)) + (U.frOnly||'');
+     return `<button class="btn ghost" onclick="read(${c})">${lbl}</button>`})():''}
+   <div class="vbar"><button class="ttsbtn" data-lbl="${U.listenLbl}" onclick="sayCue(${c})">▸ ${U.listenLbl}</button></div>
+   <details><summary>${U.whatMeans}</summary><div class="explain">${w.e}</div></details>
+ </div>`;
+
+ const past=Wv.filter(x=>x.n<c);
+ if(past.length){html+=`<p class="sechead">${U.doneHead}</p>`+past.map(x=>
+   `<div class="row past" onclick="open_(${x.n})"><span class="idx">${x.n}</span><span class="nm">${x.t}</span><span class="st">7/7</span></div>`).join('')}
+
+ const next=Wv.filter(x=>x.n>c);
+ if(next.length){html+=`<p class="sechead">${U.lockHead}</p>`+next.map(x=>
+   `<div class="row lock"><span class="idx">${x.n}</span><span class="nm">${x.n===c+1?x.t:'—'}</span><span class="st">${x.n===c+1?U.sess(7-d):''}</span></div>`).join('')
+   +`<p class="src" style="border:0;margin-top:16px">${U.lockNote}</p>`}
+
+ document.getElementById('weeks').innerHTML=html;
+
+ document.getElementById('journal').innerHTML = ST.journal.length
+  ? ST.journal.slice().reverse().map(e=>`<div class="jentry"><p class="jmeta">${e.date} · semaine ${e.week}</p><p class="jtext">${e.txt.replace(/[<>]/g,'')}</p></div>`).join('')
+  : `<p class="empty">${U.jEmpty}</p>`;
+}
+
+/* ══════ Lecteur pas à pas ══════ */
+let RD={part:null,i:0};
+function read(n){
+ const L=Lv[n];if(!L)return;
+ RD.part=n;RD.i=(ST.pos&&ST.pos[n])||0;
+ document.querySelectorAll('.pane').forEach(x=>x.classList.remove('act'));
+ document.getElementById('pane-read').classList.add('act');
+ document.querySelectorAll('nav button').forEach(x=>x.classList.remove('act'));
+ document.getElementById('rd-nav').classList.add('on');
+ paint();
+}
+function paint(){
+ const L=Lv[RD.part],N=L.p.length,i=RD.i;
+ const stage=document.getElementById('rd-stage');
+
+ if(i>=N){ // écran de fin
+  const loops=((ST.loops||{})[RD.part]||0);
+  document.getElementById('rd-count').textContent=U.partDone;
+  document.getElementById('rd-prog').style.width="100%";
+  stage.innerHTML=`<div class="done-card">
+    <h2>${U.doneH(L.titre)}</h2>
+    <p>${U.doneP1}</p>
+    <p>${U.doneP2}</p>
+    <p class="loops">${U.loops(loops,RD.part)}</p>
+  </div>`;
+  document.getElementById('rd-prev').disabled=false;
+  const nx=document.getElementById('rd-next');
+  nx.textContent=U.rereadStart;
+  nx.onclick=()=>{RD.i=0;savePos();paint()};
+  return;
+ }
+
+ const [num,txt,gl]=L.p[i];
+ document.getElementById('rd-count').textContent=U.counter(num,i+1,N);
+ document.getElementById('rd-prog').style.width=((i+1)/N*100)+'%';
+ stage.innerHTML=`
+   ${num===44?`<p class="rdtag">${U.exoTag}</p>`:''}
+   <p class="rdpara${num===44?' exo':''}">${txt}</p>
+   <details class="pgloss"><summary>${U.whatSays}</summary><div class="gtxt">${gl}</div></details>
+   <div id="vslot"></div>`;
+ voiceBar(num,txt);
+ document.getElementById('rd-prev').disabled=(i===0);
+ const nx=document.getElementById('rd-next');
+ nx.textContent=(i===N-1)?U.finish:U.next;
+ nx.onclick=()=>step(1);
+ scrollTo(0,0);
+}
+function step(d){
+ const N=LESSONS[RD.part].p.length;
+ const nv=RD.i+d;
+ if(nv<0)return;
+ if(nv>N)return;
+ if(nv===N){ // on vient de finir : on compte une lecture
+  ST.loops=ST.loops||{};ST.loops[RD.part]=(ST.loops[RD.part]||0)+1;
+ }
+ RD.i=nv;savePos();paint();
+}
+function savePos(){ST.pos=ST.pos||{};ST.pos[RD.part]=RD.i;S.set('mk',ST)}
+function back(){hush();if(AU){AU.pause();AU=null}
+ document.getElementById('rd-nav').classList.remove('on');
+ document.querySelectorAll('.pane').forEach(x=>x.classList.remove('act'));
+ document.getElementById('pane-key').classList.add('act');
+ document.querySelector('nav button[data-p=key]').classList.add('act');
+ render();scrollTo(0,0);
+}
+/* swipe horizontal */
+let sx=0;
+document.getElementById('pane-read').addEventListener('touchstart',e=>{sx=e.changedTouches[0].clientX},{passive:true});
+document.getElementById('pane-read').addEventListener('touchend',e=>{
+ const dx=e.changedTouches[0].clientX-sx;
+ if(Math.abs(dx)>60)step(dx<0?1:-1);
+},{passive:true});
+document.addEventListener('keydown',e=>{
+ if(!document.getElementById('pane-read').classList.contains('act'))return;
+ if(e.key==='ArrowRight')step(1);if(e.key==='ArrowLeft')step(-1);
+});
+
+async function voiceBar(num,txt){
+ const slot=document.getElementById('vslot'); if(!slot)return;
+ const key=`p${RD.part}-${num}`;
+ const has=DB.ok ? !!(await DB.get(key)) : false;
+ const first=!has;
+ slot.innerHTML=`<div class="vbar">
+   <button id="vrec" class="${first?'on':''}" onclick="recToggle('${key}','vrec')">● ${first?V().rec:V().again}</button>
+   ${has?`<button id="vplay" onclick="playMine('${key}','vplay')">▸ ${V().mine}</button>
+          <button class="tiny" onclick="delMine('${key}')">✕</button>`:''}
+   <button class="ttsbtn" onclick="say(${JSON.stringify(txt).replace(/'/g,"\\u0027")}.replace(/<[^>]+>/g,''))">▸ ${V().tts}</button>
+ </div>
+ <div class="autorow"><button class="${ST.autoVoice?'on':''}" onclick="toggleAuto()">${ST.autoVoice?'●':'○'}</button><span>${V().auto}</span></div>
+ <p class="vhint">${first?V().first:V().kept}</p>`;
+ paintVoiceBtns();
+ if(has&&ST.autoVoice&&!SPK)playMine(key,'vplay');
+}
+
+/* ══════ Séance ══════ */
+let T={w:null,end:0,tot:0,run:false,raf:null,wl:null};
+const R=2*Math.PI*46;
+document.getElementById('arc').style.strokeDasharray=R;
+
+function open_(n){
+ T.w=n;T.run=false;cancelAnimationFrame(T.raf);
+ const w=Wv.find(x=>x.n===n);
+ document.getElementById('cue').textContent=w.c;
+ document.getElementById('picker').innerHTML=[15,20,30].map(m=>`<button class="${m===ST.dur?'sel':''}" onclick="setDur(${m})">${m} min</button>`).join('');
+ clock(ST.dur*60,ST.dur*60);
+ document.getElementById('startStop').textContent=U.startBtn;
+ document.getElementById('session').classList.add('on');
+ const sb=document.getElementById('sayCue');
+ if(sb){sb.onclick=()=>sayCue(n);sb.textContent='▸ '+U.listenLbl}
+}
+function setDur(m){ST.dur=m;S.set('mk',ST);open_(T.w)}
+function clock(l,t){
+ document.getElementById('clock').textContent=`${Math.floor(l/60)}:${String(Math.floor(l%60)).padStart(2,'0')}`;
+ document.getElementById('arc').style.strokeDashoffset=R*(1-l/t);
+}
+function tick(){const l=Math.max(0,(T.end-Date.now())/1000);clock(l,T.tot);
+ if(l<=0){done();return}T.raf=requestAnimationFrame(tick)}
+
+document.getElementById('startStop').onclick=async()=>{
+ if(!T.run){T.tot=ST.dur*60;T.end=Date.now()+T.tot*1000;T.run=true;
+  document.getElementById('startStop').textContent=U.stopBtn;
+  try{T.wl=await navigator.wakeLock.request('screen')}catch(e){}
+  tick();
+ }else{T.run=false;cancelAnimationFrame(T.raf);T.tot=Math.max(1,(T.end-Date.now())/1000);
+  document.getElementById('startStop').textContent=(LG==='ja'?'再開':'Reprendre');
+  if(T.wl){T.wl.release();T.wl=null}}
+};
+document.getElementById('quit').onclick=()=>{hush();if(AU){AU.pause();AU=null}T.run=false;cancelAnimationFrame(T.raf);
+ if(T.wl){T.wl.release();T.wl=null}document.getElementById('session').classList.remove('on')};
+
+async function done(){
+ T.run=false;if(T.wl){T.wl.release();T.wl=null}
+ if(navigator.vibrate)navigator.vibrate([90,140,90]);
+ ST.done[T.w]=ST.done[T.w]||[];
+ if(!ST.done[T.w].includes(today()))ST.done[T.w].push(today());
+ await S.set('mk',ST);
+ document.getElementById('session').innerHTML=
+  `<div style="max-width:400px;width:100%">
+     <h2 style="font-family:Fraunces,serif;font-weight:300;font-size:26px;margin:0 0 10px">${U.sessDone}</h2>
+     <p class="cue" style="text-align:left;margin:0">${U.sessAsk}</p>
+     <textarea id="note" placeholder="${LG==='ja'?'任意':'Optionnel.'}"></textarea>
+     <button class="btn" onclick="note(${T.w})">${U.save}</button>
+     <button class="btn ghost" onclick="location.reload()">${U.skip}</button>
+   </div>`;
+}
+async function note(w){
+ const v=document.getElementById('note').value.trim();
+ if(v){ST.journal.push({date:new Date().toLocaleDateString(LG==='ja'?'ja-JP':'fr-FR'),week:w,txt:v});await S.set('mk',ST)}
+ location.reload();
+}
+
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
+ document.getElementById('rd-nav').classList.remove('on');
+ document.querySelectorAll('nav button').forEach(x=>x.classList.remove('act'));
+ document.querySelectorAll('.pane').forEach(x=>x.classList.remove('act'));
+ b.classList.add('act');document.getElementById('pane-'+b.dataset.p).classList.add('act');scrollTo(0,0)});
+
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+(async()=>{await DB.open();const s=await S.get('mk');if(s)ST={...ST,...s};applyLang();render()})();
+</script>
