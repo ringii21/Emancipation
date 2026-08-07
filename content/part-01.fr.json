@@ -221,7 +221,8 @@
   {
    "n": 44,
    "txt": "Passe maintenant à l'application. Choisis une pièce où tu peux être seul et non dérangé. Assieds-toi droit, confortablement, mais ne t'avachis pas. Laisse tes pensées aller où elles veulent, mais reste parfaitement immobile pendant quinze minutes à une demi-heure. Continue ainsi trois ou quatre jours, ou une semaine, jusqu'à obtenir le contrôle complet de ton être physique.",
-   "glose": "<strong>L'exercice de la semaine.</strong> Il tient en un paragraphe sur quarante-cinq, et c'est le seul qui compte vraiment."
+   "glose": "<strong>L'exercice de la semaine.</strong> Il tient en un paragraphe sur quarante-cinq, et c'est le seul qui compte vraiment.",
+   "exo": true
   },
   {
    "n": 45,

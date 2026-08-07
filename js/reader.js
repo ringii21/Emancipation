@@ -50,12 +50,12 @@ function paint(){
   return;
  }
 
- const q=L.p[i],num=q.n,txt=q.txt,gl=q.glose;
+ const q=L.p[i],num=q.n,txt=q.txt,gl=q.glose,exo=!!q.exo;
  document.getElementById('rd-count').textContent=U.counter(num,i+1,N);
  document.getElementById('rd-prog').style.width=((i+1)/N*100)+'%';
  stage.innerHTML=`
-   ${num===44?`<p class="rdtag">${U.exoTag}</p>`:''}
-   <p class="rdpara${num===44?' exo':''}">${txt}</p>
+   ${exo?`<p class="rdtag">${U.exoTag}</p>`:''}
+   <p class="rdpara${exo?' exo':''}">${txt}</p>
    <details class="pgloss"><summary>${U.whatSays}</summary><div class="gtxt">${gl}</div></details>
    <div id="vslot"></div>`;
  voiceBar(num,txt);
