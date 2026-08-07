@@ -70,7 +70,17 @@ conception, pas une fonctionnalité.
   `data/` (données des semaines), `content/` (leçons traduites et commentées, un JSON par
   partie et par langue, chargé par `fetch()`), `sources/` (textes sources, ex. PDF de 1912).
 - **`content/index.json` déclare les parties réellement disponibles.** C'est lui qui distingue
-  « semaine verrouillée » de « lecture pas encore écrite ».
+  « semaine verrouillée » de « lecture pas encore écrite ». Un fichier peut exister dans
+  `content/` sans y être listé : traduction préparée d'avance, non publiée.
+- **Rendu : vanilla assumé jusqu'au module refuge, à réévaluer à ce moment-là.** Le
+  `render()` actuel réécrit tout le HTML — acceptable pour des cartes statiques, pas pour
+  un chat (liste qui grandit, champ de saisie actif qui perdrait focus et curseur, messages
+  qui streament). Au lancement du module 2, trancher entre : **Preact + htm** chargés par
+  balise script (~3 Ko, composants et rendu ciblé, zéro build conservé — option
+  privilégiée) ou du vanilla discipliné en DOM append-only. Alpine.js jugé moins adapté
+  aux listes ; Vite + React écarté (un build et des dépendances à maintenir, prix non
+  justifié pour six modules personnels). Dans tous les cas les invariants tiennent :
+  zéro build, tout local, fichiers déposés tels quels.
 - **Un module à la fois, validé avant le suivant.** Décision explicite, qui reproduit
   volontairement la logique de verrouillage de Haanel.
 - **Domaine public uniquement pour les textes sources.** Haanel (mort en 1949) est libre. Les
