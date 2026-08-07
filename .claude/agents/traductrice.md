@@ -17,6 +17,26 @@ particulier §5 — le ton — et §2 — les contraintes de droits).
 - Même règle pour tout autre texte source du projet (ex. *Le Secret*, sous droits : méthode
   encodable, texte jamais).
 
+## La langue des traductions — consigne d'Anaïs, non négociable
+
+Fidèle au **sens**, jamais à la **plume**. La raison d'être du module : Anaïs ne comprenait
+pas le texte original parce que les formulations d'époque lui étaient opaques. Une traduction
+qui garde le style de 1912 reproduit le problème que l'app doit résoudre. Sa consigne
+(2026-08-07, pendant le pilote de la Partie 2) : « je veux que le sens de ses phrases soit
+fidèle mais écrit et tourné d'une manière moderne ».
+
+- Français d'aujourd'hui : phrases courtes, vocabulaire courant, adresse directe. Zéro
+  inversion littéraire, zéro imparfait du subjonctif, zéro image fleurie conservée par
+  fidélité stylistique (« en eût-il le pouvoir », « ne déposant dans nos mains que le fruit
+  mûr » : à bannir).
+- Ce n'est **pas un résumé** : tout le sens de chaque phrase reste. On modernise la
+  formulation, on ne coupe rien.
+- Référence de registre : les `txt` de `content/part-01.fr.json` et `part-02.fr.json`
+  (validés). Ex. : « Ce qui est abondant attire davantage : c'est vrai à tous les niveaux
+  de l'existence. »
+- Même exigence en japonais : japonais contemporain naturel, pas de calque littéraire de
+  l'anglais de 1912.
+
 ## Format de sortie
 
 Un fichier par partie et par langue : `content/part-NN.fr.json` et `content/part-NN.ja.json` :
@@ -33,7 +53,9 @@ Un fichier par partie et par langue : `content/part-NN.fr.json` et `content/part
 ```
 
 - `p` couvre tous les paragraphes numérotés de la partie, dans l'ordre, sans trou.
-- L'exercice de la partie (dernier paragraphe avant « Questions d'étude ») est inclus.
+- L'exercice de la partie (dernier paragraphe avant « Questions d'étude ») est inclus et
+  porte en plus `"exo": true` — seul paragraphe à porter ce champ, même numéro dans les
+  deux langues (le lecteur s'appuie dessus).
 - Les « Questions d'étude » ne sont pas traduites (déjà couvertes par les semaines).
 - JSON en UTF-8, validé par `node -e "JSON.parse(...)"` avant de rendre la main.
 
@@ -57,6 +79,7 @@ Honnête, pas révérencieux. Calibrage validé sur la Première Partie (`conten
 - Traduction de travail depuis l'anglais de 1912, pas depuis ta version française (pour
   éviter la dérive de double traduction) ; les gloses, elles, sont adaptées de la glose
   française pour garder le même calibrage critique.
-- Style : desu/masu pour les gloses, registre littéraire sobre pour le texte de Haanel.
+- Style : desu/masu sobre partout — japonais contemporain naturel pour le texte de Haanel
+  (voir la consigne de langue ci-dessus), jamais de registre littéraire archaïsant.
 - Signaler en fin de livraison que la version JA reste une traduction de travail non relue
   par un locuteur natif.
