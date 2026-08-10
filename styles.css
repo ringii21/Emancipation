@@ -193,3 +193,44 @@ body.ja .pc-phase{font-family:"Fraunces","Hiragino Mincho ProN","Yu Mincho",seri
   #pc-arc{transition:none!important}
   .pc-card:active{transform:none}
 }
+
+/* ══════ Module 2 — Le refuge ══════
+   Conversation append-only. Aucun décompte, aucune progression : rien à styler pour
+   cela — il n'y en a pas. Le composeur reste collé au-dessus de la <nav> pour que le
+   clavier iPhone ne le masque pas. */
+/* Le pane du refuge cède la place à un fil scrollable + composeur fixe. */
+#refuge{display:flex;flex-direction:column}
+/* Espace pour que le fil ne passe pas sous le composeur fixe + la nav. */
+#pane-refuge .wrap{padding-bottom:0}
+
+#rf-thread{display:flex;flex-direction:column;gap:10px;padding:8px 0 20px;min-height:120px}
+.rf-msg{max-width:82%;padding:12px 15px;border-radius:15px;font-family:"Spectral",Georgia,serif;
+  font-weight:300;font-size:16.5px;line-height:1.6;white-space:pre-wrap;word-wrap:break-word}
+/* Le refuge parle à gauche (teinte encre/carte), l'utilisatrice à droite (laiton sobre). */
+.rf-refuge{align-self:flex-start;background:var(--ink2);border:1px solid var(--line);
+  color:#D5D2C8;border-bottom-left-radius:5px}
+.rf-me{align-self:flex-end;background:var(--ink3);border:1px solid var(--line);
+  color:var(--paper);border-bottom-right-radius:5px}
+body.ja .rf-msg{font-family:"Spectral","Hiragino Mincho ProN","Yu Mincho",Georgia,serif;
+  line-height:1.9;letter-spacing:.01em}
+
+/* Les trois propositions, en colonne, réutilisant .btn.ghost. */
+#rf-actions{display:flex;flex-direction:column;gap:0;margin:4px 0 14px}
+#rf-actions .btn.ghost{text-align:left;margin-top:8px}
+.rf-actions-intro{font-size:12px;letter-spacing:.06em;color:var(--muted);
+  margin:14px 0 2px;font-family:"DM Sans",system-ui,sans-serif}
+
+/* Composeur fixe au-dessus de la nav. env(safe-area-inset-bottom) + hauteur de nav :
+   le champ ne passe jamais sous la barre ni sous le clavier. */
+#rf-composer{position:fixed;left:0;right:0;bottom:0;z-index:35;
+  display:flex;gap:9px;align-items:flex-end;
+  max-width:640px;margin:0 auto;
+  background:rgba(14,20,26,.96);backdrop-filter:blur(14px);border-top:1px solid var(--line);
+  padding:12px 20px calc(env(safe-area-inset-bottom) + 66px)}
+#rf-input{flex:1;margin:0;min-height:46px;max-height:132px;resize:none;
+  padding:12px 14px;font-size:16px;line-height:1.4}
+#rf-composer .btn{width:auto;flex:0 0 auto;padding:13px 18px;margin:0;align-self:stretch}
+
+/* Réserve, dans le fil, la place occupée par le composeur fixe + la nav pour que le
+   dernier message reste visible au-dessus du champ. */
+#pane-refuge #refuge{padding-bottom:calc(env(safe-area-inset-bottom) + 128px)}

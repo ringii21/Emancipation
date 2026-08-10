@@ -1,0 +1,108 @@
+{
+ "lang":"fr",
+ "accueil":{
+  "eyebrow":"Quand ça ne va pas",
+  "titre":"Le <em>refuge</em>",
+  "messages":[
+   "Tu es là. C'est déjà quelque chose. Prends le temps qu'il te faut.",
+   "Il n'y a rien à faire ici, rien à réussir. Tu peux juste être là.",
+   "Pose ce que tu portes, ou ne pose rien. Les deux sont possibles.",
+   "Tu peux écrire, ou juste rester en silence. Je ne te demande rien.",
+   "Cet endroit reste ouvert, à n'importe quelle heure. Tu peux t'installer."
+  ],
+  "placeholder":"Écris ce qui se passe, comme ça vient. Ou pas.",
+  "humeurs":[
+   {"id":"detresse","label":"Je n'en peux plus","motscles":["j'en peux plus","envie d'en finir","en finir","me faire du mal","me faire mal","à bout","plus envie de vivre","disparaître","tout arrêter","mourir","suicide","je veux crever","à quoi bon vivre"]},
+   {"id":"anxiete","label":"Anxieuse, tendue","motscles":["angoiss","panique","peur","stress","cœur qui bat","souffle court","oppress","j'ai peur","tendu","crise","je tremble","paniqu"]},
+   {"id":"tristesse","label":"Triste, à plat","motscles":["triste","déprim","vide","envie de pleurer","je pleure","découragé","plus goût","seul","abattu","à plat","le cafard","chagrin"]},
+   {"id":"colere","label":"En colère","motscles":["colère","énerv","rage","furieux","j'en ai marre","ras-le-bol","injuste","ça me révolte","je suis remontée","agacé","exaspér"]},
+   {"id":"rumination","label":"La tête qui tourne en boucle","motscles":["rumin","en boucle","je pense sans arrêt","je n'arrive pas à arrêter","obsèd","ça tourne","ressass","je repense","je n'arrête pas de","dans ma tête"]},
+   {"id":"neutre","label":"Je ne sais pas trop","motscles":[]}
+  ]
+ },
+ "reponses":{
+  "anxiete":{
+   "accueil":[
+    "Il y a de l'anxiété, là, quelque chose qui serre. Tu n'as pas à la faire partir tout de suite.",
+    "C'est tendu à l'intérieur, le corps est en alerte. Je le note avec toi, sans rien te demander de plus.",
+    "La peur est là. Elle prend de la place. On peut juste la laisser être là un moment."
+   ],
+   "relance":[
+    "Si tu veux, dis-moi où ça se loge, dans le corps ou dans la tête. Ou reste comme tu es, c'est bien aussi.",
+    "Tu peux mettre des mots dessus, ou pas. Je reste là quoi qu'il arrive."
+   ]
+  },
+  "tristesse":{
+   "accueil":[
+    "Il y a de la tristesse. C'est lourd à porter, et tu le portes quand même.",
+    "Tu es à plat. Ça compte, même si tu ne sais pas dire pourquoi.",
+    "Quelque chose fait mal, doucement, en dedans. Je suis là pendant que c'est là."
+   ],
+   "relance":[
+    "Tu peux me dire ce qui pèse, si ça t'aide. Ou juste rester en silence, sans rien expliquer.",
+    "Rien ne t'oblige à raconter. On peut aussi rester là, sans mots."
+   ]
+  },
+  "colere":{
+   "accueil":[
+    "Il y a de la colère. Elle a le droit d'être là. On ne va pas la ranger de force.",
+    "Quelque chose te met en rage. Ça se comprend, même si tu ne l'expliques pas.",
+    "Tu es remontée, et c'est légitime de l'être. Je ne vais pas te calmer, je vais rester là."
+   ],
+   "relance":[
+    "Si ça soulage, écris contre quoi ou contre qui c'est dirigé. Personne ne lira, c'est juste pour toi.",
+    "Tu peux vider ce qu'il y a, ou le garder. Comme tu le sens."
+   ]
+  },
+  "rumination":{
+   "accueil":[
+    "La tête tourne en boucle. C'est épuisant, ce manège qui ne s'arrête pas.",
+    "Les mêmes pensées reviennent, encore. Tu n'y peux pas grand-chose sur le moment, et ce n'est pas ta faute.",
+    "Ça ressasse sans fin. Je ne vais pas te dire d'arrêter, ça ne s'arrête pas sur commande."
+   ],
+   "relance":[
+    "Si tu veux, écris la pensée qui revient le plus. La poser dehors peut alléger un peu, sans garantie.",
+    "Tu peux la déposer ici, ou la laisser tourner en silence. Je reste avec toi."
+   ]
+  },
+  "neutre":{
+   "accueil":[
+    "Tu ne sais pas trop ce que c'est, et c'est très bien de ne pas savoir. On n'a pas besoin de nommer.",
+    "Quelque chose ne va pas, sans nom clair. On peut rester là-dedans, dans le flou, sans le forcer.",
+    "C'est confus, mélangé. Tu n'as rien à démêler tout de suite."
+   ],
+   "relance":[
+    "Si un mot te vient, écris-le, même si ce n'est pas juste. Sinon, reste, il n'y a rien à trouver.",
+    "On peut juste être là ensemble, sans savoir. Ça suffit pour l'instant."
+   ]
+  }
+ },
+ "detresse":{
+  "message":"Ça fait beaucoup, là. Ce que tu ressens est grave et je ne vais pas faire comme si ce n'était rien. Tu n'as rien à régler tout de suite, et tu n'as pas à porter ça seule.",
+  "orientation":"Je ne suis pas une personne et je ne peux pas t'aider comme il le faudrait maintenant. En France, tu peux appeler le 3114 : c'est le numéro national de prévention du suicide, gratuit, ouvert jour et nuit. Quelqu'un décroche et écoute. Si tu es en danger immédiat, appelle le 15 ou le 112. Tu peux le faire même si une part de toi n'en a pas envie."
+ },
+ "propositions":{
+  "intro":"Si tu veux, sans obligation :",
+  "respirer":"Respirer un moment",
+  "nommer":"Nommer une chose que je voudrais changer",
+  "ecoute":"Juste rester là, sans rien faire"
+ },
+ "nommer":{
+  "invite":"Une seule chose que tu voudrais voir changer. Pas un plan, pas un engagement. Juste la nommer, ça suffit.",
+  "placeholder":"La chose, dite avec tes mots.",
+  "apres":[
+   "C'est noté. Tu l'as nommée, et pour aujourd'hui c'est déjà quelque chose. Rien ne t'oblige à en faire quoi que ce soit.",
+   "Voilà, c'est posé. Ça reste sur ton téléphone, juste pour toi, personne d'autre ne le voit. Tu n'as rien à décider maintenant.",
+   "Tu l'as mise en mots. C'est un repère, pas une dette. Tu pourras y revenir, ou pas."
+  ]
+ },
+ "ecoute":{
+  "messages":[
+   "D'accord. Reste autant que tu veux. Je n'attends rien de toi.",
+   "On ne fait rien, alors. Tu es là, je suis là, c'est tout.",
+   "Je ne sais pas te dire quoi faire. Je peux rester là pendant que tu poses ça.",
+   "Prends le temps. Il n'y a pas de suite à donner, pas de prochaine étape."
+  ]
+ },
+ "gardeFou":"Le refuge n'est pas un soin médical et je ne suis pas un professionnel. C'est un endroit pour souffler, pas un traitement. Si ce que tu traverses est lourd, ou si ça dure, parles-en à un médecin, un psychologue ou une personne de confiance. Ça n'a rien d'un aveu de faiblesse."
+}

@@ -15,6 +15,11 @@
 </head>
 <body>
 
+<div class="pane" id="pane-refuge"><div class="wrap">
+  <header><p class="eyebrow" id="rfEyebrow">Quand ça ne va pas</p><h1 id="rfH1">Le <em>refuge</em></h1></header>
+  <div id="refuge"></div>
+</div></div>
+
 <div class="pane act" id="pane-key"><div class="wrap">
   <header>
     <p class="eyebrow">Charles Haanel · 1912</p>
@@ -83,6 +88,7 @@
 <button id="langbtn" onclick="switchLang()">日本語</button>
 
 <nav>
+  <button data-p="refuge"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg><span class="nl">Refuge</span></button>
   <button class="act" data-p="key"><svg viewBox="0 0 24 24"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v4"/></svg><span class="nl">La Clé</span></button>
   <button data-p="journal"><svg viewBox="0 0 24 24"><path d="M5 4h13v16H5z"/><path d="M9 9h6M9 13h4"/></svg><span class="nl">Carnet</span></button>
   <button data-p="pensees"><svg viewBox="0 0 24 24"><path d="M9.5 3.5a5 5 0 0 0-3.5 8.6V16h7v-3.9a5 5 0 0 0-3.5-8.6z"/><path d="M7 19h5"/></svg><span class="nl">Pensées</span></button>
@@ -96,5 +102,6 @@
 <script src="js/session.js"></script>
 <script src="js/app.js"></script>
 <script src="js/pensees.js"></script>
+<script src="js/refuge.js"></script>
 </body>
 </html>

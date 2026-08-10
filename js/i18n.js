@@ -7,7 +7,8 @@
 /* ══════ Interface — français ══════ */
 var FRUI={
  eyebrow:"Charles Haanel · 1912",h1:'La Clé<br><em>maîtresse</em>',
- navKey:"La Clé",navJournal:"Carnet",navPensees:"Pensées",navSoon:"Suite",
+ navRefuge:"Refuge",navKey:"La Clé",navJournal:"Carnet",navPensees:"Pensées",navSoon:"Suite",
+ rfSend:"Envoyer",rfLoadFail:"Le refuge n'a pas pu se charger. Recharge la page ; il reste ouvert.",
  jEyebrow:"Ce que tu as observé",jH1:'Le <em>carnet</em>',
  pnEyebrow:"Exercices d'auto-observation",pnH1:'Pensées <em>constructives</em>',
  pnStart:"Commencer",pnStop:"Mettre en pause",pnQuit:"Quitter",
@@ -48,7 +49,8 @@ var FRUI={
 var JA={
 ui:{
  eyebrow:"チャールズ・ハアネル · 1912",h1:'ザ・マスター<br><em>キー</em>',
- navKey:"鍵",navJournal:"手帳",navPensees:"考え",navSoon:"続き",
+ navRefuge:"拠り所",navKey:"鍵",navJournal:"手帳",navPensees:"考え",navSoon:"続き",
+ rfSend:"送る",rfLoadFail:"拠り所を読み込めませんでした。ページを再読み込みしてください。ここはいつでも開いています。",
  jEyebrow:"気づいたこと",jH1:'<em>手帳</em>',
  pnEyebrow:"自分を観察する練習",pnH1:'建設的な<em>考え</em>',
  pnStart:"開始",pnStop:"一時停止",pnQuit:"やめる",
