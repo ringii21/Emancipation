@@ -26,8 +26,12 @@ function applyLang(){
  q('#pane-journal h1').innerHTML=U.jH1;
  q('#pnEyebrow').textContent=U.pnEyebrow;
  q('#pnH1').innerHTML=U.pnH1;
+ q('#pane-soon .eyebrow').textContent=U.sEyebrow;
+ q('#pane-soon h1').innerHTML=U.sH1;
+ q('#pane-soon .consigne').innerHTML=U.soonBody;
  const nl=document.querySelectorAll('nav .nl');
- nl[0].textContent=U.navKey; nl[1].textContent=U.navJournal; nl[2].textContent=U.navPensees;
+ nl[0].textContent=U.navKey; nl[1].textContent=U.navJournal; nl[2].textContent=U.navPensees; nl[3].textContent=U.navSoon;
+ q('.nsoon').textContent=U.soonTag;
  q('.backbtn').textContent=U.quit;
  q('#quit').textContent=U.quitSess;
  document.getElementById('langbtn').textContent=U.langLabel;
@@ -67,8 +71,6 @@ function render(){
    <div class="consigne">${w.x}</div>
    <p class="src">${w.s} · ${U.src}</p>
    <div class="days">${[0,1,2,3,4,5,6].map(i=>`<div class="day ${i<d?'done':''} ${i===d&&!dt?'today':''}">${i<d?'✓':i+1}</div>`).join('')}</div>
-   ${dt?`<button class="btn" disabled>${U.doneToday}</button><button class="btn ghost" onclick="open_(${c})">${U.again}</button>`
-       :`<button class="btn" onclick="open_(${c})">${U.begin(d+1)}</button>`}
    ${(()=>{
      /* trois états : partie disponible → bouton de lecture (comportement démo) ;
         partie absente de content/index.json → mention discrète, non cliquable ;
@@ -78,7 +80,9 @@ function render(){
      if(!Lc){loadPart(c,LG).then(()=>render()).catch(()=>{});return ''}
      const P=Lc.p.length,pos=(ST.pos||{})[c]||0,lp=(ST.loops||{})[c]||0;
      const lbl = (lp>0 ? U.reread(lp) : pos>0 ? U.resume(pos,P) : U.readIt(P)) + (U.frOnly||'');
-     return `<button class="btn ghost" onclick="read(${c})">${lbl}</button>`})()}
+     return `<button class="btn" onclick="read(${c})">${lbl}</button>`})()}
+   ${dt?`<button class="btn ghost" disabled>${U.doneToday}</button><button class="btn ghost" onclick="open_(${c})">${U.again}</button>`
+       :`<button class="btn ghost" onclick="open_(${c})">${U.begin(d+1)}</button>`}
    <div class="vbar"><button class="ttsbtn" data-lbl="${U.listenLbl}" onclick="sayCue(${c})">▸ ${U.listenLbl}</button></div>
    <details><summary>${U.whatMeans}</summary><div class="explain">${w.e}</div></details>
  </div>`;

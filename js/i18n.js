@@ -7,7 +7,7 @@
 /* ══════ Interface — français ══════ */
 var FRUI={
  eyebrow:"Charles Haanel · 1912",h1:'La Clé<br><em>maîtresse</em>',
- navKey:"La Clé",navJournal:"Carnet",navPensees:"Suite",
+ navKey:"La Clé",navJournal:"Carnet",navPensees:"Pensées",navSoon:"Suite",
  jEyebrow:"Ce que tu as observé",jH1:'Le <em>carnet</em>',
  pnEyebrow:"Exercices d'auto-observation",pnH1:'Pensées <em>constructives</em>',
  pnStart:"Commencer",pnStop:"Mettre en pause",pnQuit:"Quitter",
@@ -16,6 +16,8 @@ var FRUI={
  pnCarnet:"Ton carnet",pnEmpty:"Rien d'enregistré pour l'instant. Tu peux garder une trace d'un exercice, si tu veux ; rien n'y oblige, et ce que tu écris reste sur ce téléphone.",
  pnChoisir:"Choisis un état, ou écris une phrase.",pnEnvoyer:"Voir ce qui pourrait aider",
  pnSensCount:n=>`${n} chose${n>1?'s':''}`,
+ sEyebrow:"En construction",sH1:'La <em>suite</em>',soonTag:"bientôt",
+ soonBody:"<p>Le refuge, le rituel du matin, les exercices pour couper une habitude et l'onglet Gourmet arrivent ensuite.</p><p>On construit un module à la fois, dans l'ordre. C'est le principe.</p>",
  start0:"24 semaines, 168 séances. Une par jour. La première commence quand tu veux.",
  day:(t,c)=>`Jour ${t} sur 168 · semaine ${c} sur 24`,
  wk:c=>`Semaine ${c} · en cours`, src:"La Clé de la Maîtrise, 1912",
@@ -46,7 +48,7 @@ var FRUI={
 var JA={
 ui:{
  eyebrow:"チャールズ・ハアネル · 1912",h1:'ザ・マスター<br><em>キー</em>',
- navKey:"鍵",navJournal:"手帳",navPensees:"続き",
+ navKey:"鍵",navJournal:"手帳",navPensees:"考え",navSoon:"続き",
  jEyebrow:"気づいたこと",jH1:'<em>手帳</em>',
  pnEyebrow:"自分を観察する練習",pnH1:'建設的な<em>考え</em>',
  pnStart:"開始",pnStop:"一時停止",pnQuit:"やめる",
@@ -55,6 +57,8 @@ ui:{
  pnCarnet:"あなたの手帳",pnEmpty:"まだ何も残っていません。よければエクササイズの記録を残せます。義務ではありませんし、書いたものはこの端末の中だけに残ります。",
  pnChoisir:"状態を選ぶか、一言書いてください。",pnEnvoyer:"役に立ちそうなものを見る",
  pnSensCount:n=>`${n}つ`,
+ sEyebrow:"準備中",sH1:'この<em>先</em>',soonTag:"近日",
+ soonBody:"<p>拠り所、朝の習慣、習慣を断つための練習、そしてグルメのタブが、このあとに続きます。</p><p>一度にひとつずつ、順番に作っていきます。それが方針です。</p>",
  start0:"24週間、168回のセッション。1日1回。最初の1回は、いつ始めてもかまいません。",
  day:(t,c)=>`168日のうち${t}日目 · 24週のうち第${c}週`,
  wk:c=>`第${c}週 · 実施中`, src:"『ザ・マスター・キー・システム』1912",
