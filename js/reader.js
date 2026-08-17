@@ -41,6 +41,7 @@ function paint(){
     <h2>${U.doneH(L.titre)}</h2>
     <p>${U.doneP1}</p>
     <p>${U.doneP2}</p>
+    <button class="btn" onclick="open_(${RD.part})">${U.startSess}</button>
     <p class="loops">${U.loops(loops,RD.part)}</p>
   </div>`;
   document.getElementById('rd-prev').disabled=false;
