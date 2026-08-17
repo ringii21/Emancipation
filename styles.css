@@ -220,18 +220,17 @@ body.ja .rf-msg{font-family:"Spectral","Hiragino Mincho ProN","Yu Mincho",Georgi
 .rf-actions-intro{font-size:12px;letter-spacing:.06em;color:var(--muted);
   margin:14px 0 2px;font-family:"DM Sans",system-ui,sans-serif}
 
-/* Composeur fixe au-dessus de la nav. env(safe-area-inset-bottom) + hauteur de nav :
-   le champ ne passe jamais sous la barre ni sous le clavier. */
-#rf-composer{position:fixed;left:0;right:0;bottom:0;z-index:35;
-  display:flex;gap:9px;align-items:flex-end;
-  max-width:640px;margin:0 auto;
-  background:var(--ink);border-top:1px solid var(--line);
-  padding:10px 16px calc(env(safe-area-inset-bottom) + 60px)}
+/* Le composeur est posé JUSTE au-dessus de la nav : bottom = hauteur RÉELLE de la nav,
+   mesurée en JS (--nav-h) — plus aucun chevauchement, quel que soit l'écran ou la
+   safe-area. Fond opaque pleine largeur, contenu centré comme le reste. */
+#rf-composer{position:fixed;left:0;right:0;bottom:var(--nav-h,68px);z-index:38;
+  background:var(--ink);border-top:1px solid var(--line);padding:11px 0}
+.rf-composer-in{display:flex;gap:9px;align-items:flex-end;max-width:640px;margin:0 auto;padding:0 20px}
 #rf-input{flex:1;margin:0;height:48px;min-height:48px;max-height:132px;resize:none;box-sizing:border-box;
   padding:13px 14px;font-size:16px;line-height:1.4;
   background:var(--ink2);color:var(--paper);border:1px solid var(--line);border-radius:12px}
 #rf-composer .btn{width:auto;flex:0 0 auto;height:48px;min-height:48px;padding:0 18px;margin:0;align-self:flex-end}
 
-/* Réserve, dans le fil, la place occupée par le composeur fixe + la nav pour que le
-   dernier message reste visible au-dessus du champ (composeur opaque ≈ 119px + marge). */
-#pane-refuge #refuge{padding-bottom:calc(env(safe-area-inset-bottom) + 150px)}
+/* Réserve, dans le fil, la place du composeur (≈70px) + la nav (--nav-h) pour que le
+   dernier message reste visible au-dessus du champ. */
+#pane-refuge #refuge{padding-bottom:calc(var(--nav-h,68px) + 82px)}

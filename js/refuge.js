@@ -110,8 +110,10 @@ function rfMount(){
   <div id="rf-thread" aria-live="polite"></div>
   <div id="rf-actions"></div>
   <div id="rf-composer">
-    <textarea id="rf-input" rows="1"></textarea>
-    <button class="btn" id="rf-send"></button>
+    <div class="rf-composer-in">
+      <textarea id="rf-input" rows="1"></textarea>
+      <button class="btn" id="rf-send"></button>
+    </div>
   </div>`;
  const inp=document.getElementById('rf-input');
  const snd=document.getElementById('rf-send');
@@ -123,6 +125,16 @@ function rfMount(){
   });
  }
  RFMOUNTED=true;
+ rfFitComposer();
+ addEventListener('resize',rfFitComposer);
+}
+
+/* La nav du bas n'a pas une hauteur fixe (safe-area iPhone, densité de police selon
+   l'écran). On la mesure et on expose --nav-h : le composeur se cale ainsi pile
+   au-dessus, sans chevauchement, sur n'importe quel écran. */
+function rfFitComposer(){
+ const nav=document.querySelector('nav');
+ if(nav)document.documentElement.style.setProperty('--nav-h',nav.offsetHeight+'px');
 }
 
 /* Le composeur porte les libellés/placeholder d'interface (i18n). Rafraîchi à chaque
