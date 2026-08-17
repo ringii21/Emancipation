@@ -119,14 +119,27 @@ function rfMount(){
  const snd=document.getElementById('rf-send');
  if(snd)snd.onclick=()=>rfSubmit();
  if(inp){
-  // Entrée = envoyer (Maj+Entrée = saut de ligne), comportement de messagerie.
+  // Envoi au bouton « Envoyer ». Entrée = saut de ligne, comme sur un vrai clavier de
+  // téléphone (on peut écrire plusieurs lignes). Raccourci clavier physique :
+  // Ctrl/Cmd+Entrée pour envoyer.
   inp.addEventListener('keydown',e=>{
-   if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();rfSubmit()}
+   if(e.key==='Enter'&&(e.metaKey||e.ctrlKey)){e.preventDefault();rfSubmit()}
   });
+  // Le champ grandit avec le texte (jusqu'à la max-height CSS), pour voir ses lignes.
+  inp.addEventListener('input',rfGrowInput);
  }
  RFMOUNTED=true;
  rfFitComposer();
  addEventListener('resize',rfFitComposer);
+}
+
+/* Auto-agrandissement du composeur : hauteur = contenu, bornée par la max-height CSS
+   (132px). Remis à une ligne à l'envoi (rfSubmit vide inp.style.height). */
+function rfGrowInput(){
+ const inp=document.getElementById('rf-input');
+ if(!inp)return;
+ inp.style.height='auto';
+ inp.style.height=Math.min(inp.scrollHeight,132)+'px';
 }
 
 /* La nav du bas n'a pas une hauteur fixe (safe-area iPhone, densité de police selon
@@ -244,8 +257,12 @@ function rfSubmit(){
  const raw=inp.value||'';
  const txt=raw.trim();
  if(!txt)return;
- // Le champ est vidé mais jamais recréé : le focus reste.
+ // Le champ est vidé (jamais recréé) et remis à sa hauteur d'une ligne. On retire le
+ // focus : sur téléphone, le clavier se referme après l'envoi — il ne reste que la
+ // barre du prompt.
  inp.value='';
+ inp.style.height='';
+ if(inp.blur)try{inp.blur()}catch(e){}
  rfAppend('me',rfEsc(txt));
 
  // Parcours B : on attendait la chose à nommer.

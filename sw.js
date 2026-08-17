@@ -1,7 +1,7 @@
 // Service worker — La Clé.
 // Incrémenter VERSION à chaque déploiement, sinon les utilisatrices
 // reçoivent l'ancienne version depuis le cache (PROJET.md §7.5).
-const VERSION = 8;
+const VERSION = 9;
 const CACHE = 'lacle-v' + VERSION;
 
 const ASSETS = [

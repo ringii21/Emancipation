@@ -10,7 +10,7 @@
    "Tu peux écrire, ou juste rester en silence. Je ne te demande rien.",
    "Cet endroit reste ouvert, à n'importe quelle heure. Tu peux t'installer."
   ],
-  "placeholder":"Écris ce qui se passe, comme ça vient. Ou pas.",
+  "placeholder":"Écris ce qui vient. Ou pas.",
   "humeurs":[
    {"id":"detresse","label":"Je n'en peux plus","motscles":["j'en peux plus","envie d'en finir","en finir","me faire du mal","me faire mal","à bout","plus envie de vivre","disparaître","tout arrêter","mourir","suicide","je veux crever","à quoi bon vivre"]},
    {"id":"anxiete","label":"Anxieuse, tendue","motscles":["angoiss","panique","peur","stress","cœur qui bat","souffle court","oppress","j'ai peur","tendu","crise","je tremble","paniqu"]},
