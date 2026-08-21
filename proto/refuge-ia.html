@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0E141A">
+<title>Refuge — prototype IA locale</title>
+<style>
+  :root{
+    --ink:#0E141A; --ink2:#141C24; --ink3:#1B252E; --line:#26333d;
+    --paper:#EDE9E1; --muted:#8A94A0; --brass:#C9A24B; --sage:#8FB69B; --warn:#C97B6B;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    background:var(--ink); color:var(--paper);
+    font-family:-apple-system,"DM Sans",system-ui,sans-serif;
+    display:flex; flex-direction:column; height:100dvh;
+  }
+  header{
+    padding:calc(env(safe-area-inset-top) + 14px) 18px 12px;
+    border-bottom:1px solid var(--line); background:var(--ink);
+  }
+  header .eyebrow{margin:0;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  header h1{margin:2px 0 0;font-size:22px;font-weight:400}
+  header h1 em{color:var(--brass);font-style:italic}
+  /* zone de démarrage */
+  #setup{padding:16px 18px;border-bottom:1px solid var(--line)}
+  #setup p{margin:0 0 10px;font-size:13.5px;line-height:1.55;color:var(--muted)}
+  .row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+  select,button{font:inherit}
+  select{
+    flex:1 1 auto;min-width:150px;padding:11px 12px;border-radius:10px;
+    background:var(--ink2);color:var(--paper);border:1px solid var(--line);font-size:15px;
+  }
+  .btn{
+    padding:11px 18px;border-radius:10px;border:none;background:var(--brass);color:var(--ink);
+    font-weight:600;font-size:15px;
+  }
+  .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--paper);font-weight:400}
+  .btn:disabled{background:var(--ink3);color:var(--muted)}
+  #status{margin-top:12px;font-size:12.5px;color:var(--sage);line-height:1.5;min-height:1.2em}
+  #status.err{color:var(--warn)}
+  .bar{height:6px;border-radius:6px;background:var(--ink3);overflow:hidden;margin-top:8px;display:none}
+  .bar i{display:block;height:100%;width:0;background:var(--brass);transition:width .2s}
+  /* fil */
+  #thread{flex:1 1 auto;overflow-y:auto;padding:16px 14px 8px;-webkit-overflow-scrolling:touch}
+  .msg{max-width:82%;padding:11px 14px;border-radius:15px;margin:0 0 10px;font-size:16px;line-height:1.5;white-space:pre-wrap;word-wrap:break-word}
+  .me{margin-left:auto;background:var(--ink3);border-bottom-right-radius:5px}
+  .refuge{margin-right:auto;background:var(--ink2);border:1px solid var(--line);border-bottom-left-radius:5px;
+    font-family:"Spectral",Georgia,serif}
+  .refuge.warn{border-color:var(--warn);color:#F0D9D2}
+  .refuge.think{color:var(--muted);font-style:italic}
+  /* composeur */
+  #composer{
+    border-top:1px solid var(--line);background:var(--ink);
+    padding:10px 14px calc(env(safe-area-inset-bottom) + 10px);
+    display:flex;gap:9px;align-items:flex-end;
+  }
+  #input{
+    flex:1;min-height:46px;max-height:130px;resize:none;box-sizing:border-box;
+    padding:12px 14px;font-size:16px;line-height:1.4;border-radius:12px;
+    background:var(--ink2);color:var(--paper);border:1px solid var(--line);
+  }
+  #send{height:46px;align-self:flex-end}
+  .disclaimer{font-size:11px;color:var(--muted);padding:0 16px 8px;text-align:center;line-height:1.5}
+</style>
+</head>
+<body>
+<header>
+  <p class="eyebrow">Prototype · modèle 100 % sur ton téléphone</p>
+  <h1>Le <em>refuge</em> — test IA locale</h1>
+</header>
+
+<div id="setup">
+  <p><strong>1re fois :</strong> charger le modèle télécharge ~0,8 à 2 Go dans Safari (fais-le en Wi-Fi). Ensuite, il reste en mémoire du navigateur — rien ne quitte ton téléphone.</p>
+  <div class="row">
+    <select id="model" aria-label="Modèle"></select>
+    <button class="btn" id="load">Charger</button>
+  </div>
+  <div class="bar" id="bar"><i id="barfill"></i></div>
+  <div id="status">Prêt à charger.</div>
+</div>
+
+<div id="thread"></div>
+
+<div id="composer" style="display:none">
+  <textarea id="input" rows="1" placeholder="Écris ce qui vient. Ou pas."></textarea>
+  <button class="btn" id="send">Envoyer</button>
+</div>
+<p class="disclaimer" id="disclaimer" style="display:none">Prototype — pas un professionnel de santé. En cas d'idées noires : 3114 (gratuit, 24h/24).</p>
+
+<script type="module">
+import * as webllm from "https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm/+esm";
+
+const $ = s => document.querySelector(s);
+const statusEl = $('#status'), barEl = $('#bar'), barFill = $('#barfill');
+const modelSel = $('#model'), loadBtn = $('#load');
+const thread = $('#thread'), composer = $('#composer'), input = $('#input'), sendBtn = $('#send');
+
+let engine = null, busy = false;
+const history = [];  // {role, content} en mémoire vive uniquement
+
+/* ── Ton du refuge (voix : s'intéresser au concret, jamais de réassurance creuse) ── */
+const SYSTEM = `Tu es « le refuge », une présence chaleureuse et attentive, comme un ami ou un proche qui écoute vraiment. Réponds en français, brièvement, avec des mots simples et humains.
+Quand la personne raconte quelque chose, intéresse-toi à CE QUI S'EST PASSÉ : reprends ce qu'elle a dit et pose une question ouverte et concrète sur sa situation. Ne donne pas de leçon.
+N'utilise JAMAIS de réassurance creuse ni de formules toutes faites (par ex. « tu n'as rien à résoudre », « c'est normal », « prends le temps qu'il te faut »). Ces phrases sont interdites.
+Tu n'es pas un professionnel de santé : tu ne diagnostiques pas et ne prescris pas. Si la personne exprime des idées noires, l'envie de se faire du mal ou de mourir, ou qu'elle n'arrive pas à se calmer, arrête-toi doucement et invite-la à en parler à un professionnel de santé ou, en urgence, à appeler le 3114 (numéro national de prévention du suicide, gratuit, 24h/24).`;
+
+/* ── Garde-fou détresse DÉTERMINISTE : jamais confié au modèle ── */
+const CRISE = ["j'en peux plus","envie d'en finir","en finir","me faire du mal","me faire mal",
+  "à bout","plus envie de vivre","disparaître","tout arrêter","mourir","suicide","je veux crever",
+  "à quoi bon vivre","me tuer","idées noires","me suicider"];
+const MSG_CRISE = "Ce que tu traverses est lourd, et tu n'as pas à le porter seule. Si tu penses à te faire du mal, appelle le 3114 — gratuit, 24h/24 — ou le 15. Des personnes sont là pour te répondre, maintenant.";
+function estCrise(t){ const s=(t||'').toLowerCase(); return CRISE.some(m=>s.includes(m)); }
+
+/* ── Rendu des bulles (textContent = aucune injection) ── */
+function bulle(role, texte, cls){
+  const d = document.createElement('div');
+  d.className = 'msg ' + (role==='me'?'me':'refuge') + (cls?(' '+cls):'');
+  d.textContent = texte;
+  thread.appendChild(d);
+  d.scrollIntoView({block:'nearest'});
+  return d;
+}
+
+/* ── Peuplement de la liste des modèles (petits, adaptés iPhone) ── */
+function remplirModeles(){
+  const veut = [
+    {re:/Qwen2\.5-1\.5B-Instruct-q4f16_1-MLC/, label:'Qwen 2.5 · 1,5 Md — meilleur français (défaut)'},
+    {re:/Llama-3\.2-1B-Instruct-q4f16_1-MLC/,  label:'Llama 3.2 · 1 Md — le plus rapide'},
+    {re:/Llama-3\.2-3B-Instruct-q4f16_1-MLC/,  label:'Llama 3.2 · 3 Md — plus fin, ~2 Go'},
+    {re:/gemma-2-2b-it-q4f16_1-MLC/,           label:'Gemma 2 · 2 Md'},
+  ];
+  const ids = (webllm.prebuiltAppConfig && webllm.prebuiltAppConfig.model_list || []).map(m=>m.model_id);
+  let n=0;
+  for(const v of veut){
+    const id = ids.find(x=>v.re.test(x));
+    if(id){ const o=document.createElement('option'); o.value=id; o.textContent=v.label; modelSel.appendChild(o); n++; }
+  }
+  if(!n){ // repli : tout petit modèle q4f16 dispo
+    ids.filter(x=>/q4f16/.test(x) && /(0\.5B|1B|1\.5B|2b|2B)/.test(x)).slice(0,6)
+       .forEach(id=>{ const o=document.createElement('option'); o.value=id; o.textContent=id; modelSel.appendChild(o); });
+  }
+}
+
+/* ── Chargement du modèle ── */
+async function charger(){
+  if(!navigator.gpu){
+    statusEl.className='err';
+    statusEl.textContent="WebGPU indisponible. Sur iPhone : iOS 18 ou plus. Sinon Réglages ▸ Apps ▸ Safari ▸ Avancé ▸ Fonctionnalités expérimentales ▸ activer WebGPU, puis recharge la page.";
+    return;
+  }
+  loadBtn.disabled=true; modelSel.disabled=true; barEl.style.display='block';
+  statusEl.className=''; statusEl.textContent="Préparation…";
+  try{
+    engine = await webllm.CreateMLCEngine(modelSel.value, {
+      initProgressCallback: (r)=>{
+        statusEl.textContent = r.text || 'Chargement…';
+        if(typeof r.progress==='number'){ barFill.style.width = Math.round(r.progress*100)+'%'; }
+      }
+    });
+    barEl.style.display='none';
+    statusEl.className=''; statusEl.textContent="Modèle prêt. Écris-lui.";
+    composer.style.display='flex'; $('#disclaimer').style.display='block';
+    $('#setup').querySelector('p').textContent = "Modèle chargé, en mémoire du navigateur. Tu peux recharger un autre modèle à tout moment.";
+    loadBtn.textContent='Recharger'; loadBtn.disabled=false; modelSel.disabled=false;
+    bulle('refuge','Je suis là. Qu’est-ce qui t’amène ?');
+    input.focus();
+  }catch(e){
+    barEl.style.display='none';
+    statusEl.className='err';
+    statusEl.textContent="Échec du chargement : " + (e && e.message ? e.message : e);
+    loadBtn.disabled=false; modelSel.disabled=false;
+  }
+}
+
+/* ── Envoi d'un message ── */
+async function envoyer(){
+  if(busy || !engine) return;
+  const txt = (input.value||'').trim();
+  if(!txt) return;
+  input.value=''; input.style.height='';
+  bulle('me', txt);
+
+  // Garde-fou détresse : réponse déterministe, on NE passe PAS par le modèle.
+  if(estCrise(txt)){ bulle('refuge', MSG_CRISE, 'warn'); return; }
+
+  busy=true; sendBtn.disabled=true;
+  history.push({role:'user', content:txt});
+  const recent = history.slice(-12);
+  const b = bulle('refuge','…','think');
+  try{
+    const flux = await engine.chat.completions.create({
+      messages: [{role:'system', content:SYSTEM}, ...recent],
+      stream:true, temperature:0.7, max_tokens:512,
+    });
+    let out='';
+    for await (const chunk of flux){
+      const d = chunk.choices && chunk.choices[0] && chunk.choices[0].delta && chunk.choices[0].delta.content || '';
+      if(d){ out+=d; b.classList.remove('think'); b.textContent=out; b.scrollIntoView({block:'nearest'}); }
+    }
+    if(!out){ b.textContent='(pas de réponse)'; }
+    else history.push({role:'assistant', content:out});
+  }catch(e){
+    b.classList.remove('think'); b.classList.add('warn');
+    b.textContent = "Souci du modèle : " + (e && e.message ? e.message : e);
+  }finally{
+    busy=false; sendBtn.disabled=false;
+  }
+}
+
+/* ── Câblage ── */
+loadBtn.onclick = charger;
+sendBtn.onclick = envoyer;
+// Entrée = saut de ligne (clavier iPhone) ; envoi au bouton. Le champ grandit avec le texte.
+input.addEventListener('input', ()=>{ input.style.height='auto'; input.style.height=Math.min(input.scrollHeight,130)+'px'; });
+remplirModeles();
+</script>
+</body>
+</html>
